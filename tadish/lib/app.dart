@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'pages/signin/signin_view.dart';
 import 'pages/signup/signup_view.dart';
+import 'pages/home/home_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
@@ -35,6 +36,8 @@ class MyApp extends StatelessWidget {
               settings: routeSettings,
               builder: (BuildContext context) {
                 switch (routeSettings.name) {
+                  case HomeView.routeName:
+                    return HomeView();
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
                   case SigninView.routeName:
