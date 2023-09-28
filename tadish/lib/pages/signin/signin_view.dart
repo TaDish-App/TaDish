@@ -24,7 +24,7 @@ class _SigninViewState extends State<SigninView> {
             const SizedBox(height: 40.0),
             Column(
               children: <Widget>[
-                Image.asset('assets/images/cloche.png', width: 200),
+                Image.asset('assets/images/cloche_dark.png', width: 200),
                 const SizedBox(height: 16.0),
                 Text(
                   "Welcome to",

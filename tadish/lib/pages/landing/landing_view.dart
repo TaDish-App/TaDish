@@ -26,7 +26,7 @@ class LandingView extends StatelessWidget {
             const SizedBox(height: 150.0),
             Column(
               children: <Widget>[
-                Image.asset('assets/images/cloche.png', width: 300),
+                Image.asset('assets/images/cloche_light.png', width: 300),
                 const Text(
                   "TaDish",
                   style: TextStyle(
