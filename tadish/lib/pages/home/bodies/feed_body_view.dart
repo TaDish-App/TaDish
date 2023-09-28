@@ -4,8 +4,8 @@ import 'news_body_item_actions.dart';
 import '../../../../pages/sample_feature/sample_item.dart';
 
 /// Displays a list of Gardens.
-class NewsBodyView extends StatelessWidget {
-  const NewsBodyView({
+class FeedBodyView extends StatelessWidget {
+  const FeedBodyView({
     super.key,
     this.items = const [SampleItem(1), SampleItem(2), SampleItem(3)],
   });

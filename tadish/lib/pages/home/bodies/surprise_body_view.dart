@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../components/garden_summary_card.dart';
 
 /// Displays a list of Gardens.
-class GardensBodyView extends StatelessWidget {
-  const GardensBodyView({
+class SurpriseBodyView extends StatelessWidget {
+  const SurpriseBodyView({
     super.key,
   });
 
@@ -12,10 +12,11 @@ class GardensBodyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ListView(children: const [
-          GardenSummaryCard(),
-        ]));
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Text('Surprise Page'),
+      ),
+    );
   }
 }
