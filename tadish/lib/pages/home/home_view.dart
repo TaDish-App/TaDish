@@ -44,7 +44,7 @@ class HomeView extends StatefulWidget {
     },
     3: {
       'title': const Text('Surprise'),
-      'body': const SurpriseBodyView(),
+      'body': SurpriseBodyView(),
       'navItem': const BottomNavigationBarItem(
         label: '',
         icon: Icon(Icons.lightbulb_circle_outlined, size: 40),
