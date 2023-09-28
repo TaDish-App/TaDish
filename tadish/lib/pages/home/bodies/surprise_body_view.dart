@@ -43,8 +43,18 @@ class _SurpriseBodyViewState extends State<SurpriseBodyView> {
             Expanded(
               child: FortuneWheel(
                 selected: selected.stream,
+                indicators: const <FortuneIndicator>[
+                  FortuneIndicator(
+                    alignment: Alignment.bottomCenter,
+                    child: TriangleIndicator(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
                 items: [
-                  for (var it in items) FortuneItem(child: Text(it)),
+                  for (var it in items) FortuneItem(
+                      child: Text(it),
+                  ),
                 ],
               ),
             ),
