@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class SigninView extends StatefulWidget {
   const SigninView({Key? key}) : super(key: key);
 
-  static const routeName = '/';
+  static const routeName = '/signin';
 
   @override
   State<SigninView> createState() => _SigninViewState();
@@ -24,15 +24,16 @@ class _SigninViewState extends State<SigninView> {
             const SizedBox(height: 40.0),
             Column(
               children: <Widget>[
-                Image.asset('assets/images/cloche.png', width: 200),
+                Image.asset('assets/images/cloche_dark.png', width: 200),
                 const SizedBox(height: 16.0),
                 Text(
-                  "Welcome to",
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                Text(
-                  "Agile Garden Club",
+                  "Welcome back!",
                   style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 8.0),
+                Text(
+                  "Login to your account",
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
             ),

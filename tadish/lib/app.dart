@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'pages/signin/signin_view.dart';
 import 'pages/signup/signup_view.dart';
 import 'pages/home/home_view.dart';
+import 'pages/landing/landing_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
+import 'custom_theme.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -25,9 +27,7 @@ class MyApp extends StatelessWidget {
       listenable: settingsController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
-          theme: ThemeData(),
-          darkTheme: ThemeData.dark(),
-          themeMode: settingsController.themeMode,
+          theme: customTheme,
 
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
@@ -36,6 +36,8 @@ class MyApp extends StatelessWidget {
               settings: routeSettings,
               builder: (BuildContext context) {
                 switch (routeSettings.name) {
+                  case LandingView.routeName:
+                    return const LandingView();
                   case HomeView.routeName:
                     return HomeView();
                   case SettingsView.routeName:
