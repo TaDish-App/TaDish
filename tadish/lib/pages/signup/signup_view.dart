@@ -14,7 +14,8 @@ class _SignupViewState extends State<SignupView> {
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _mobileController = TextEditingController();
+  final _locationController = TextEditingController();
+  final _tasteController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +30,14 @@ class _SignupViewState extends State<SignupView> {
                 Image.asset('assets/images/cloche_dark.png', width: 200),
                 const SizedBox(height: 16.0),
                 Text(
-                  "Sign Up",
+                  "Welcome!",
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
-                const SizedBox(height: 16.0),
-                const Text(
-                    "Your name and email is shared only with members of your AGC Chapter and AGC Administrators."),
+                const SizedBox(height: 8.0),
+                Text(
+                  "Create your account",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ],
             ),
             const SizedBox(height: 20.0),
@@ -54,18 +57,25 @@ class _SignupViewState extends State<SignupView> {
             ),
             const SizedBox(height: 12.0),
             TextField(
+              controller: _locationController,
+              decoration: const InputDecoration(
+                labelText: 'Location',
+              ),
+            ),
+            const SizedBox(height: 12.0),
+            TextField(
+              controller: _tasteController,
+              decoration: const InputDecoration(
+                labelText: 'Taste Preference',
+              ),
+            ),
+            const SizedBox(height: 12.0),
+            TextField(
               controller: _passwordController,
               decoration: const InputDecoration(
                 labelText: 'Password',
               ),
               obscureText: true,
-            ),
-            const SizedBox(height: 12.0),
-            TextField(
-              controller: _mobileController,
-              decoration: const InputDecoration(
-                labelText: 'Mobile',
-              ),
             ),
             const SizedBox(height: 12.0),
             ElevatedButton(

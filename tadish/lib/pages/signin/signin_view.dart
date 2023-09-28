@@ -27,12 +27,13 @@ class _SigninViewState extends State<SigninView> {
                 Image.asset('assets/images/cloche_dark.png', width: 200),
                 const SizedBox(height: 16.0),
                 Text(
-                  "Welcome to",
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                Text(
-                  "Agile Garden Club",
+                  "Welcome back!",
                   style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 8.0),
+                Text(
+                  "Login to your account",
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
             ),
