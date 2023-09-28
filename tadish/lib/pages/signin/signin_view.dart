@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class SigninView extends StatefulWidget {
   const SigninView({Key? key}) : super(key: key);
 
-  static const routeName = '/';
+  static const routeName = '/signin';
 
   @override
   State<SigninView> createState() => _SigninViewState();
