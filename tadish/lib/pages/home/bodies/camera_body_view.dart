@@ -73,11 +73,14 @@ class CameraBodyViewState extends State<CameraBodyView> {
                 height: 25,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly, //Center Row contents horizontally,
+                // crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
                 children: [
                   InputChip(
                     avatar: Icon(Icons.energy_savings_leaf),
                     label: Text('Vegan'),
                     onSelected: (bool value) {},
+                    backgroundColor: Theme.of(context).primaryColor.withAlpha(95),
                   ),
                   InputChip(
                     avatar: Icon(Icons.assistant_photo_rounded ),
