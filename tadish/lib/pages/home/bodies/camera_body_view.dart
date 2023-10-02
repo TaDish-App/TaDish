@@ -69,7 +69,28 @@ class CameraBodyViewState extends State<CameraBodyView> {
                   print(rating);
                 },
               ),
-              // Add TextFormFields and ElevatedButton here.
+              const SizedBox(
+                height: 25,
+              ),
+              Row(
+                children: [
+                  InputChip(
+                    avatar: Icon(Icons.energy_savings_leaf),
+                    label: Text('Vegan'),
+                    onSelected: (bool value) {},
+                  ),
+                  InputChip(
+                    avatar: Icon(Icons.assistant_photo_rounded ),
+                    label: Text('Local'),
+                    onSelected: (bool value) {},
+                  ),
+                  InputChip(
+                    avatar: Icon(Icons.auto_awesome_rounded),
+                    label: Text('Vegetarian'),
+                    onSelected: (bool value) {},
+                  ),
+                ],
+              ),// Add TextFormFields and ElevatedButton here.
               TextFormField(
                 // The validator receives the text that the user has entered.
                 validator: (value) {
