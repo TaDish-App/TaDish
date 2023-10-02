@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../components/select_camera_gallery.dart';
 
 /// Displays a list of Gardens.
@@ -49,6 +50,25 @@ class CameraBodyViewState extends State<CameraBodyView> {
                 height: 25,
               ),
               const SelectCameraGallery(),
+              const SizedBox(
+                height: 25,
+              ),
+              RatingBar.builder(
+                initialRating: 3,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {
+                  // TODO Add this to a field that the form can use
+                  print(rating);
+                },
+              ),
               // Add TextFormFields and ElevatedButton here.
               TextFormField(
                 // The validator receives the text that the user has entered.
@@ -70,7 +90,7 @@ class CameraBodyViewState extends State<CameraBodyView> {
                     );
                   }
                 },
-                child: const Text('Submit'),
+                child: const Text('Add Dish'),
               ),
             ],
           ),
