@@ -45,7 +45,10 @@ class CameraBodyViewState extends State<CameraBodyView> {
                   fontSize: 15,
                 ),
               ),
-              SelectCameraGallery(),
+              const SizedBox(
+                height: 25,
+              ),
+              const SelectCameraGallery(),
               // Add TextFormFields and ElevatedButton here.
               TextFormField(
                 // The validator receives the text that the user has entered.
