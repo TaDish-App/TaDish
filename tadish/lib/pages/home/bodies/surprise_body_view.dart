@@ -1,21 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
+import 'dart:async';
 
-import '../../../components/garden_summary_card.dart';
+class SurpriseBodyView extends StatefulWidget {
+  @override
+  _SurpriseBodyViewState createState() => _SurpriseBodyViewState();
+  }
 
-/// Displays a list of Gardens.
-class SurpriseBodyView extends StatelessWidget {
-  const SurpriseBodyView({
-    super.key,
-  });
+class _SurpriseBodyViewState extends State<SurpriseBodyView> {
+  StreamController<int> selected = StreamController<int>();
 
-  final String title = 'Gardens';
+  @override
+  void dispose() {
+    selected.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Text('Surprise Page'),
+    final items = <String>[
+      'HiTEA',
+      'HiTEA',
+      'HiTEA',
+      'HiTEA',
+      'HiTEA',
+      'HiTEA',
+      'TacoBell',
+      'HiTEA',
+    ];
+
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () {
+          setState(() {
+            selected.add(
+              Fortune.randomInt(0, items.length),
+            );
+          });
+        },
+        child: Column(
+          children: [
+            Expanded(
+              child: FortuneWheel(
+                selected: selected.stream,
+                items: [
+                  for (var it in items) FortuneItem(child: Text(it)),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20), // Adjust spacing as needed
+            Text(
+              'Selected Result: $selected',
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }
