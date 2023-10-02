@@ -125,21 +125,30 @@ class CameraBodyViewState extends State<CameraBodyView> {
               const SizedBox(
                 height: 10,
               ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Validate returns true if the form is valid, or false otherwise.
-                    if (_formKey.currentState!.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
-                    }
-                  },
-                  child: const Text('Add Dish'),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly, //Center Row contents horizontally,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).primaryColor.withAlpha(98),
+                       ),
+                    onPressed: () {  },
+                    child: const Text('Add Details'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Validate returns true if the form is valid, or false otherwise.
+                      if (_formKey.currentState!.validate()) {
+                        // If the form is valid, display a snackbar. In the real world,
+                        // you'd often call a server or save the information in a database.
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Processing Data')),
+                        );
+                      }
+                    },
+                    child: const Text('Add Dish'),
+                  ),
+                ],
               )
             ],
           ),
