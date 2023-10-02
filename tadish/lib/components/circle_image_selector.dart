@@ -5,16 +5,16 @@ import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'select_photo_options_screen.dart';
+import 'camera_gallery_choice_modal.dart';
 
-class SelectCameraGallery extends StatefulWidget {
-  const SelectCameraGallery({super.key});
+class CircleImageSelector extends StatefulWidget {
+  const CircleImageSelector({super.key});
 
   @override
-  State<SelectCameraGallery> createState() => _SelectCameraGalleryState();
+  State<CircleImageSelector> createState() => _CircleImageSelectorState();
 }
 
-class _SelectCameraGalleryState extends State<SelectCameraGallery> {
+class _CircleImageSelectorState extends State<CircleImageSelector> {
   File? _image;
 
   @override
@@ -59,7 +59,7 @@ class _SelectCameraGalleryState extends State<SelectCameraGallery> {
             builder: (context, scrollController) {
               return SingleChildScrollView(
                 controller: scrollController,
-                child: SelectPhotoOptionsScreen(
+                child: CameraGalleryChoiceModal(
                   onTap: pickImage,
                 ),
               );

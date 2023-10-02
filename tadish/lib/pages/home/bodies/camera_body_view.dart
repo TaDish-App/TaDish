@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../../../components/select_camera_gallery.dart';
+import '../../../components/circle_image_selector.dart';
 
 /// Displays a list of Gardens.
 /// CameraBodyView
@@ -49,7 +49,7 @@ class CameraBodyViewState extends State<CameraBodyView> {
               const SizedBox(
                 height: 25,
               ),
-              const SelectCameraGallery(),
+              const CircleImageSelector(),
               const SizedBox(
                 height: 25,
               ),
@@ -93,8 +93,27 @@ class CameraBodyViewState extends State<CameraBodyView> {
                     onSelected: (bool value) {},
                   ),
                 ],
-              ),// Add TextFormFields and ElevatedButton here.
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              // TODO Change Textformfields to modals instead, else screen overflow
               TextFormField(
+                decoration: InputDecoration(
+                  hintText: 'Public Notes',
+                  contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  hintText: 'Private Notes',
+                  contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                ),
                 // The validator receives the text that the user has entered.
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -103,19 +122,25 @@ class CameraBodyViewState extends State<CameraBodyView> {
                   return null;
                 },
               ),
-              ElevatedButton(
-                onPressed: () {
-                  // Validate returns true if the form is valid, or false otherwise.
-                  if (_formKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
-                  }
-                },
-                child: const Text('Add Dish'),
+              const SizedBox(
+                height: 10,
               ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (_formKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
+                    }
+                  },
+                  child: const Text('Add Dish'),
+                ),
+              )
             ],
           ),
         )

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 're_usable_select_photo_button.dart';
-// import '/widgets/re_usable_select_photo_button.dart';
+import 'select_photo_option_button.dart';
 
-class SelectPhotoOptionsScreen extends StatelessWidget {
+class CameraGalleryChoiceModal extends StatelessWidget {
   final Function(ImageSource source) onTap;
-  const SelectPhotoOptionsScreen({
+  const CameraGalleryChoiceModal({
     Key? key,
     required this.onTap,
   }) : super(key: key);
@@ -36,7 +35,7 @@ class SelectPhotoOptionsScreen extends StatelessWidget {
             height: 20,
           ),
           Column(children: [
-            SelectPhoto(
+            SelectPhotoOptionButton(
               onTap: () => onTap(ImageSource.gallery),
               icon: Icons.image,
               textLabel: 'Browse Gallery',
@@ -53,7 +52,7 @@ class SelectPhotoOptionsScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            SelectPhoto(
+            SelectPhotoOptionButton(
               onTap: () => onTap(ImageSource.camera),
               icon: Icons.camera_alt_outlined,
               textLabel: 'Use a Camera',

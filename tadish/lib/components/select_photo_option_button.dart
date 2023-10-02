@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SelectPhoto extends StatelessWidget {
+class SelectPhotoOptionButton extends StatelessWidget {
   final String textLabel;
   final IconData icon;
 
   final void Function()? onTap;
 
-  const SelectPhoto({
+  const SelectPhotoOptionButton({
     Key? key,
     required this.textLabel,
     required this.icon,
@@ -32,7 +32,7 @@ class SelectPhoto extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: Colors.black,
+              color: Colors.white,
             ),
             const SizedBox(
               width: 14,
@@ -41,7 +41,7 @@ class SelectPhoto extends StatelessWidget {
               textLabel,
               style: const TextStyle(
                 fontSize: 18,
-                color: Colors.black,
+                color: Colors.white,
               ),
             )
           ],
