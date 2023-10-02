@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 const Color customPrimaryColor = Color(0xFF33241C);
+const Color customDarkBrownColor = Color(0xFF805B4E);
+const Color customLightBrownColor = Color(0xFF9F8177);
 
 final MaterialColor customPrimarySwatch = MaterialColor(
   customPrimaryColor.value,

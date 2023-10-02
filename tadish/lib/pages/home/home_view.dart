@@ -78,7 +78,9 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widget.pages[_selectedIndex]['body'],
+      body: SafeArea(
+        child: widget.pages[_selectedIndex]['body']
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed, // needed when more than 3 items
         items: [
