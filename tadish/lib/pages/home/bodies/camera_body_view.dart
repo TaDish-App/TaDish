@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../components/select_camera_gallery.dart';
 
 /// Displays a list of Gardens.
 /// CameraBodyView
@@ -44,6 +45,7 @@ class CameraBodyViewState extends State<CameraBodyView> {
                   fontSize: 15,
                 ),
               ),
+              SelectCameraGallery(),
               // Add TextFormFields and ElevatedButton here.
               TextFormField(
                 // The validator receives the text that the user has entered.
