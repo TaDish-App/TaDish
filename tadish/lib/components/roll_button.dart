@@ -19,8 +19,8 @@ class RollButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Text('Roll'),
       onPressed: onPressed,
+      child: const Text('Roll'),
     );
   }
 }
@@ -45,7 +45,6 @@ class RollButtonWithPreview extends StatelessWidget {
       direction: Axis.vertical,
       children: [
         RollButton(onPressed: onPressed),
-        Text('Rolled Value: ${items[selected]}'),
       ],
     );
   }

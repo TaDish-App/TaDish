@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../../components/roll_button.dart';
 
 import 'dart:async';
-import 'dart:math';
 import '../../../custom_theme.dart';
 
 class SurpriseBodyView extends HookWidget {
@@ -28,10 +27,36 @@ class SurpriseBodyView extends HookWidget {
     final selectedIndex = useStream(selected.stream, initialData: 0).data ?? 0;
     final isAnimating = useState(false);
 
-    void handleRoll() {
-      selected.add(
-        roll(items.length),
+    // A function to show the results popup
+    void showResultsPopup(String result) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Results'),
+            content: Text('The wheel stopped at $result !'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
       );
+    }
+
+    void handleRoll() {
+      final result = roll(items.length);
+      selected.add(result);
+
+      // Show the results popup when the wheel stops
+      Future.delayed(const Duration(seconds: 3), () {
+        showResultsPopup(items[result]);
+        isAnimating.value = false;
+      });
     }
 
     return Center(
@@ -44,6 +69,7 @@ class SurpriseBodyView extends HookWidget {
               'Spin the Wheel',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 16),
             RollButtonWithPreview(
               selected: selectedIndex,
               items: items,
@@ -56,6 +82,8 @@ class SurpriseBodyView extends HookWidget {
                 onAnimationStart: () => isAnimating.value = true,
                 onAnimationEnd: () => isAnimating.value = false,
                 onFling: handleRoll,
+                animateFirst: false,
+                duration: const Duration(seconds: 3),
                 items: [
                   for (var i = 0; i < items.length; i++)
                     FortuneItem(
