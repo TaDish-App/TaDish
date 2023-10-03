@@ -28,7 +28,7 @@ class HomeView extends StatefulWidget {
     },
     1: {
       'title': const Text('Recommendation'),
-      'body': const RecommendationBodyView(),
+      'body': RecommendationBodyView(),
       'navItem': const BottomNavigationBarItem(
         label: '',
         icon: Icon(Icons.recommend_outlined, size: 40),
