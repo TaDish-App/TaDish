@@ -1,9 +1,7 @@
-import 'dart:math';
-
-import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../../components/circle_image_selector.dart';
+import '../../../../components/star_confetti.dart';
 
 /// Displays a list of Gardens.
 /// CameraBodyView
@@ -23,33 +21,6 @@ class CameraBodyViewState extends State<CameraBodyView> {
   // Note: This is a `GlobalKey<FormState>`,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
-  late final ConfettiController _controllerCenter =
-      ConfettiController(duration: const Duration(seconds: 1));
-
-  /// A custom Path to paint stars.
-  Path drawStar(Size size) {
-    // Method to convert degree to radians
-    double degToRad(double deg) => deg * (pi / 180.0);
-
-    const numberOfPoints = 5;
-    final halfWidth = size.width / 2;
-    final externalRadius = halfWidth;
-    final internalRadius = halfWidth / 2.5;
-    final degreesPerStep = degToRad(360 / numberOfPoints);
-    final halfDegreesPerStep = degreesPerStep / 2;
-    final path = Path();
-    final fullAngle = degToRad(360);
-    path.moveTo(size.width, halfWidth);
-
-    for (double step = 0; step < fullAngle; step += degreesPerStep) {
-      path.lineTo(halfWidth + externalRadius * cos(step),
-          halfWidth + externalRadius * sin(step));
-      path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
-          halfWidth + internalRadius * sin(step + halfDegreesPerStep));
-    }
-    path.close();
-    return path;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,14 +60,13 @@ class CameraBodyViewState extends State<CameraBodyView> {
                 direction: Axis.horizontal,
                 allowHalfRating: true,
                 itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                 itemBuilder: (context, _) => const Icon(
                   Icons.star,
                   color: Colors.amber,
                 ),
                 onRatingUpdate: (rating) {
                   // TODO Add this to a field that the form can use
-                  print(rating);
                 },
               ),
               const SizedBox(
@@ -108,20 +78,20 @@ class CameraBodyViewState extends State<CameraBodyView> {
                 // crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
                 children: [
                   InputChip(
-                    avatar: Icon(Icons.energy_savings_leaf),
-                    label: Text('Vegan'),
+                    avatar: const Icon(Icons.energy_savings_leaf),
+                    label: const Text('Vegan'),
                     onSelected: (bool value) {},
                     backgroundColor:
                         Theme.of(context).primaryColor.withAlpha(95),
                   ),
                   InputChip(
-                    avatar: Icon(Icons.assistant_photo_rounded),
-                    label: Text('Local'),
+                    avatar: const Icon(Icons.assistant_photo_rounded),
+                    label: const Text('Local'),
                     onSelected: (bool value) {},
                   ),
                   InputChip(
-                    avatar: Icon(Icons.auto_awesome_rounded),
-                    label: Text('Vegetarian'),
+                    avatar: const Icon(Icons.auto_awesome_rounded),
+                    label: const Text('Vegetarian'),
                     onSelected: (bool value) {},
                   ),
                 ],
@@ -129,7 +99,7 @@ class CameraBodyViewState extends State<CameraBodyView> {
               const SizedBox(
                 height: 10,
               ),
-              // TODO Change Textformfields to modals instead, else screen overflow
+              // TODO Change TextFormField to modals instead, else screen overflow
               TextFormField(
                 decoration: InputDecoration(
                   hintText: 'Public Notes',
@@ -183,7 +153,6 @@ class CameraBodyViewState extends State<CameraBodyView> {
                           const SnackBar(content: Text('Processing Data')),
                         );
                       }
-                      _controllerCenter.play();
                       showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => Dialog(
@@ -193,27 +162,7 @@ class CameraBodyViewState extends State<CameraBodyView> {
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: ConfettiWidget(
-                                          confettiController: _controllerCenter,
-                                          blastDirectionality:
-                                              BlastDirectionality.explosive,
-                                          // don't specify a direction, blast randomly
-                                          shouldLoop: true,
-                                          // start again as soon as the animation is finished
-                                          colors: [
-                                            Colors.green.withAlpha(90),
-                                            Colors.blue.withAlpha(90),
-                                            Colors.pink.withAlpha(90),
-                                            Colors.orange.withAlpha(90),
-                                            Colors.purple.withAlpha(90)
-                                          ],
-                                          // manually specify the colors to be used
-                                          createParticlePath:
-                                              drawStar, // define a custom shape/path.
-                                        ),
-                                      ),
+                                      const StarConfetti(),
                                       const SizedBox(height: 15),
                                       const Text(
                                           textAlign: TextAlign.center,
@@ -222,7 +171,6 @@ class CameraBodyViewState extends State<CameraBodyView> {
                                       const SizedBox(height: 10),
                                       TextButton(
                                         onPressed: () {
-                                          _controllerCenter.stop();
                                           Navigator.pop(context);
                                         },
                                         child: const Text('Close'),
