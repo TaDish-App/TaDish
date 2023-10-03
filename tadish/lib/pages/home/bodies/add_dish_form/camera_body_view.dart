@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:path/path.dart';
 import '../../../../components/circle_image_selector.dart';
+import '../../../../components/slider.dart';
 import '../../../../components/star_confetti.dart';
 
 /// Displays a list of Gardens.
@@ -140,7 +142,37 @@ class CameraBodyViewState extends State<CameraBodyView> {
                       backgroundColor:
                           Theme.of(context).primaryColor.withAlpha(98),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => const Dialog(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 20),
+                                    "How did it taste to you?"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text("Sweetness"),
+                                SliderExample(color: Colors.blue),
+                                Text("Sourness"),
+                                SliderExample(color: Colors.lime),
+                                Text("Spiciness"),
+                                SliderExample(color: Colors.deepOrange),
+                                Text("Saltiness"),
+                                SliderExample(color: Colors.blueGrey),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                     child: const Text('Add Details'),
                   ),
                   ElevatedButton(
