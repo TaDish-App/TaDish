@@ -6,7 +6,7 @@ class RecommendationBodyView extends StatelessWidget {
   });
   // final image = const AssetImage('assets/images/garden-001.jpg');
 
-  final image = const AssetImage('assets/images/1.jpg');
+  final image = const AssetImage('assets/images/2.jpg');
 
   @override
   Widget build(BuildContext context) {
