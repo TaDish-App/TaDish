@@ -4,7 +4,7 @@ import '../../pages/home/bodies/feed_body_view.dart';
 import 'bodies/recommendation_body_view.dart';
 import 'bodies/profile_body_view.dart';
 import 'bodies/surprise_body_view.dart';
-import 'bodies/camera_body_view.dart';
+import 'bodies/add_dish_form/camera_body_view.dart';
 import '../../custom_theme.dart';
 
 /// Top-level Layout for all of the "Home" related
