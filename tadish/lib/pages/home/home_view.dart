@@ -28,7 +28,7 @@ class HomeView extends StatefulWidget {
     },
     1: {
       'title': const Text('Recommendation'),
-      'body': const RecommendationBodyView(),
+      'body': RecommendationBodyView(),
       'navItem': const BottomNavigationBarItem(
         label: '',
         icon: Icon(Icons.recommend_outlined, size: 40),
@@ -78,7 +78,9 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widget.pages[_selectedIndex]['body'],
+      body: SafeArea(
+        child: widget.pages[_selectedIndex]['body']
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed, // needed when more than 3 items
         items: [
