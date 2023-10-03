@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:radar_chart/radar_chart.dart';
+
+import '../../../components/Tile.dart';
 
 class ProfileBodyView extends StatelessWidget {
   const ProfileBodyView({
@@ -62,7 +65,7 @@ class ProfileBodyView extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +82,7 @@ class ProfileBodyView extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -95,18 +98,20 @@ class ProfileBodyView extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Text("21", style: TextStyle(
-                      fontSize: 20,
-                    )),
+                    Text("21",
+                        style: TextStyle(
+                          fontSize: 20,
+                        )),
                     Text("Friends",
                         style: TextStyle(color: secondaryTextColor)),
                   ],
                 ),
                 Column(
                   children: [
-                    Text("8", style: TextStyle(
-                      fontSize: 20,
-                    )),
+                    Text("8",
+                        style: TextStyle(
+                          fontSize: 20,
+                        )),
                     Text("Special",
                         style: TextStyle(color: secondaryTextColor)),
                   ],
@@ -114,7 +119,7 @@ class ProfileBodyView extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -134,7 +139,73 @@ class ProfileBodyView extends StatelessWidget {
                 ),
               ],
             ),
-
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.all(8),
+                children: <Widget>[
+                  StaggeredGrid.count(
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 4,
+                    children: const [
+                      StaggeredGridTile.count(
+                        crossAxisCellCount: 2,
+                        mainAxisCellCount: 2,
+                        child: Tile(index: 0),
+                      ),
+                      StaggeredGridTile.count(
+                        crossAxisCellCount: 2,
+                        mainAxisCellCount: 1,
+                        child: Tile(index: 1),
+                      ),
+                      StaggeredGridTile.count(
+                        crossAxisCellCount: 1,
+                        mainAxisCellCount: 1,
+                        child: Tile(index: 2),
+                      ),
+                      StaggeredGridTile.count(
+                        crossAxisCellCount: 1,
+                        mainAxisCellCount: 1,
+                        child: Tile(index: 3),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  StaggeredGrid.count(
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 4,
+                    children: const [
+                      StaggeredGridTile.count(
+                        crossAxisCellCount: 2,
+                        mainAxisCellCount: 2,
+                        child: Tile(index: 4),
+                      ),
+                      StaggeredGridTile.count(
+                        crossAxisCellCount: 2,
+                        mainAxisCellCount: 1,
+                        child: Tile(index: 5),
+                      ),
+                      StaggeredGridTile.count(
+                        crossAxisCellCount: 1,
+                        mainAxisCellCount: 1,
+                        child: Tile(index: 6),
+                      ),
+                      StaggeredGridTile.count(
+                        crossAxisCellCount: 1,
+                        mainAxisCellCount: 1,
+                        child: Tile(index: 7),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
