@@ -8,6 +8,7 @@ class ProfileBodyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const secondaryTextColor = Colors.grey;
     return Center(
       child: SafeArea(
         child: Column(
@@ -66,15 +67,74 @@ class ProfileBodyView extends StatelessWidget {
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.person),
-                Text("thuo_hawaii  | "),
-                Icon(Icons.pin_drop_rounded),
-                Text(" Honolulu, HI"),
+                Icon(Icons.person, color: secondaryTextColor),
+                Text("thuo_hawaii  | ",
+                    style: TextStyle(color: secondaryTextColor)),
+                Icon(
+                  Icons.pin_drop_rounded,
+                  color: secondaryTextColor,
+                ),
+                Text(" Honolulu, HI",
+                    style: TextStyle(color: secondaryTextColor)),
               ],
             ),
             const SizedBox(
               height: 10,
             ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    Text("38",
+                        style: TextStyle(
+                          fontSize: 20,
+                        )),
+                    Text("Dishes", style: TextStyle(color: secondaryTextColor)),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text("21", style: TextStyle(
+                      fontSize: 20,
+                    )),
+                    Text("Friends",
+                        style: TextStyle(color: secondaryTextColor)),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text("8", style: TextStyle(
+                      fontSize: 20,
+                    )),
+                    Text("Special",
+                        style: TextStyle(color: secondaryTextColor)),
+                  ],
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TextButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                    ),
+                    child: const Icon(Icons.favorite)),
+                TextButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                  ),
+                  child: const Icon(Icons.history_edu),
+                ),
+              ],
+            ),
+
           ],
         ),
       ),
