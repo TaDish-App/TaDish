@@ -1,21 +1,35 @@
 import 'package:flutter/material.dart';
 
-import '../../../components/garden_summary_card.dart';
-
-/// Displays a list of Gardens.
 class RecommendationBodyView extends StatelessWidget {
   const RecommendationBodyView({
     super.key,
   });
 
-  final String title = 'Gardens';
+  final image = const AssetImage('assets/images/recommend/1.jpg');
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Padding(
         padding: EdgeInsets.all(10.0),
-        child: Text('Recommendation Page'),
+        child: Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 200.0,
+                child: Ink.image(
+                  image: image,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const ListTile(
+                title: Text('FOOD'),
+                subtitle: Text('issa okay'),
+              ),
+            ]
+          )
+        ),
       ),
     );
   }
