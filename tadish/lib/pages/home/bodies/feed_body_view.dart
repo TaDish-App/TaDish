@@ -17,62 +17,81 @@ class FeedBodyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
-      child: ListView(children: [
-        ListTile(
-          leading:
-          Icon(Icons.severe_cold, color: Theme.of(context).primaryColor),
-          title: const Text('Frost Alert: 11/15/22'),
-          subtitle: const Text(
-              'Bellingham Chapter: Predicted overnight low of 37\u00B0 for 11/15/22'),
-          trailing: const NewsBodyItemActions(),
-        ),
-        const Divider(),
-        ListTile(
-          leading: Icon(
-            Icons.image_search,
-            color: Theme.of(context).primaryColor,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 50,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: const [
+                FilterChip(label: Text("Vegan"), onSelected: null),
+                FilterChip(label: Text("Local"), onSelected: null),
+                FilterChip(label: Text("Spicy"), onSelected: null),
+                FilterChip(label: Text("Oldest First"), onSelected: null),
+              ],
+            ),
           ),
-          title: const Text(
-              'Reply to: "Something is eating these bean sprouts..."'),
-          subtitle: const Text(
-              'Alderwood Garden: ... Looks like it could be a rabbit or...'),
-          trailing: const NewsBodyItemActions(),
-        ),
-        const Divider(),
-        ListTile(
-          leading: Icon(Icons.group_add, color: Theme.of(context).primaryColor),
-          title: const Text('New Chapter Members'),
-          subtitle: const Text('Bellingham Chapter: @AsaD, @CyTheGuy.'),
-          trailing: const NewsBodyItemActions(),
-        ),
-        const Divider(),
-        ListTile(
-          leading:
-          Icon(Icons.water_drop, color: Theme.of(context).primaryColor),
-          title: const Text('New seed(s) available'),
-          subtitle: const Text(
-              "Bellingham Chapter: Lettuce (Flashy Trout's Back), Bean (Tanya's Pink Pod), Squash (Zepplin Delicata)"),
-          trailing: const NewsBodyItemActions(),
-        ),
-        const Divider(),
-        ListTile(
-          leading:
-          Icon(Icons.yard_outlined, color: Theme.of(context).primaryColor),
-          title: const Text('First Harvest expected'),
-          subtitle: const Text(
-              'Alderwood Garden: Week of Nov 15: Pepper (Bridge to Paris), Pumpkin (Winter Luxury)'),
-          trailing: const NewsBodyItemActions(),
-        ),
-        const Divider(),
-        ListTile(
-          leading:
-          Icon(Icons.pest_control, color: Theme.of(context).primaryColor),
-          title: const Text('Pest Alert: Aphids'),
-          subtitle: const Text(
-              'Bellingham Chapter: 10 gardens with Aphid pest observations this week'),
-          trailing: const NewsBodyItemActions(),
-        ),
-      ]),
+          Expanded(
+            child: ListView(children: [
+              ListTile(
+                leading: Icon(Icons.severe_cold,
+                    color: Theme.of(context).primaryColor),
+                title: const Text('Frost Alert: 11/15/22'),
+                subtitle: const Text(
+                    'Bellingham Chapter: Predicted overnight low of 37\u00B0 for 11/15/22'),
+                trailing: const NewsBodyItemActions(),
+              ),
+              const Divider(),
+              ListTile(
+                leading: Icon(
+                  Icons.image_search,
+                  color: Theme.of(context).primaryColor,
+                ),
+                title: const Text(
+                    'Reply to: "Something is eating these bean sprouts..."'),
+                subtitle: const Text(
+                    'Alderwood Garden: ... Looks like it could be a rabbit or...'),
+                trailing: const NewsBodyItemActions(),
+              ),
+              const Divider(),
+              ListTile(
+                leading:
+                    Icon(Icons.group_add, color: Theme.of(context).primaryColor),
+                title: const Text('New Chapter Members'),
+                subtitle: const Text('Bellingham Chapter: @AsaD, @CyTheGuy.'),
+                trailing: const NewsBodyItemActions(),
+              ),
+              const Divider(),
+              ListTile(
+                leading:
+                    Icon(Icons.water_drop, color: Theme.of(context).primaryColor),
+                title: const Text('New seed(s) available'),
+                subtitle: const Text(
+                    "Bellingham Chapter: Lettuce (Flashy Trout's Back), Bean (Tanya's Pink Pod), Squash (Zepplin Delicata)"),
+                trailing: const NewsBodyItemActions(),
+              ),
+              const Divider(),
+              ListTile(
+                leading: Icon(Icons.yard_outlined,
+                    color: Theme.of(context).primaryColor),
+                title: const Text('First Harvest expected'),
+                subtitle: const Text(
+                    'Alderwood Garden: Week of Nov 15: Pepper (Bridge to Paris), Pumpkin (Winter Luxury)'),
+                trailing: const NewsBodyItemActions(),
+              ),
+              const Divider(),
+              ListTile(
+                leading: Icon(Icons.pest_control,
+                    color: Theme.of(context).primaryColor),
+                title: const Text('Pest Alert: Aphids'),
+                subtitle: const Text(
+                    'Bellingham Chapter: 10 gardens with Aphid pest observations this week'),
+                trailing: const NewsBodyItemActions(),
+              ),
+            ]),
+          ),
+        ],
+      ),
     );
   }
 }
