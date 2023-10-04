@@ -23,7 +23,7 @@ class HomeView extends StatefulWidget {
       'body': const FeedBodyView(),
       'navItem': const BottomNavigationBarItem(
         label: '',
-        icon: Icon(Icons.feed_outlined, size: 40),
+        icon: Icon(Icons.bookmark, size: 40),
       ),
     },
     1: {
