@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:radar_chart/radar_chart.dart';
+import '../../../components/taste_prefs_radar_chart.dart';
 import '../../../custom_theme.dart';
 
 import '../../../components/Tile.dart';
@@ -37,40 +38,7 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
               height: 20,
             ),
             // Radar Chart for taste prefs
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: const ShapeDecoration(
-                  color: Colors.white,
-                  shape: CircleBorder(
-                      side: BorderSide(
-                    width: 2,
-                    color: Colors.brown,
-                  ))),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  RadarChart(
-                    length: 4,
-                    radius: 40,
-                    // initialAngle: pi / 5,
-                    backgroundColor: Colors.white,
-                    borderStroke: 2,
-                    borderColor: Colors.grey.shade200,
-                    radialStroke: 2,
-                    radialColor: Colors.grey.shade200,
-                    radars: [
-                      RadarTile(
-                        values: const [.95, .54, .2, .87],
-                        borderStroke: 2,
-                        borderColor: Colors.yellow,
-                        backgroundColor: Colors.yellow.withOpacity(0.4),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            const TastePrefsRadarChart(tastePrefsData: [0.9, 0.4, 0.66, 0.95], radius: 40,),
             const SizedBox(
               height: 15,
             ),
@@ -272,3 +240,4 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
     );
   }
 }
+

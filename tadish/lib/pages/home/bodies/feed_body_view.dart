@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../components/dish_row_tile.dart';
 import 'news_body_item_actions.dart';
 import '../../../../pages/sample_feature/sample_item.dart';
 
@@ -32,62 +33,16 @@ class FeedBodyView extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView(children: [
-              ListTile(
-                leading: Icon(Icons.severe_cold,
-                    color: Theme.of(context).primaryColor),
-                title: const Text('Frost Alert: 11/15/22'),
-                subtitle: const Text(
-                    'Bellingham Chapter: Predicted overnight low of 37\u00B0 for 11/15/22'),
-                trailing: const NewsBodyItemActions(),
-              ),
-              const Divider(),
-              ListTile(
-                leading: Icon(
-                  Icons.image_search,
-                  color: Theme.of(context).primaryColor,
-                ),
-                title: const Text(
-                    'Reply to: "Something is eating these bean sprouts..."'),
-                subtitle: const Text(
-                    'Alderwood Garden: ... Looks like it could be a rabbit or...'),
-                trailing: const NewsBodyItemActions(),
-              ),
-              const Divider(),
-              ListTile(
-                leading:
-                    Icon(Icons.group_add, color: Theme.of(context).primaryColor),
-                title: const Text('New Chapter Members'),
-                subtitle: const Text('Bellingham Chapter: @AsaD, @CyTheGuy.'),
-                trailing: const NewsBodyItemActions(),
-              ),
-              const Divider(),
-              ListTile(
-                leading:
-                    Icon(Icons.water_drop, color: Theme.of(context).primaryColor),
-                title: const Text('New seed(s) available'),
-                subtitle: const Text(
-                    "Bellingham Chapter: Lettuce (Flashy Trout's Back), Bean (Tanya's Pink Pod), Squash (Zepplin Delicata)"),
-                trailing: const NewsBodyItemActions(),
-              ),
-              const Divider(),
-              ListTile(
-                leading: Icon(Icons.yard_outlined,
-                    color: Theme.of(context).primaryColor),
-                title: const Text('First Harvest expected'),
-                subtitle: const Text(
-                    'Alderwood Garden: Week of Nov 15: Pepper (Bridge to Paris), Pumpkin (Winter Luxury)'),
-                trailing: const NewsBodyItemActions(),
-              ),
-              const Divider(),
-              ListTile(
-                leading: Icon(Icons.pest_control,
-                    color: Theme.of(context).primaryColor),
-                title: const Text('Pest Alert: Aphids'),
-                subtitle: const Text(
-                    'Bellingham Chapter: 10 gardens with Aphid pest observations this week'),
-                trailing: const NewsBodyItemActions(),
-              ),
+            child: ListView(children: const [
+              DishRowTile(imageUrl: 'assets/images/1.jpg', dishName: 'Kimchi Fried Rice', restaurantName: 'Seoul Tofu House', starRating: 5,),
+              Divider(),
+              DishRowTile(dishName: 'Shrimp Scampi', restaurantName: 'Arancino de Mare', starRating: 4),
+              Divider(),
+              DishRowTile(imageUrl: 'assets/images/2.jpg', dishName: 'Tuna Sushi Rolls', restaurantName: 'Genki Sushi', starRating: 2),
+              Divider(),
+              DishRowTile(imageUrl: 'assets/images/3.jpg', dishName: 'Grilled Cheese', restaurantName: 'Le Ricardo', starRating: 1),
+              Divider(),
+              DishRowTile(imageUrl: 'assets/images/4.jpg', dishName: 'Fried Green Tea Ice Cream', restaurantName: 'California Pizza Kitchen', starRating: 5),
             ]),
           ),
         ],
