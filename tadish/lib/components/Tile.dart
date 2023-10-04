@@ -17,7 +17,7 @@ class Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final child = Container(
-      color: backgroundColor ?? Colors.white,
+      color: backgroundColor ?? Colors.grey.shade200,
       height: extent,
       child: Center(
         child: CircleAvatar(

@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:radar_chart/radar_chart.dart';
+import '../../../custom_theme.dart';
 
 import '../../../components/Tile.dart';
 
-class ProfileBodyView extends StatelessWidget {
+class ProfileBodyView extends StatefulWidget {
   const ProfileBodyView({
     super.key,
   });
 
   @override
+  State<ProfileBodyView> createState() => _ProfileBodyViewState();
+}
+
+class _ProfileBodyViewState extends State<ProfileBodyView> {
+  static Color activeIcon = customPrimarySwatch.withOpacity(0.9);
+  static Color inactiveIcon = customPrimarySwatch.withOpacity(0.5);
+  static Color activeUnderline = customPrimarySwatch.withOpacity(0.15);
+  static Color inactiveUnderline = Colors.transparent;
+  Color favoriteIconColor = activeIcon;
+  Color favoriteUnderline = activeUnderline;
+  Color historyIconColor = inactiveIcon;
+  Color historyUnderline = inactiveUnderline;
+
+  @override
   Widget build(BuildContext context) {
+
+
     const secondaryTextColor = Colors.grey;
     return Center(
       child: SafeArea(
@@ -124,23 +141,66 @@ class ProfileBodyView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                TextButton(
-                    onPressed: () {},
+                Expanded(
+                    child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color:
+                          favoriteUnderline),
+                    ),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      // TODO Change to favorites view if not in favorite view already
+                      setState(() {
+                        if (favoriteUnderline == inactiveUnderline ){
+                          favoriteUnderline = activeUnderline;
+                          favoriteIconColor = activeIcon;
+                          historyIconColor = inactiveIcon;
+                          historyUnderline = inactiveUnderline;
+                        }
+                      });
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                     ),
-                    child: const Icon(Icons.favorite)),
-                TextButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
+                    child: Icon(Icons.favorite,
+                        color: favoriteIconColor),
                   ),
-                  child: const Icon(Icons.history_edu),
-                ),
+                )),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                            width: 1.0,
+                            color:
+                            historyUnderline),
+                      ),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        // TODO Change to history view
+                        setState(() {
+                          if (historyUnderline == inactiveUnderline ){
+                            favoriteUnderline = inactiveUnderline;
+                            favoriteIconColor = inactiveIcon;
+                            historyIconColor = activeIcon;
+                            historyUnderline = activeUnderline;
+                          }
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                      ),
+                      child: Icon(Icons.history_edu,
+                          color: historyIconColor),
+                    ),
+                  ),
+                )
               ],
-            ),
-            const SizedBox(
-              height: 10,
             ),
             Expanded(
               child: ListView(
