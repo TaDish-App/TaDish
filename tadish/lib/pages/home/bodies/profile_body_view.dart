@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:radar_chart/radar_chart.dart';
+import '../../../components/dish_row_tile.dart';
 import '../../../components/taste_prefs_radar_chart.dart';
 import '../../../custom_theme.dart';
 
@@ -24,6 +25,8 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
   Color favoriteUnderline = activeUnderline;
   Color historyIconColor = inactiveIcon;
   Color historyUnderline = inactiveUnderline;
+
+  bool onFavorites = true;
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +132,7 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                           historyIconColor = inactiveIcon;
                           historyUnderline = inactiveUnderline;
                         }
+                        onFavorites = !onFavorites;
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -158,6 +162,7 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                             historyIconColor = activeIcon;
                             historyUnderline = activeUnderline;
                           }
+                          onFavorites = !onFavorites;
                         });
                       },
                       style: ElevatedButton.styleFrom(
@@ -170,7 +175,7 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                 )
               ],
             ),
-            Expanded(
+            (onFavorites ? Expanded(
               child: ListView(
                 padding: const EdgeInsets.all(8),
                 children: <Widget>[
@@ -233,7 +238,19 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                   ),
                 ],
               ),
-            )
+            ) : Expanded(child: ListView(
+              // TODO Change the DishRowTile to remove profile avatar and add a date
+              children: const [DishRowTile(imageUrl: 'assets/images/1.jpg', dishName: 'Kimchi Fried Rice', restaurantName: 'Seoul Tofu House', starRating: 5,),
+                Divider(),
+                DishRowTile(dishName: 'Shrimp Scampi', restaurantName: 'Arancino de Mare', starRating: 4),
+                Divider(),
+                DishRowTile(imageUrl: 'assets/images/2.jpg', dishName: 'Tuna Sushi Rolls', restaurantName: 'Genki Sushi', starRating: 2),
+                Divider(),
+                DishRowTile(imageUrl: 'assets/images/3.jpg', dishName: 'Grilled Cheese', restaurantName: 'Le Ricardo', starRating: 1),
+                Divider(),
+                DishRowTile(imageUrl: 'assets/images/4.jpg', dishName: 'Fried Green Tea Ice Cream', restaurantName: 'California Pizza Kitchen', starRating: 5),
+              ],
+            ))),
           ],
         ),
       ),
