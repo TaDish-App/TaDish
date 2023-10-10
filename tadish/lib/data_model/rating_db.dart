@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 /// The data associated with users.
 class RatingData {
   RatingData({
@@ -39,7 +37,7 @@ class RatingData {
 
 /// Provides access to and operations on all defined users.
 class RatingsDB {
-  final List<RatingData> _news = [
+  final List<RatingData> _ratings = [
     RatingData(
         id: 'rating-001',
         raterID: 'user-001',
@@ -179,17 +177,15 @@ class RatingsDB {
   ];
 
   List<String> getRatingsIDs() {
-    return _news.map((data) => data.id).toList();
+    return _ratings.map((data) => data.id).toList();
   }
 
-  RatingData getRatings(ratingID) {
-    return _news.firstWhere((data) => data.id == ratingID);
+  List<RatingData> getRatingsOfDish(dishID) {
+    return _ratings.where((data) => data.dishID == dishID).toList();
   }
 
-  List<String> getAssociatedRatingsIDs(String userID) {
-    return getRatingsIDs()
-        .where((newsID) => getRatings(newsID).raterID == userID)
-        .toList();
+  List<RatingData> getSingularUserRatings(userID) {
+    return _ratings.where((data) => data.raterID == userID).toList();
   }
 }
 
