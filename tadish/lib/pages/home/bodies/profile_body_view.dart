@@ -233,7 +233,7 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                     ),
                   )
                 : const Expanded(
-                    child: HistoryView(userID: 'user-001'))),
+                    child: HistoryView(userID: 'user-001'))), // TODO dynamically change userid
           ],
         ),
       ),

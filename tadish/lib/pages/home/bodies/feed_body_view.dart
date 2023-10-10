@@ -4,8 +4,11 @@ import '../../../components/dish_row_tile.dart';
 import '../../../data_model/dish_db.dart';
 
 class FeedBodyView extends StatelessWidget {
-
   final List<DishData> dishes = dishDB.getDishRestaurant();
+
+  FeedBodyView({super.key});
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -38,7 +41,7 @@ class FeedBodyView extends StatelessWidget {
                 ) : Container(
                     alignment: Alignment.center,
                     child: ListView(children: dishes.map((dish) =>
-                      DishRowTile(imageUrl: dish.pictures[0], dishName: dish.name, restaurantName: dish.restaurant!.name, starRating: dish.averageStarRating),
+                      DishRowTile(imageUrl: dish.pictures[0], dishName: dish.name, restaurantName: dish.restaurant!.name, starRating: dish.averageStarRating, tastePrefs: [dish.averageSweetness, dish.averageSourness, dish.averageSpiciness, dish.averageSaltiness]),
                     ).toList())
                 ),
           ),
