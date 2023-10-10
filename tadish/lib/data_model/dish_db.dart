@@ -121,6 +121,14 @@ class DishDB {
     }
     return dishes;
   }
+
+  String getDishName(String dishID) {
+    return _dishes.singleWhere((dish) => dish.id == dishID).name;
+  }
+
+  String getDishRestaurantName(String dishID) {
+    return _dishes.singleWhere((dish) => dish.id == dishID).restaurant!.name;
+  }
 }
 
 DishDB dishDB = DishDB();
