@@ -13,11 +13,13 @@ class HistoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<RatingData> ratings = ratingsDB.getSingularUserRatings(userID);
 
-    return ListView(
+    return ratings.isNotEmpty ? ListView(
     // TODO Change the DishRowTile to remove profile avatar and add a date
     children: ratings.map((rating) =>
         DishRowTile(imageUrl: rating.picture, dishName: dishDB.getDishName(rating.dishID), restaurantName: dishDB.getDishRestaurantName(rating.dishID), starRating: rating.starRating, ratingDateTime: rating.createdOn),
-    ).toList()
-                  );
+    ).toList()) : const Center(
+      child: Text("You haven't rated a dish yet!"),
+
+    );
   }
 }
