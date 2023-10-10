@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../components/item_card.dart';
+import '../../../components/dish_card.dart';
+import '../../../data_model/dish_db.dart';
 
 class RecommendationBodyView extends StatefulWidget {
   @override
@@ -7,69 +8,18 @@ class RecommendationBodyView extends StatefulWidget {
 }
 
 class _RecommendationBodyViewState extends State<RecommendationBodyView> {
-  List<Map<String, dynamic>> cards = [
-    {
-      'title': 'Tiramisu',
-      'cost': '7.00',
-      'image': AssetImage('assets/images/1.jpg'),
-      'sweetness': 80.0,
-      'sourness': 00.0,
-      'spiciness': 00.0,
-      'saltiness': 10.0,
-      'people': '2',
-    },
-    {
-      'title': 'Flan',
-      'cost': '5.00',
-      'image': AssetImage('assets/images/2.jpg'),
-      'sweetness': 70.0,
-      'sourness': 10.0,
-      'spiciness': 00.0,
-      'saltiness': 20.0,
-      'people': '6',
-    },
-    {
-      'title': 'Crème Brûlée',
-      'cost': '8.50',
-      'image': AssetImage('assets/images/3.jpg'),
-      'sweetness': 80.0,
-      'sourness': 00.0,
-      'spiciness': 00.0,
-      'saltiness': 20.0,
-      'people': '5',
-    },
-    {
-      'title': 'Panna Cotta',
-      'cost': '12.00',
-      'image': AssetImage('assets/images/4.jpg'),
-      'sweetness': 60.0,
-      'sourness': 00.0,
-      'spiciness': 00.0,
-      'saltiness': 20.0,
-      'people': '1',
-    },
-    {
-      'title': 'Yogurt Parfait',
-      'cost': '4.50',
-      'image': AssetImage('assets/images/5.jpg'),
-      'sweetness': 80.0,
-      'sourness': 00.0,
-      'spiciness': 00.0,
-      'saltiness': 20.0,
-      'people': '100',
-    },// Add more cards as needed
-  ];
+  List<DishData> dishes = dishDB.getDishes();
 
   void _swipeLeft() {
     setState(() {
-      cards.removeAt(0);
+      dishes.removeAt(0);
     });
   }
 
   void _swipeRight() {
     setState(() {
-      saved.add(cards[0]['title']);
-      cards.removeAt(0);
+      saved.add(dishes[0].name);
+      dishes.removeAt(0);
     });
   }
 
@@ -78,7 +28,7 @@ class _RecommendationBodyViewState extends State<RecommendationBodyView> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: cards.isEmpty
+      child: dishes.isEmpty
           ? Container(
             alignment: Alignment.center,
             child: Column (
@@ -91,8 +41,8 @@ class _RecommendationBodyViewState extends State<RecommendationBodyView> {
           )
           : Stack(
         alignment: Alignment.center,
-        children: cards.map((card) {
-          final index = cards.indexOf(card);
+        children: dishes.map((dish) {
+          final index = dishes.indexOf(dish);
           final isFrontCard = index == 0;
 
           return SizedBox(
@@ -114,15 +64,14 @@ class _RecommendationBodyViewState extends State<RecommendationBodyView> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: isFrontCard
-                      ? ItemCard(
-                    title: card['title'],
-                    cost: card['cost'],
-                    image: card['image'],
-                    sweetness: card['sweetness'],
-                    sourness: card['sourness'],
-                    spiciness: card['spiciness'],
-                    saltiness: card['saltiness'],
-                    people: card['people'],
+                      ? DishCard(
+                    name: dish.name,
+                    picture: AssetImage(dish.pictures[0]),
+                    sweetness: dish.averageSweetness,
+                    sourness: dish.averageSourness,
+                    saltiness: dish.averageSaltiness,
+                    spiciness: dish.averageSpiciness,
+                    numRaters: dish.numRaters,
                   )
                       : Container(
                     width: 100.0,
@@ -132,15 +81,14 @@ class _RecommendationBodyViewState extends State<RecommendationBodyView> {
               ),
               childWhenDragging: Container(),
               child: isFrontCard
-                  ? ItemCard(
-                title: card['title'],
-                cost: card['cost'],
-                image: card['image'],
-                sweetness: card['sweetness'],
-                sourness: card['sourness'],
-                spiciness: card['spiciness'],
-                saltiness: card['saltiness'],
-                people: card['people'],
+                  ? DishCard(
+                name: dish.name,
+                picture: AssetImage(dish.pictures[0]),
+                sweetness: dish.averageSweetness,
+                sourness: dish.averageSourness,
+                saltiness: dish.averageSaltiness,
+                spiciness: dish.averageSpiciness,
+                numRaters: dish.numRaters,
               )
                   : Container(
                 width: 100.0,

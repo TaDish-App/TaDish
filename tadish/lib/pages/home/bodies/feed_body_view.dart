@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../components/dish_row_tile.dart';
-import 'news_body_item_actions.dart';
-import '../../../../pages/sample_feature/sample_item.dart';
+import '../../../data_model/dish_db.dart';
 
-/// Displays a list of Gardens.
 class FeedBodyView extends StatelessWidget {
-  const FeedBodyView({
-    super.key,
-    this.items = const [SampleItem(1), SampleItem(2), SampleItem(3)],
-  });
 
-  final List<SampleItem> items;
-  final String title = 'Home';
-
+  final List<DishData> dishes = dishDB.getDishRestaurant();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,20 +25,25 @@ class FeedBodyView extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView(children: const [
-              DishRowTile(imageUrl: 'assets/images/1.jpg', dishName: 'Kimchi Fried Rice', restaurantName: 'Seoul Tofu House', starRating: 5,),
-              Divider(),
-              DishRowTile(dishName: 'Shrimp Scampi', restaurantName: 'Arancino de Mare', starRating: 4),
-              Divider(),
-              DishRowTile(imageUrl: 'assets/images/2.jpg', dishName: 'Tuna Sushi Rolls', restaurantName: 'Genki Sushi', starRating: 2),
-              Divider(),
-              DishRowTile(imageUrl: 'assets/images/3.jpg', dishName: 'Grilled Cheese', restaurantName: 'Le Ricardo', starRating: 1),
-              Divider(),
-              DishRowTile(imageUrl: 'assets/images/4.jpg', dishName: 'Fried Green Tea Ice Cream', restaurantName: 'California Pizza Kitchen', starRating: 5),
-            ]),
+            child: Center(
+                child: dishes.isEmpty
+                    ? Container(
+                  alignment: Alignment.center,
+                  child: const Column (
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('No saved dishes!'),
+                    ]
+                  )
+                ) : Container(
+                    alignment: Alignment.center,
+                    child: ListView(children: dishes.map((dish) =>
+                      DishRowTile(imageUrl: dish.pictures[0], dishName: dish.name, restaurantName: dish.restaurant!.name, starRating: dish.averageStarRating),
+                    ).toList())
+                ),
           ),
-        ],
       ),
+    ])
     );
   }
 }
