@@ -20,7 +20,7 @@ class HomeView extends StatefulWidget {
   final Map pages = {
     0: {
       'title': const Text('Feed'),
-      'body': const FeedBodyView(),
+      'body': FeedBodyView(),
       'navItem': const BottomNavigationBarItem(
         label: '',
         icon: Icon(Icons.bookmark, size: 40),

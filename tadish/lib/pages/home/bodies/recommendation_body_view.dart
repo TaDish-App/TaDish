@@ -67,7 +67,7 @@ class _RecommendationBodyViewState extends State<RecommendationBodyView> {
                       ? DishCard(
                     name: dish.name,
                     cost: dish.cost,
-                    picture: dish.pictures![0],
+                    picture: AssetImage(dish.pictures[0]),
                     sweetness: dish.averageSweetness,
                     sourness: dish.averageSourness,
                     saltiness: dish.averageSaltiness,
@@ -85,7 +85,7 @@ class _RecommendationBodyViewState extends State<RecommendationBodyView> {
                   ? DishCard(
                 name: dish.name,
                 cost: dish.cost,
-                picture: dish.pictures![0],
+                picture: AssetImage(dish.pictures[0]),
                 sweetness: dish.averageSweetness,
                 sourness: dish.averageSourness,
                 saltiness: dish.averageSaltiness,

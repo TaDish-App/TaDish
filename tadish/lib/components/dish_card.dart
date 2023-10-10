@@ -70,11 +70,6 @@ class DishCard extends StatelessWidget {
                   color: Colors.blueGrey,
                   value: saltiness,
                 ),
-                const Text("Saltiness"),
-                InactiveSliderExample(
-                  color: Colors.blueGrey,
-                  value: saltiness,
-                ),
               ],
             ),
           ),
