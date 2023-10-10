@@ -4,7 +4,6 @@ import '../../../components/inactive_slider.dart';
 class DishCard extends StatelessWidget {
   final AssetImage picture;
   final String name;
-  final String cost;
   final double sweetness;
   final double sourness;
   final double spiciness;
@@ -14,7 +13,6 @@ class DishCard extends StatelessWidget {
   const DishCard({super.key,
     required this.picture,
     required this.name,
-    required this.cost,
     required this.sweetness,
     required this.sourness,
     required this.spiciness,
@@ -48,7 +46,6 @@ class DishCard extends StatelessWidget {
                         Text(numRaters),
                       ]
                   ),
-                  subtitle: Text('Total $cost'),
                 ),
                 const Text("Sweetness"),
                 InactiveSliderExample(

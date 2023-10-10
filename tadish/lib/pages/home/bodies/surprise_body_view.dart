@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:tadish/data_model/restaurant_db.dart';
 import '../../../components/roll_button.dart';
 import '../../../../components/star_confetti.dart';
+import '../../../data_model/dish_db.dart';
 
 import 'dart:async';
 import '../../../custom_theme.dart';
@@ -10,16 +12,7 @@ import '../../../custom_theme.dart';
 class SurpriseBodyView extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final items = <String>[
-      'Chong Qing Hot Pot',
-      'Ginza Sushi',
-      'Nicos Pier 38',
-      'Gometei',
-      'Gyu-Kaku',
-      'Ruscello',
-      'Golden Pork',
-      'HiTEA',
-    ];
+    final items = restaurantDB.getRestaurantNames();
 
     final alternatingColors = [
       Colors.lightBlue,
