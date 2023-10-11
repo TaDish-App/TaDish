@@ -1,5 +1,4 @@
 import 'restaurant_db.dart';
-import 'dart:convert';
 
 class DishData {
   DishData(
