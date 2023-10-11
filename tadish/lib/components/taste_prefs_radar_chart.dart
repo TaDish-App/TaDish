@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:radar_chart/radar_chart.dart';
+import 'dart:math';
 
 class TastePrefsRadarChart extends StatelessWidget {
   final List<double> tastePrefsData;
@@ -10,6 +11,8 @@ class TastePrefsRadarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO save color per dish and profile
+    var randColor = Random().nextInt(Colors.primaries.length);
     return Container(
       padding: const EdgeInsets.all(5),
       decoration: const ShapeDecoration(
@@ -36,8 +39,8 @@ class TastePrefsRadarChart extends StatelessWidget {
               RadarTile(
                 values: tastePrefsData,
                 borderStroke: 2,
-                borderColor: Colors.yellow,
-                backgroundColor: Colors.yellow.withOpacity(0.4),
+                borderColor: Colors.primaries[randColor],
+                backgroundColor: Colors.primaries[randColor].withAlpha(40),
               )
             ],
           ),

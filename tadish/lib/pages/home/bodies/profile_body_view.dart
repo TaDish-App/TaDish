@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:radar_chart/radar_chart.dart';
-import '../../../components/dish_row_tile.dart';
+import '../../../components/history_view.dart';
 import '../../../components/taste_prefs_radar_chart.dart';
 import '../../../custom_theme.dart';
 
@@ -30,8 +29,6 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
 
   @override
   Widget build(BuildContext context) {
-
-
     const secondaryTextColor = Colors.grey;
     return Center(
       child: SafeArea(
@@ -41,7 +38,10 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
               height: 20,
             ),
             // Radar Chart for taste prefs
-            const TastePrefsRadarChart(tastePrefsData: [0.9, 0.4, 0.66, 0.95], radius: 40,),
+            const TastePrefsRadarChart(
+              tastePrefsData: [0.9, 0.4, 0.66, 0.95],
+              radius: 40,
+            ),
             const SizedBox(
               height: 15,
             ),
@@ -116,17 +116,14 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                     child: Container(
                   decoration: BoxDecoration(
                     border: Border(
-                      bottom: BorderSide(
-                          width: 1.0,
-                          color:
-                          favoriteUnderline),
+                      bottom: BorderSide(width: 1.0, color: favoriteUnderline),
                     ),
                   ),
                   child: TextButton(
                     onPressed: () {
                       // TODO Change to favorites view if not in favorite view already
                       setState(() {
-                        if (favoriteUnderline == inactiveUnderline ){
+                        if (favoriteUnderline == inactiveUnderline) {
                           favoriteUnderline = activeUnderline;
                           favoriteIconColor = activeIcon;
                           historyIconColor = inactiveIcon;
@@ -138,25 +135,21 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                     ),
-                    child: Icon(Icons.favorite,
-                        color: favoriteIconColor),
+                    child: Icon(Icons.favorite, color: favoriteIconColor),
                   ),
                 )),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(
-                            width: 1.0,
-                            color:
-                            historyUnderline),
+                        bottom: BorderSide(width: 1.0, color: historyUnderline),
                       ),
                     ),
                     child: TextButton(
                       onPressed: () {
                         // TODO Change to history view
                         setState(() {
-                          if (historyUnderline == inactiveUnderline ){
+                          if (historyUnderline == inactiveUnderline) {
                             favoriteUnderline = inactiveUnderline;
                             favoriteIconColor = inactiveIcon;
                             historyIconColor = activeIcon;
@@ -168,89 +161,79 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                       ),
-                      child: Icon(Icons.history_edu,
-                          color: historyIconColor),
+                      child: Icon(Icons.history_edu, color: historyIconColor),
                     ),
                   ),
                 )
               ],
             ),
-            (onFavorites ? Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(8),
-                children: <Widget>[
-                  StaggeredGrid.count(
-                    crossAxisCount: 4,
-                    mainAxisSpacing: 4,
-                    crossAxisSpacing: 4,
-                    children: const [
-                      StaggeredGridTile.count(
-                        crossAxisCellCount: 2,
-                        mainAxisCellCount: 2,
-                        child: Tile(index: 0),
-                      ),
-                      StaggeredGridTile.count(
-                        crossAxisCellCount: 2,
-                        mainAxisCellCount: 1,
-                        child: Tile(index: 1),
-                      ),
-                      StaggeredGridTile.count(
-                        crossAxisCellCount: 1,
-                        mainAxisCellCount: 1,
-                        child: Tile(index: 2),
-                      ),
-                      StaggeredGridTile.count(
-                        crossAxisCellCount: 1,
-                        mainAxisCellCount: 1,
-                        child: Tile(index: 3),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  StaggeredGrid.count(
-                    crossAxisCount: 4,
-                    mainAxisSpacing: 4,
-                    crossAxisSpacing: 4,
-                    children: const [
-                      StaggeredGridTile.count(
-                        crossAxisCellCount: 2,
-                        mainAxisCellCount: 2,
-                        child: Tile(index: 4),
-                      ),
-                      StaggeredGridTile.count(
-                        crossAxisCellCount: 2,
-                        mainAxisCellCount: 1,
-                        child: Tile(index: 5),
-                      ),
-                      StaggeredGridTile.count(
-                        crossAxisCellCount: 1,
-                        mainAxisCellCount: 1,
-                        child: Tile(index: 6),
-                      ),
-                      StaggeredGridTile.count(
-                        crossAxisCellCount: 1,
-                        mainAxisCellCount: 1,
-                        child: Tile(index: 7),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ) : Expanded(child: ListView(
-              // TODO Change the DishRowTile to remove profile avatar and add a date
-              children: const [DishRowTile(imageUrl: 'assets/images/1.jpg', dishName: 'Kimchi Fried Rice', restaurantName: 'Seoul Tofu House', starRating: 5,),
-                Divider(),
-                DishRowTile(dishName: 'Shrimp Scampi', restaurantName: 'Arancino de Mare', starRating: 4),
-                Divider(),
-                DishRowTile(imageUrl: 'assets/images/2.jpg', dishName: 'Tuna Sushi Rolls', restaurantName: 'Genki Sushi', starRating: 2),
-                Divider(),
-                DishRowTile(imageUrl: 'assets/images/3.jpg', dishName: 'Grilled Cheese', restaurantName: 'Le Ricardo', starRating: 1),
-                Divider(),
-                DishRowTile(imageUrl: 'assets/images/4.jpg', dishName: 'Fried Green Tea Ice Cream', restaurantName: 'California Pizza Kitchen', starRating: 5),
-              ],
-            ))),
+            (onFavorites
+                ? Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.all(8),
+                      children: <Widget>[
+                        StaggeredGrid.count(
+                          crossAxisCount: 4,
+                          mainAxisSpacing: 4,
+                          crossAxisSpacing: 4,
+                          children: const [
+                            StaggeredGridTile.count(
+                              crossAxisCellCount: 2,
+                              mainAxisCellCount: 2,
+                              child: Tile(index: 0),
+                            ),
+                            StaggeredGridTile.count(
+                              crossAxisCellCount: 2,
+                              mainAxisCellCount: 1,
+                              child: Tile(index: 1),
+                            ),
+                            StaggeredGridTile.count(
+                              crossAxisCellCount: 1,
+                              mainAxisCellCount: 1,
+                              child: Tile(index: 2),
+                            ),
+                            StaggeredGridTile.count(
+                              crossAxisCellCount: 1,
+                              mainAxisCellCount: 1,
+                              child: Tile(index: 3),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        StaggeredGrid.count(
+                          crossAxisCount: 4,
+                          mainAxisSpacing: 4,
+                          crossAxisSpacing: 4,
+                          children: const [
+                            StaggeredGridTile.count(
+                              crossAxisCellCount: 2,
+                              mainAxisCellCount: 2,
+                              child: Tile(index: 4),
+                            ),
+                            StaggeredGridTile.count(
+                              crossAxisCellCount: 2,
+                              mainAxisCellCount: 1,
+                              child: Tile(index: 5),
+                            ),
+                            StaggeredGridTile.count(
+                              crossAxisCellCount: 1,
+                              mainAxisCellCount: 1,
+                              child: Tile(index: 6),
+                            ),
+                            StaggeredGridTile.count(
+                              crossAxisCellCount: 1,
+                              mainAxisCellCount: 1,
+                              child: Tile(index: 7),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                : const Expanded(
+                    child: HistoryView(userID: 'user-001'))), // TODO dynamically change userid
           ],
         ),
       ),
