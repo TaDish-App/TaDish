@@ -7,6 +7,7 @@ class UserData {
         List<double>? tastePreference,
         List<String>? friendsIDList,
         List<String>? savedDishesID,
+        int? taggedDishes,
         this.geolocation,
         required this.role,
         String? gender,
@@ -20,7 +21,9 @@ class UserData {
         savedDishesID = savedDishesID ?? [],
         gender = gender ?? "Prefer not to respond",
         createdOn = createdOn ?? DateTime.now(),
+        taggedDishes = taggedDishes ?? 0,
         updatedOn = updatedOn ?? DateTime.now();
+
     String id;
     String name;
     String username;
@@ -36,6 +39,7 @@ class UserData {
     DateTime createdOn;
     DateTime updatedOn;
     bool isActive;
+    int taggedDishes;
 
 }
 
@@ -54,6 +58,7 @@ class UserDB {
       gender : 'Prefer not to respond',
       age : 100,
       ethnicity : 'Prefer not to respond',
+      taggedDishes : 10,
     ),
     UserData(
         id : 'user-001',
@@ -68,6 +73,7 @@ class UserDB {
         gender : 'M',
         age : 21,
         ethnicity : 'Asian',
+        taggedDishes : 14,
     ),
     UserData(
       id : 'user-002',
@@ -82,6 +88,7 @@ class UserDB {
       gender : 'F',
       age : 21,
       ethnicity : 'Asian',
+      taggedDishes : 12,
     ),
     UserData(
       id : 'user-003',
@@ -96,6 +103,7 @@ class UserDB {
       gender : 'M',
       age : 24,
       ethnicity : 'Black or African American,',
+      taggedDishes : 6,
     ),
     UserData(
       id : 'user-004',
@@ -110,6 +118,7 @@ class UserDB {
       gender : 'F',
       age : 19,
       ethnicity : 'White',
+      taggedDishes : 5,
     ),
   ];
 
@@ -128,7 +137,7 @@ class UserDB {
 
 }
 
-UserDB dishDB = UserDB();
+UserDB usersDB = UserDB();
 
 /// The currently logged in user.
-String currentUserID = 'user-001';
+String currentUserID = 'user-002';

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:tadish/data_model/rating_db.dart';
 import '../../../components/history_view.dart';
 import '../../../components/taste_prefs_radar_chart.dart';
 import '../../../custom_theme.dart';
 
 import '../../../components/Tile.dart';
+import '../../../data_model/user_db.dart';
 
 class ProfileBodyView extends StatefulWidget {
   const ProfileBodyView({
@@ -30,6 +32,8 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
   @override
   Widget build(BuildContext context) {
     const secondaryTextColor = Colors.grey;
+    UserData currentUser = UserDB().getUser(currentUserID);
+
     return Center(
       child: SafeArea(
         child: Column(
@@ -38,16 +42,16 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
               height: 20,
             ),
             // Radar Chart for taste prefs
-            const TastePrefsRadarChart(
-              tastePrefsData: [0.9, 0.4, 0.66, 0.95],
+            TastePrefsRadarChart(
+              tastePrefsData: currentUser.tastePreference,
               radius: 40,
             ),
             const SizedBox(
               height: 15,
             ),
-            const Text(
-              "Timothy Huo",
-              style: TextStyle(
+            Text(
+              currentUser.name,
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 25,
               ),
@@ -55,52 +59,52 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
             const SizedBox(
               height: 20,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.person, color: secondaryTextColor),
-                Text("thuo_hawaii  | ",
-                    style: TextStyle(color: secondaryTextColor)),
-                Icon(
+                const Icon(Icons.person, color: secondaryTextColor),
+                Text("${currentUser.username}  | ",
+                    style: const TextStyle(color: secondaryTextColor)),
+                const Icon(
                   Icons.pin_drop_rounded,
                   color: secondaryTextColor,
                 ),
-                Text(" Honolulu, HI",
-                    style: TextStyle(color: secondaryTextColor)),
+                Text(" ${currentUser.geolocation}",
+                    style: const TextStyle(color: secondaryTextColor)),
               ],
             ),
             const SizedBox(
               height: 20,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
-                    Text("38",
-                        style: TextStyle(
+                    Text(ratingsDB.getSingularUserRatings(currentUserID).length.toString(),
+                        style: const TextStyle(
                           fontSize: 20,
                         )),
-                    Text("Dishes", style: TextStyle(color: secondaryTextColor)),
+                    const Text("Ratings", style: TextStyle(color: secondaryTextColor)),
                   ],
                 ),
                 Column(
                   children: [
-                    Text("21",
-                        style: TextStyle(
+                    Text(usersDB.getFriends(currentUserID).length.toString(),
+                        style: const TextStyle(
                           fontSize: 20,
                         )),
-                    Text("Friends",
+                    const Text("Friends",
                         style: TextStyle(color: secondaryTextColor)),
                   ],
                 ),
                 Column(
                   children: [
-                    Text("8",
-                        style: TextStyle(
+                    Text(usersDB.getUser(currentUserID).taggedDishes.toString(),
+                        style: const TextStyle(
                           fontSize: 20,
                         )),
-                    Text("Special",
+                    const Text("Special",
                         style: TextStyle(color: secondaryTextColor)),
                   ],
                 )
@@ -232,8 +236,8 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                       ],
                     ),
                   )
-                : const Expanded(
-                    child: HistoryView(userID: 'user-001'))), // TODO dynamically change userid
+                : Expanded(
+                    child: HistoryView(userID: currentUserID))), // TODO dynamically change userid
           ],
         ),
       ),
