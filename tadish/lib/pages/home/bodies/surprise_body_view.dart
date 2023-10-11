@@ -12,7 +12,6 @@ import 'dart:async';
 class SurpriseBodyView extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    const secondaryTextColor = Colors.grey;
     final items = restaurantDB.getRestaurantNames();
 
     final alternatingColors = [
@@ -56,48 +55,88 @@ class SurpriseBodyView extends HookWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('FriendsList'),
-            content: const Column(
+            title: const Row(
               children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                Text('FriendsList'),
+                Icon(Icons.emoji_people),
+                Text('2'),
+              ],
+            ),
+            content: SingleChildScrollView(
+              child: Container(
+                width: 400,
+                child: const Column(
                   children: [
-                    // Radar Chart for taste prefs
-                    TastePrefsRadarChart(tastePrefsData: [0.9, 0.4, 0.66, 0.95], radius: 40,),
                     SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      "Timothy Huo",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // Radar Chart for taste prefs
+                        TastePrefsRadarChart(tastePrefsData: [0.9, 0.4, 0.66, 0.95], radius: 20,),
+                        Text(
+                          "Timothy Huo",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Icon(Icons.person, color: customPrimaryColor),
+                      ],
                     ),
-                    Icon(Icons.person, color: customPrimaryColor),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.person, color: secondaryTextColor),
-                    Text("thuo_hawaii  | ",
-                        style: TextStyle(color: secondaryTextColor)),
-                    Icon(
-                      Icons.pin_drop_rounded,
-                      color: secondaryTextColor,
+                    SizedBox(
+                      height: 5,
                     ),
-                    Text(" Honolulu, HI",
-                        style: TextStyle(color: secondaryTextColor)),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Divider(
+                      color: Colors.black,
+                      thickness: 1,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // Radar Chart for taste prefs
+                        TastePrefsRadarChart(tastePrefsData: [0.9, 0.4, 0.66, 0.95], radius: 20,),
+                        Text(
+                          "Timothy Huo",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Icon(Icons.add_circle_outline, color: customPrimaryColor),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // Radar Chart for taste prefs
+                        TastePrefsRadarChart(tastePrefsData: [0.9, 0.4, 0.66, 0.95], radius: 20,),
+                        Text(
+                          "Timothy Huo",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Icon(Icons.remove_circle_outline, color: customPrimaryColor),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
                   ],
-                ),
-              ],
+                )
+              )
             ),
             actions: <Widget>[
               TextButton(
