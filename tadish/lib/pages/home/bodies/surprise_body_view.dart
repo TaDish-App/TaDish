@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:tadish/custom_theme.dart';
 import 'package:tadish/data_model/restaurant_db.dart';
 import '../../../components/roll_button.dart';
 import '../../../../components/star_confetti.dart';
-import '../../../data_model/dish_db.dart';
+import '../../../components/taste_prefs_radar_chart.dart';
 
 import 'dart:async';
-import '../../../custom_theme.dart';
 
 class SurpriseBodyView extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    const secondaryTextColor = Colors.grey;
     final items = restaurantDB.getRestaurantNames();
 
     final alternatingColors = [
@@ -25,6 +26,7 @@ class SurpriseBodyView extends HookWidget {
 
     final selectedIndex = useStream(selected.stream, initialData: 0).data ?? 0;
     final isAnimating = useState(false);
+    final showFriends = useState(false);
 
     // A function to show the results popup
     void showResultsPopup(String result) {
@@ -42,6 +44,68 @@ class SurpriseBodyView extends HookWidget {
                 },
               ),
               const StarConfetti(),
+            ],
+          );
+        },
+      );
+    }
+
+    // A function to show the results popup
+    void showFriendsListPopup() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('FriendsList'),
+            content: const Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    // Radar Chart for taste prefs
+                    TastePrefsRadarChart(tastePrefsData: [0.9, 0.4, 0.66, 0.95], radius: 40,),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "Timothy Huo",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    Icon(Icons.person, color: customPrimaryColor),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.person, color: secondaryTextColor),
+                    Text("thuo_hawaii  | ",
+                        style: TextStyle(color: secondaryTextColor)),
+                    Icon(
+                      Icons.pin_drop_rounded,
+                      color: secondaryTextColor,
+                    ),
+                    Text(" Honolulu, HI",
+                        style: TextStyle(color: secondaryTextColor)),
+                  ],
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
             ],
           );
         },
@@ -75,6 +139,14 @@ class SurpriseBodyView extends HookWidget {
               const Text(
                 'Spin the Wheel',
                 style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () {
+                  showFriends.value = true;
+                  showFriendsListPopup();
+                },
+                child: const Text('FriendsList'),
               ),
               const SizedBox(height: 8),
               RollButtonWithPreview(
