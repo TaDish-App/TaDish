@@ -140,4 +140,4 @@ class UserDB {
 UserDB usersDB = UserDB();
 
 /// The currently logged in user.
-String currentUserID = 'user-002';
+String currentUserID = 'user-001';
