@@ -6,13 +6,17 @@ import 'package:tadish/data_model/restaurant_db.dart';
 import '../../../components/roll_button.dart';
 import '../../../../components/star_confetti.dart';
 import '../../../components/taste_prefs_radar_chart.dart';
+import '../../../components/friends_list_row.dart';
 
 import 'dart:async';
+import '../../../data_model/user_db.dart';
 
 class SurpriseBodyView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final items = restaurantDB.getRestaurantNames();
+    UserData currentUser = UserDB().getUser(currentUserID);
+    List<UserData?> friendsList = UserDB().getFriends(currentUserID);
 
     final alternatingColors = [
       Colors.lightBlue,
@@ -59,81 +63,74 @@ class SurpriseBodyView extends HookWidget {
               children: [
                 Text('FriendsList'),
                 Icon(Icons.emoji_people),
-                Text('2'),
+                Text('1'),
               ],
             ),
             content: SingleChildScrollView(
               child: Container(
                 width: 400,
-                child: const Column(
+                child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    FriendsListRow(name: currentUser.name, tastePreference: currentUser.tastePreference, icon: const Icon(Icons.person)),
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        // Radar Chart for taste prefs
-                        TastePrefsRadarChart(tastePrefsData: [0.9, 0.4, 0.66, 0.95], radius: 20,),
-                        Text(
-                          "Timothy Huo",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                        const Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Add a friend',
+                            ),
                           ),
                         ),
-                        Icon(Icons.person, color: customPrimaryColor),
+                        TextButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Adding a friend'),
+                              ),
+                            );
+                          },
+                          child: const Text('Add'),
+                        ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Divider(
+                    const Divider(
                       color: Colors.black,
                       thickness: 1,
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        // Radar Chart for taste prefs
-                        TastePrefsRadarChart(tastePrefsData: [0.9, 0.4, 0.66, 0.95], radius: 20,),
-                        Text(
-                          "Timothy Huo",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                        Icon(Icons.add_circle_outline, color: customPrimaryColor),
-                      ],
-                    ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    Column(
                       children: [
-                        // Radar Chart for taste prefs
-                        TastePrefsRadarChart(tastePrefsData: [0.9, 0.4, 0.66, 0.95], radius: 20,),
-                        Text(
-                          "Timothy Huo",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                        friendsList.isEmpty
+                            ? Container(
+                          alignment: Alignment.center,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('No friends'),
+                            ],
                           ),
+                        )
+                            : Container(
+                          height: 200,
+                          child: ListView(
+                            children: friendsList.map((friend) =>
+                                FriendsListRow(name: friend!.name, tastePreference: friend.tastePreference,  icon: const Icon(Icons.add_outlined)),
+                            ).toList(),
+                          )
                         ),
-                        Icon(Icons.remove_circle_outline, color: customPrimaryColor),
                       ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    )
                   ],
                 )
               )
