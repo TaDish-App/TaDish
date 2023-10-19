@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../components/taste_prefs_radar_chart.dart';
-import 'package:tadish/custom_theme.dart';
 
 class FriendsListRow extends StatelessWidget {
   final String name;

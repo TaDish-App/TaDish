@@ -135,6 +135,13 @@
             </list>
           </value>
         </entry>
+        <entry key="flutter_riverpod">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_riverpod-2.4.4/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="flutter_staggered_grid_view">
           <value>
             <list>
@@ -317,6 +324,13 @@
             </list>
           </value>
         </entry>
+        <entry key="riverpod">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/riverpod-2.4.4/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="sky_engine">
           <value>
             <list>
@@ -335,6 +349,13 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/stack_trace-1.11.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="state_notifier">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/state_notifier-1.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -408,6 +429,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_lints-2.0.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.16/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_rating_bar-4.0.1/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_riverpod-2.4.4/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_staggered_grid_view-0.7.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/http-1.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib" />
@@ -432,8 +454,10 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.6/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/quiver-3.2.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/radar_chart-2.1.0/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/riverpod-2.4.4/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/source_span-1.10.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/stack_trace-1.11.0/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/state_notifier-1.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/stream_channel-2.1.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/string_scanner-1.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/term_glyph-1.2.1/lib" />

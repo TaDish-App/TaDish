@@ -12,6 +12,7 @@ import 'dart:async';
 import '../../../data_model/user_db.dart';
 
 class SurpriseBodyView extends HookWidget {
+
   @override
   Widget build(BuildContext context) {
     final items = restaurantDB.getRestaurantNames();

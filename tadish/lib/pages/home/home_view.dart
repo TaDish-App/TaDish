@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../components/drawer_view.dart';
 import '../../pages/home/bodies/feed_body_view.dart';
 import 'bodies/recommendation_body_view.dart';
 import 'bodies/profile_body_view.dart';
@@ -78,9 +79,11 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: widget.pages[_selectedIndex]['body']
+      drawer: const DrawerView(),
+      appBar: AppBar(
+        title: const Text('Home'),
       ),
+      body: widget.pages[_selectedIndex]['body'],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed, // needed when more than 3 items
         items: [

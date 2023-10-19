@@ -8,7 +8,6 @@ class FeedBodyView extends StatelessWidget {
 
   FeedBodyView({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(

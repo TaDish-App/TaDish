@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-
 import 'pages/signin/signin_view.dart';
 import 'pages/signup/signup_view.dart';
 import 'pages/home/home_view.dart';
 import 'pages/landing/landing_view.dart';
+import 'pages/feed/feed_view.dart';
+import 'pages/camera/camera_view.dart';
+import 'pages/recommendation/recommendation_view.dart';
+import 'pages/surprise/surprise_view.dart';
+import 'pages/profile/profile_view.dart';
+import 'pages/home/bodies/add_dish_form/camera_body_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 import 'custom_theme.dart';
+
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -46,6 +52,16 @@ class MyApp extends StatelessWidget {
                     return const SigninView();
                   case SignupView.routeName:
                     return const SignupView();
+                  case FeedView.routeName:
+                    return FeedView();
+                  case ProfileView.routeName:
+                    return ProfileView();
+                  case RecommendationView.routeName:
+                    return RecommendationView();
+                  case SurpriseView.routeName:
+                    return SurpriseView();
+                  case CameraView.routeName:
+                    return CameraView();
                   default:
                     return const SigninView();
                 }
