@@ -8,7 +8,7 @@ import 'pages/camera/camera_view.dart';
 import 'pages/recommendation/recommendation_view.dart';
 import 'pages/surprise/surprise_view.dart';
 import 'pages/profile/profile_view.dart';
-import 'pages/home/bodies/add_dish_form/camera_body_view.dart';
+import 'pages/friends_list/friends_list_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 import 'custom_theme.dart';
@@ -62,6 +62,8 @@ class MyApp extends StatelessWidget {
                     return SurpriseView();
                   case CameraView.routeName:
                     return CameraView();
+                  case FriendsListView.routeName:
+                    return FriendsListView();
                   default:
                     return const SigninView();
                 }

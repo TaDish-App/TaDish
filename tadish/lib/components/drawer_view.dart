@@ -7,6 +7,7 @@ import '../pages/profile/profile_view.dart';
 import '../pages/surprise/surprise_view.dart';
 import '../pages/home/home_view.dart';
 import '../pages/camera/camera_view.dart';
+import '../pages/friends_list/friends_list_view.dart';
 
 class DrawerView extends StatelessWidget {
   const DrawerView({Key? key}) : super(key: key);
@@ -49,6 +50,13 @@ class DrawerView extends StatelessWidget {
             title: const Text('Surprise'),
             onTap: () {
               Navigator.pushReplacementNamed(context, SurpriseView.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.person_outline),
+            title: const Text('Friends List'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, FriendsListView.routeName);
             },
           ),
           ListTile(

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:tadish/custom_theme.dart';
 import 'package:tadish/data_model/restaurant_db.dart';
 import '../../../components/roll_button.dart';
 import '../../../../components/star_confetti.dart';
-import '../../../components/taste_prefs_radar_chart.dart';
 import '../../../components/friends_list_row.dart';
 
 import 'dart:async';
