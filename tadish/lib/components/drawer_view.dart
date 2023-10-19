@@ -68,17 +68,17 @@ class DrawerView extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text('Sign out'),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, 'bad page');
-            },
-          ),
-          ListTile(
             leading: const Icon(Icons.settings),
             title: const Text('Settings'),
             onTap: () {
               Navigator.pushReplacementNamed(context, SettingsView.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Sign out'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, 'bad page');
             },
           ),
         ],
