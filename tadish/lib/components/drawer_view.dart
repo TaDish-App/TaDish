@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tadish/pages/home/bodies/add_dish_form/camera_body_view.dart';
+
 import 'package:tadish/pages/recommendation/recommendation_view.dart';
 
 import '../pages/feed/feed_view.dart';
@@ -8,6 +8,7 @@ import '../pages/surprise/surprise_view.dart';
 import '../pages/home/home_view.dart';
 import '../pages/camera/camera_view.dart';
 import '../pages/friends_list/friends_list_view.dart';
+import '../settings/settings_view.dart';
 
 class DrawerView extends StatelessWidget {
   const DrawerView({Key? key}) : super(key: key);
@@ -71,6 +72,13 @@ class DrawerView extends StatelessWidget {
             title: const Text('Sign out'),
             onTap: () {
               Navigator.pushReplacementNamed(context, 'bad page');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('Settings'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, SettingsView.routeName);
             },
           ),
         ],

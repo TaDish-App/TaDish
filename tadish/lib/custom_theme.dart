@@ -30,3 +30,10 @@ final ThemeData customTheme = ThemeData(
   //   headlineSmall: TextStyle(color: Colors.white),
   // ),
 );
+
+// final ThemeData customDarkTheme = ThemeData(
+//   primarySwatch: customPrimarySwatch,
+//   secondaryHeaderColor: Colors.black,
+// );
+
+const customDarkTheme = ThemeMode.dark;

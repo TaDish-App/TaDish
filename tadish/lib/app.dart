@@ -11,7 +11,7 @@ import 'pages/profile/profile_view.dart';
 import 'pages/friends_list/friends_list_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
-import 'custom_theme.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 
 
 /// The Widget that configures your application.
@@ -29,12 +29,13 @@ class MyApp extends StatelessWidget {
     //
     // The ListenableBuilder Widget listens to the SettingsController for changes.
     // Whenever the user updates their settings, the MaterialApp is rebuilt.
-    return ListenableBuilder(
-      listenable: settingsController,
+    return AnimatedBuilder(
+      animation: settingsController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
-          theme: customTheme,
-
+          theme: FlexThemeData.light(scheme: FlexScheme.espresso),
+          darkTheme: FlexThemeData.dark(scheme: FlexScheme.espresso),
+          themeMode: settingsController.themeMode,
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
           onGenerateRoute: (RouteSettings routeSettings) {
