@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:tadish/data_model/restaurant_db.dart';
 import '../../../components/roll_button.dart';
 import '../../../../components/star_confetti.dart';
@@ -9,13 +9,24 @@ import '../../../components/friends_list_row.dart';
 import 'dart:async';
 import '../../../data_model/user_db.dart';
 
-class SurpriseBodyView extends HookWidget {
+final selectedStreamProvider = StreamProvider<int>((ref) {
+  // You can initialize the stream here with an initial value if needed.
+  final controller = StreamController<int>.broadcast();
+  controller.add(0); // Initialize with 0 or any other initial value.
+  return controller.stream;
+});
 
+final isAnimatingProvider = StateProvider<bool>((ref) => false);
+final showFriendsProvider = StateProvider<bool>((ref) => false);
+
+class SurpriseBodyView extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final String currentUserID = ref.watch(currentUserIDProvider);
+    final UserDB userDB = ref.watch(userDBProvider);
     final items = restaurantDB.getRestaurantNames();
-    UserData currentUser = UserDB().getUser(currentUserID);
-    List<UserData?> friendsList = UserDB().getFriends(currentUserID);
+    UserData currentUser = userDB.getUser(currentUserID);
+    List<UserData?> friendsList = userDB.getFriends(currentUserID);
 
     final alternatingColors = [
       Colors.lightBlue,
@@ -24,11 +35,9 @@ class SurpriseBodyView extends HookWidget {
       Colors.yellow
     ];
 
-    StreamController<int> selected = useStreamController<int>();
-
-    final selectedIndex = useStream(selected.stream, initialData: 0).data ?? 0;
-    final isAnimating = useState(false);
-    final showFriends = useState(false);
+    final selectedStream = ref.watch(selectedStreamProvider);
+    final isAnimating = ref.watch(isAnimatingProvider);
+    final showFriends = ref.watch(showFriendsProvider);
 
     // A function to show the results popup
     void showResultsPopup(String result) {
@@ -66,73 +75,73 @@ class SurpriseBodyView extends HookWidget {
               ],
             ),
             content: SingleChildScrollView(
-              child: Container(
-                width: 400,
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    FriendsListRow(name: currentUser.name, tastePreference: currentUser.tastePreference, icon: const Icon(Icons.person)),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
+                child: Container(
+                    width: 400,
+                    child: Column(
                       children: [
-                        const Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              labelText: 'Add a friend',
-                            ),
-                          ),
+                        const SizedBox(
+                          height: 5,
                         ),
-                        TextButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Adding a friend'),
+                        FriendsListRow(name: currentUser.name, tastePreference: currentUser.tastePreference, icon: const Icon(Icons.person)),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            const Expanded(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  labelText: 'Add a friend',
+                                ),
                               ),
-                            );
-                          },
-                          child: const Text('Add'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Adding a friend'),
+                                  ),
+                                );
+                              },
+                              child: const Text('Add'),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Divider(
-                      color: Colors.black,
-                      thickness: 1,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Column(
-                      children: [
-                        friendsList.isEmpty
-                            ? Container(
-                          alignment: Alignment.center,
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('No friends'),
-                            ],
-                          ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(
+                          color: Colors.black,
+                          thickness: 1,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          children: [
+                            friendsList.isEmpty
+                                ? Container(
+                              alignment: Alignment.center,
+                              child: const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('No friends'),
+                                ],
+                              ),
+                            )
+                                : Container(
+                                height: 200,
+                                child: ListView(
+                                  children: friendsList.map((friend) =>
+                                      FriendsListRow(name: friend!.name, tastePreference: friend.tastePreference,  icon: const Icon(Icons.add_outlined)),
+                                  ).toList(),
+                                )
+                            ),
+                          ],
                         )
-                            : Container(
-                          height: 200,
-                          child: ListView(
-                            children: friendsList.map((friend) =>
-                                FriendsListRow(name: friend!.name, tastePreference: friend.tastePreference,  icon: const Icon(Icons.add_outlined)),
-                            ).toList(),
-                          )
-                        ),
                       ],
                     )
-                  ],
                 )
-              )
             ),
             actions: <Widget>[
               TextButton(
@@ -149,12 +158,12 @@ class SurpriseBodyView extends HookWidget {
 
     void handleRoll() {
       final result = roll(items.length);
-      selected.add(result);
+      ref.read(selectedStreamProvider.notifier).state = result;
 
       // Show the results popup when the wheel stops
       Future.delayed(const Duration(seconds: 3), () {
         showResultsPopup(items[result]);
-        isAnimating.value = false;
+        ref.read(isAnimatingProvider.notifier).state = false;
       });
     }
 
@@ -178,24 +187,24 @@ class SurpriseBodyView extends HookWidget {
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
-                  showFriends.value = true;
+                  ref.read(showFriendsProvider.notifier).state = true;
                   showFriendsListPopup();
                 },
                 child: const Text('FriendsList'),
               ),
               const SizedBox(height: 8),
               RollButtonWithPreview(
-                selected: selectedIndex,
+                selected: selectedStream,
                 items: items,
-                onPressed: isAnimating.value ? null : handleRoll,
+                onPressed: isAnimating ? null : handleRoll,
               ),
               const SizedBox(height: 8),
               Expanded(
                 child: FortuneWheel(
-                  selected: selected.stream,
+                  selected: selectedStream,
                   // Use the same stream here
-                  onAnimationStart: () => isAnimating.value = true,
-                  onAnimationEnd: () => isAnimating.value = false,
+                  onAnimationStart: () => ref.read(isAnimatingProvider.notifier).state = true,
+                  onAnimationEnd: () => ref.read(isAnimatingProvider.notifier).state = false,
                   onFling: handleRoll,
                   animateFirst: false,
                   duration: const Duration(seconds: 3),
@@ -210,7 +219,7 @@ class SurpriseBodyView extends HookWidget {
                         onTap: () => print(items[i]),
                         style: FortuneItemStyle(
                           color:
-                              alternatingColors[i % alternatingColors.length],
+                          alternatingColors[i % alternatingColors.length],
                         ),
                       ),
                   ],

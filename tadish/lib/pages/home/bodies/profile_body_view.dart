@@ -4,34 +4,29 @@ import 'package:tadish/data_model/rating_db.dart';
 import '../../../components/history_view.dart';
 import '../../../components/taste_prefs_radar_chart.dart';
 import '../../../custom_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../data_model/user_db.dart';
 
-class ProfileBodyView extends StatefulWidget {
-  const ProfileBodyView({
-    super.key,
-  });
-
-  @override
-  State<ProfileBodyView> createState() => _ProfileBodyViewState();
-}
-
-class _ProfileBodyViewState extends State<ProfileBodyView> {
+class ProfileBodyView extends ConsumerWidget {
   static Color activeIcon = customPrimarySwatch.withOpacity(0.9);
   static Color inactiveIcon = customPrimarySwatch.withOpacity(0.5);
   static Color activeUnderline = customPrimarySwatch.withOpacity(0.15);
   static Color inactiveUnderline = Colors.transparent;
-  Color favoriteIconColor = activeIcon;
-  Color favoriteUnderline = activeUnderline;
-  Color historyIconColor = inactiveIcon;
-  Color historyUnderline = inactiveUnderline;
 
-  bool onFavorites = true;
+  const ProfileBodyView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final Color favoriteIconColor = ref.watch(favoriteIconColorProvider);
+    final Color favoriteUnderline = ref.watch(favoriteUnderlineProvider);
+    final Color historyIconColor = ref.watch(historyIconColorProvider);
+    final Color historyUnderline = ref.watch(historyUnderlineProvider);
+    final bool onFavorites = ref.watch(onFavoritesProvider);
+
     const secondaryTextColor = Colors.grey;
-    UserData currentUser = UserDB().getUser(currentUserID);
+    final UserDB userDB = ref.watch(userDBProvider);
+    final UserData currentUser = userDB.getUser(currentUserID);
 
     return Center(
       child: SafeArea(
@@ -89,7 +84,7 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                 ),
                 Column(
                   children: [
-                    Text(usersDB.getFriends(currentUserID).length.toString(),
+                    Text(userDB.getFriends(currentUserID).length.toString(),
                         style: const TextStyle(
                           fontSize: 20,
                         )),
@@ -99,7 +94,7 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                 ),
                 Column(
                   children: [
-                    Text(usersDB.getUser(currentUserID).taggedDishes.toString(),
+                    Text(userDB.getUser(currentUserID).taggedDishes.toString(),
                         style: const TextStyle(
                           fontSize: 20,
                         )),
@@ -125,15 +120,13 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                   child: TextButton(
                     onPressed: () {
                       // TODO Change to favorites view if not in favorite view already
-                      setState(() {
-                        if (favoriteUnderline == inactiveUnderline) {
-                          favoriteUnderline = activeUnderline;
-                          favoriteIconColor = activeIcon;
-                          historyIconColor = inactiveIcon;
-                          historyUnderline = inactiveUnderline;
-                        }
-                        onFavorites = !onFavorites;
-                      });
+                      if (favoriteUnderline == inactiveUnderline) {
+                      ref.read(favoriteUnderlineProvider.notifier).state = activeUnderline;
+                      ref.read(favoriteIconColorProvider.notifier).state = activeIcon;
+                      ref.read(historyIconColorProvider.notifier).state = inactiveIcon;
+                      ref.read(historyUnderlineProvider.notifier).state = inactiveUnderline;
+                      }
+                      ref.read(onFavoritesProvider.notifier).state = !onFavorites;
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
@@ -150,16 +143,13 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        // TODO Change to history view
-                        setState(() {
-                          if (historyUnderline == inactiveUnderline) {
-                            favoriteUnderline = inactiveUnderline;
-                            favoriteIconColor = inactiveIcon;
-                            historyIconColor = activeIcon;
-                            historyUnderline = activeUnderline;
-                          }
-                          onFavorites = !onFavorites;
-                        });
+                        if (favoriteUnderline == inactiveUnderline) {
+                          ref.read(favoriteUnderlineProvider.notifier).state = inactiveUnderline;
+                          ref.read(favoriteIconColorProvider.notifier).state = inactiveIcon;
+                          ref.read(historyIconColorProvider.notifier).state = activeIcon;
+                          ref.read(historyUnderlineProvider.notifier).state = activeUnderline;
+                        }
+                        ref.read(onFavoritesProvider.notifier).state = !onFavorites;
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
