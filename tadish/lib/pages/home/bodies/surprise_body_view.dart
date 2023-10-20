@@ -10,10 +10,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
 import '../../../data_model/user_db.dart';
 
+
+final isAnimatingProvider = StateProvider<bool>((ref) => false);
+final showFriendsProvider = StateProvider<bool>((ref) => false);
+
 class SurpriseBodyView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isAnimating = ref.watch(isAnimatingProvider);
+    final showFriends = ref.watch(showFriendsProvider);
     final items = restaurantDB.getRestaurantNames();
     final UserDB userDB = ref.watch(userDBProvider);
     final UserData currentUser = userDB.getUser(currentUserID);
@@ -29,8 +35,6 @@ class SurpriseBodyView extends ConsumerWidget {
     StreamController<int> selected = useStreamController<int>();
 
     final selectedIndex = useStream(selected.stream, initialData: 0).data ?? 0;
-    final isAnimating = useState(false);
-    final showFriends = useState(false);
 
     // A function to show the results popup
     void showResultsPopup(String result) {
@@ -156,7 +160,7 @@ class SurpriseBodyView extends ConsumerWidget {
       // Show the results popup when the wheel stops
       Future.delayed(const Duration(seconds: 3), () {
         showResultsPopup(items[result]);
-        isAnimating.value = false;
+        ref.read(isAnimatingProvider.notifier).state = false;
       });
     }
 
@@ -180,7 +184,7 @@ class SurpriseBodyView extends ConsumerWidget {
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
-                  showFriends.value = true;
+                  ref.read(showFriendsProvider.notifier).state = true;
                   showFriendsListPopup();
                 },
                 child: const Text('FriendsList'),
@@ -189,15 +193,15 @@ class SurpriseBodyView extends ConsumerWidget {
               RollButtonWithPreview(
                 selected: selectedIndex,
                 items: items,
-                onPressed: isAnimating.value ? null : handleRoll,
+                onPressed: ref.read(isAnimatingProvider.notifier).state ? null : handleRoll,
               ),
               const SizedBox(height: 8),
               Expanded(
                 child: FortuneWheel(
                   selected: selected.stream,
                   // Use the same stream here
-                  onAnimationStart: () => isAnimating.value = true,
-                  onAnimationEnd: () => isAnimating.value = false,
+                  onAnimationStart: () => ref.read(isAnimatingProvider.notifier).state = true,
+                  onAnimationEnd: () => ref.read(isAnimatingProvider.notifier).state = false,
                   onFling: handleRoll,
                   animateFirst: false,
                   duration: const Duration(seconds: 3),
