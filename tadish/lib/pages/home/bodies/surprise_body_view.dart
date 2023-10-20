@@ -1,32 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:tadish/data_model/restaurant_db.dart';
 import '../../../components/roll_button.dart';
 import '../../../../components/star_confetti.dart';
 import '../../../components/friends_list_row.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'dart:async';
 import '../../../data_model/user_db.dart';
 
-final selectedStreamProvider = StreamProvider<int>((ref) {
-  // You can initialize the stream here with an initial value if needed.
-  final controller = StreamController<int>.broadcast();
-  controller.add(0); // Initialize with 0 or any other initial value.
-  return controller.stream;
-});
-
-final isAnimatingProvider = StateProvider<bool>((ref) => false);
-final showFriendsProvider = StateProvider<bool>((ref) => false);
-
 class SurpriseBodyView extends ConsumerWidget {
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String currentUserID = ref.watch(currentUserIDProvider);
-    final UserDB userDB = ref.watch(userDBProvider);
     final items = restaurantDB.getRestaurantNames();
-    UserData currentUser = userDB.getUser(currentUserID);
-    List<UserData?> friendsList = userDB.getFriends(currentUserID);
+    final UserDB userDB = ref.watch(userDBProvider);
+    final UserData currentUser = userDB.getUser(currentUserID);
+    List<UserData?> friendsList =userDB.getFriends(currentUserID);
 
     final alternatingColors = [
       Colors.lightBlue,
@@ -35,9 +26,11 @@ class SurpriseBodyView extends ConsumerWidget {
       Colors.yellow
     ];
 
-    final selectedStream = ref.watch(selectedStreamProvider);
-    final isAnimating = ref.watch(isAnimatingProvider);
-    final showFriends = ref.watch(showFriendsProvider);
+    StreamController<int> selected = useStreamController<int>();
+
+    final selectedIndex = useStream(selected.stream, initialData: 0).data ?? 0;
+    final isAnimating = useState(false);
+    final showFriends = useState(false);
 
     // A function to show the results popup
     void showResultsPopup(String result) {
@@ -158,12 +151,12 @@ class SurpriseBodyView extends ConsumerWidget {
 
     void handleRoll() {
       final result = roll(items.length);
-      ref.read(selectedStreamProvider.notifier).state = result;
+      selected.add(result);
 
       // Show the results popup when the wheel stops
       Future.delayed(const Duration(seconds: 3), () {
         showResultsPopup(items[result]);
-        ref.read(isAnimatingProvider.notifier).state = false;
+        isAnimating.value = false;
       });
     }
 
@@ -187,24 +180,24 @@ class SurpriseBodyView extends ConsumerWidget {
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
-                  ref.read(showFriendsProvider.notifier).state = true;
+                  showFriends.value = true;
                   showFriendsListPopup();
                 },
                 child: const Text('FriendsList'),
               ),
               const SizedBox(height: 8),
               RollButtonWithPreview(
-                selected: selectedStream,
+                selected: selectedIndex,
                 items: items,
-                onPressed: isAnimating ? null : handleRoll,
+                onPressed: isAnimating.value ? null : handleRoll,
               ),
               const SizedBox(height: 8),
               Expanded(
                 child: FortuneWheel(
-                  selected: selectedStream,
+                  selected: selected.stream,
                   // Use the same stream here
-                  onAnimationStart: () => ref.read(isAnimatingProvider.notifier).state = true,
-                  onAnimationEnd: () => ref.read(isAnimatingProvider.notifier).state = false,
+                  onAnimationStart: () => isAnimating.value = true,
+                  onAnimationEnd: () => isAnimating.value = false,
                   onFling: handleRoll,
                   animateFirst: false,
                   duration: const Duration(seconds: 3),
