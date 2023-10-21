@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   // Set up the SettingsController, which will glue user settings to multiple
@@ -19,3 +20,4 @@ void main() async {
   // SettingsView.
   runApp(ProviderScope(child: MyApp(settingsController: settingsController)));
 }
+

@@ -8,21 +8,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../data_model/user_db.dart';
 
-class ProfileBodyView extends ConsumerWidget {
-  static Color activeIcon = customPrimarySwatch.withOpacity(0.9);
-  static Color inactiveIcon = customPrimarySwatch.withOpacity(0.5);
-  static Color activeUnderline = customPrimarySwatch.withOpacity(0.15);
-  static Color inactiveUnderline = Colors.transparent;
-
-  const ProfileBodyView({super.key});
+class ProfileBodyView extends ConsumerStatefulWidget {
+  const ProfileBodyView({
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final Color favoriteIconColor = ref.watch(favoriteIconColorProvider);
-    final Color favoriteUnderline = ref.watch(favoriteUnderlineProvider);
-    final Color historyIconColor = ref.watch(historyIconColorProvider);
-    final Color historyUnderline = ref.watch(historyUnderlineProvider);
-    final bool onFavorites = ref.watch(onFavoritesProvider);
+  ConsumerState<ProfileBodyView> createState() => _ProfileBodyViewState();
+}
+
+class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
+  bool onFavorites = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final ratingsDB = ref.watch(ratingsDBProvider);
 
     const secondaryTextColor = Colors.grey;
     final UserDB userDB = ref.watch(userDBProvider);
@@ -75,11 +75,16 @@ class ProfileBodyView extends ConsumerWidget {
               children: [
                 Column(
                   children: [
-                    Text(ratingsDB.getSingularUserRatings(currentUserID).length.toString(),
+                    Text(
+                        ratingsDB
+                            .getSingularUserRatings(currentUserID)
+                            .length
+                            .toString(),
                         style: const TextStyle(
                           fontSize: 20,
                         )),
-                    const Text("Ratings", style: TextStyle(color: secondaryTextColor)),
+                    const Text("Ratings",
+                        style: TextStyle(color: secondaryTextColor)),
                   ],
                 ),
                 Column(
@@ -114,47 +119,56 @@ class ProfileBodyView extends ConsumerWidget {
                     child: Container(
                   decoration: BoxDecoration(
                     border: Border(
-                      bottom: BorderSide(width: 1.0, color: favoriteUnderline),
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: onFavorites
+                              ? customPrimarySwatch.withOpacity(0.15)
+                              : Colors.transparent),
                     ),
                   ),
                   child: TextButton(
                     onPressed: () {
-                      // TODO Change to favorites view if not in favorite view already
-                      if (favoriteUnderline == inactiveUnderline) {
-                      ref.read(favoriteUnderlineProvider.notifier).state = activeUnderline;
-                      ref.read(favoriteIconColorProvider.notifier).state = activeIcon;
-                      ref.read(historyIconColorProvider.notifier).state = inactiveIcon;
-                      ref.read(historyUnderlineProvider.notifier).state = inactiveUnderline;
+                      if (!onFavorites) {
+                        setState(() {
+                          onFavorites = !onFavorites;
+                        });
                       }
-                      ref.read(onFavoritesProvider.notifier).state = !onFavorites;
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                     ),
-                    child: Icon(Icons.favorite, color: favoriteIconColor),
+                    child: Icon(Icons.favorite,
+                        color: onFavorites
+                            ? customPrimarySwatch.withOpacity(0.9)
+                            : customPrimarySwatch.withOpacity(0.5)),
                   ),
                 )),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(width: 1.0, color: historyUnderline),
+                        bottom: BorderSide(
+                            width: 1.0,
+                            color: !onFavorites
+                                ? customPrimarySwatch.withOpacity(0.15)
+                                : Colors.transparent),
                       ),
                     ),
                     child: TextButton(
                       onPressed: () {
-                        if (favoriteUnderline == inactiveUnderline) {
-                          ref.read(favoriteUnderlineProvider.notifier).state = inactiveUnderline;
-                          ref.read(favoriteIconColorProvider.notifier).state = inactiveIcon;
-                          ref.read(historyIconColorProvider.notifier).state = activeIcon;
-                          ref.read(historyUnderlineProvider.notifier).state = activeUnderline;
+                        if (onFavorites) {
+                          setState(() {
+                            onFavorites = !onFavorites;
+                          });
                         }
-                        ref.read(onFavoritesProvider.notifier).state = !onFavorites;
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                       ),
-                      child: Icon(Icons.history_edu, color: historyIconColor),
+                      child: Icon(Icons.history_edu,
+                          color: !onFavorites
+                              ? customPrimarySwatch.withOpacity(0.9)
+                              : customPrimarySwatch.withOpacity(0.5)),
                     ),
                   ),
                 )
@@ -164,12 +178,10 @@ class ProfileBodyView extends ConsumerWidget {
                 ? const Expanded(
                     child: FavoritesView(),
                   )
-                : Expanded(
-                    child: HistoryView(userID: currentUserID))), // TODO dynamically change userid
+                : Expanded(child: HistoryView(userID: currentUserID))),
           ],
         ),
       ),
     );
   }
 }
-
