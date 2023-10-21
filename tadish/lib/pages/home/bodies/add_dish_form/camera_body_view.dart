@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:path/path.dart';
 import 'package:tadish/components/field_padding.dart';
 import '../../../../components/circle_image_selector.dart';
 import '../../../../components/fields/single_line_text_field.dart';
 import '../../../../components/fields/star_field.dart';
 import '../../../../components/fields/tags_field.dart';
-import '../../../../components/slider.dart';
-import '../../../../components/star_confetti.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../components/submit_button.dart';
@@ -23,7 +18,6 @@ class CameraBodyView extends ConsumerWidget {
   final _tagsFieldKey = GlobalKey<FormBuilderFieldState>();
   final _publicNotesFieldKey = GlobalKey<FormBuilderFieldState>();
   final _privateNotesFieldKey = GlobalKey<FormBuilderFieldState>();
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -78,19 +72,19 @@ class CameraBodyView extends ConsumerWidget {
                     Row(
                       children: [
                         Flexible(
-                        child: SingleLineTextField(
-                            name: "Public Notes",
-                            hint: "Public Notes",
-                            fieldKey: _publicNotesFieldKey),
-                      ),
+                          child: SingleLineTextField(
+                              name: "Public Notes",
+                              hint: "Public Notes",
+                              fieldKey: _publicNotesFieldKey),
+                        ),
                         Flexible(
-                        child: SingleLineTextField(
-                            name: "Private Notes",
-                            hint: "Private Notes",
-                            fieldKey: _privateNotesFieldKey),
-                      ),
-                    ],),
-
+                          child: SingleLineTextField(
+                              name: "Private Notes",
+                              hint: "Private Notes",
+                              fieldKey: _privateNotesFieldKey),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

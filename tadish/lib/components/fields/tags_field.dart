@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 
 class TagsField extends StatelessWidget {
   final Key fieldKey;
   final String name;
 
   TagsField({
-    super.key, required this.fieldKey, required this.name,
+    super.key,
+    required this.fieldKey,
+    required this.name,
   });
 
   static final List<String> tagValues = ["Vegan", "Local", "Vegetarian"];
@@ -31,12 +32,12 @@ class TagsField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderFilterChip(
-        key: fieldKey,
-        name: name,
-        options: tags,
-        decoration: const InputDecoration(
-            border: InputBorder.none, fillColor: Colors.transparent),
-        alignment: WrapAlignment.center,
+      key: fieldKey,
+      name: name,
+      options: tags,
+      decoration: const InputDecoration(
+          border: InputBorder.none, fillColor: Colors.transparent),
+      alignment: WrapAlignment.center,
     );
   }
 }
