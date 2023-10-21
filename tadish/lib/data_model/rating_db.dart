@@ -1,19 +1,21 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 /// The data associated with users.
 class RatingData {
-  RatingData({
-    required this.id,
-    required this.raterID,
-    required this.dishID,
-    required this.starRating,
-    this.sweetness,
-    this.sourness,
-    this.saltiness,
-    this.spiciness,
-    List<String>? tags,
-    String? picture,
-    String? publicNote,
-    String? privateNote,
-    required this.createdOn})
+  RatingData(
+      {required this.id,
+      required this.raterID,
+      required this.dishID,
+      required this.starRating,
+      this.sweetness,
+      this.sourness,
+      this.saltiness,
+      this.spiciness,
+      List<String>? tags,
+      String? picture,
+      String? publicNote,
+      String? privateNote,
+      required this.createdOn})
       : picture = picture ?? '',
         publicNote = publicNote ?? '',
         privateNote = privateNote ?? '',
@@ -32,11 +34,14 @@ class RatingData {
   String publicNote;
   String privateNote;
   DateTime createdOn;
-
 }
 
 /// Provides access to and operations on all defined users.
 class RatingsDB {
+  RatingsDB(this.ref);
+
+  final ProviderRef<RatingsDB> ref;
+
   final List<RatingData> _ratings = [
     RatingData(
         id: 'rating-001',
@@ -51,22 +56,21 @@ class RatingsDB {
         picture: 'assets/images/1.jpg',
         publicNote: 'taste very sweet',
         privateNote: 'better than the one from Costco',
-        createdOn: DateTime.parse('2023-07-20 20:18:04Z')
-    ),
+        createdOn: DateTime.parse('2023-07-20 20:18:04Z')),
     RatingData(
-        id: 'rating-002',
-        raterID: 'user-002',
-        dishID: 'dish-001',
-        starRating: 2,
-        sweetness: 100.0,
-        sourness: 0.0,
-        saltiness: 30.0,
-        spiciness: 0,
-        tags: ['local'],
-        picture: 'assets/images/1.jpg',
-        publicNote: 'my tongue literally fell off it was so sweet',
-        privateNote: 'never eat again',
-        createdOn: DateTime.parse('2023-01-05 05:29:04Z'),
+      id: 'rating-002',
+      raterID: 'user-002',
+      dishID: 'dish-001',
+      starRating: 2,
+      sweetness: 100.0,
+      sourness: 0.0,
+      saltiness: 30.0,
+      spiciness: 0,
+      tags: ['local'],
+      picture: 'assets/images/1.jpg',
+      publicNote: 'my tongue literally fell off it was so sweet',
+      privateNote: 'never eat again',
+      createdOn: DateTime.parse('2023-01-05 05:29:04Z'),
     ),
     RatingData(
       id: 'rating-003',
@@ -94,7 +98,8 @@ class RatingsDB {
       spiciness: 0,
       tags: ['local'],
       picture: 'assets/images/3.jpg',
-      publicNote: 'The raspberry practically melted in my mouth with deliciousness. So good that my girlfriend barely left me half.',
+      publicNote:
+          'The raspberry practically melted in my mouth with deliciousness. So good that my girlfriend barely left me half.',
       privateNote: 'buy at least 1 a year',
       createdOn: DateTime.parse('2023-09-23 01:58:04Z'),
     ),
@@ -203,7 +208,6 @@ class RatingsDB {
       privateNote: 'yumz',
       createdOn: DateTime.parse('2023-04-13 11:49:04Z'),
     ),
-
   ];
 
   List<String> getRatingsIDs() {
@@ -220,4 +224,6 @@ class RatingsDB {
 }
 
 /// The singleton instance providing access to all user data for clients.
-RatingsDB ratingsDB = RatingsDB();
+final ratingsDBProvider = Provider<RatingsDB>((ref) {
+  return RatingsDB(ref);
+});

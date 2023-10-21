@@ -4,32 +4,26 @@ import 'package:tadish/data_model/rating_db.dart';
 import '../../../components/history_view.dart';
 import '../../../components/taste_prefs_radar_chart.dart';
 import '../../../custom_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../data_model/user_db.dart';
 
-class ProfileBodyView extends StatefulWidget {
+class ProfileBodyView extends ConsumerStatefulWidget {
   const ProfileBodyView({
     super.key,
   });
 
   @override
-  State<ProfileBodyView> createState() => _ProfileBodyViewState();
+  ConsumerState<ProfileBodyView> createState() => _ProfileBodyViewState();
 }
 
-class _ProfileBodyViewState extends State<ProfileBodyView> {
-  static Color activeIcon = customPrimarySwatch.withOpacity(0.9);
-  static Color inactiveIcon = customPrimarySwatch.withOpacity(0.5);
-  static Color activeUnderline = customPrimarySwatch.withOpacity(0.15);
-  static Color inactiveUnderline = Colors.transparent;
-  Color favoriteIconColor = activeIcon;
-  Color favoriteUnderline = activeUnderline;
-  Color historyIconColor = inactiveIcon;
-  Color historyUnderline = inactiveUnderline;
-
+class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
   bool onFavorites = true;
 
   @override
   Widget build(BuildContext context) {
+    final ratingsDB = ref.watch(ratingsDBProvider);
+
     const secondaryTextColor = Colors.grey;
     UserData currentUser = UserDB().getUser(currentUserID);
 
@@ -80,11 +74,16 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
               children: [
                 Column(
                   children: [
-                    Text(ratingsDB.getSingularUserRatings(currentUserID).length.toString(),
+                    Text(
+                        ratingsDB
+                            .getSingularUserRatings(currentUserID)
+                            .length
+                            .toString(),
                         style: const TextStyle(
                           fontSize: 20,
                         )),
-                    const Text("Ratings", style: TextStyle(color: secondaryTextColor)),
+                    const Text("Ratings",
+                        style: TextStyle(color: secondaryTextColor)),
                   ],
                 ),
                 Column(
@@ -119,52 +118,56 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                     child: Container(
                   decoration: BoxDecoration(
                     border: Border(
-                      bottom: BorderSide(width: 1.0, color: favoriteUnderline),
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: onFavorites
+                              ? customPrimarySwatch.withOpacity(0.15)
+                              : Colors.transparent),
                     ),
                   ),
                   child: TextButton(
                     onPressed: () {
-                      // TODO Change to favorites view if not in favorite view already
-                      setState(() {
-                        if (favoriteUnderline == inactiveUnderline) {
-                          favoriteUnderline = activeUnderline;
-                          favoriteIconColor = activeIcon;
-                          historyIconColor = inactiveIcon;
-                          historyUnderline = inactiveUnderline;
-                        }
-                        onFavorites = !onFavorites;
-                      });
+                      if (!onFavorites) {
+                        setState(() {
+                          onFavorites = !onFavorites;
+                        });
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                     ),
-                    child: Icon(Icons.favorite, color: favoriteIconColor),
+                    child: Icon(Icons.favorite,
+                        color: onFavorites
+                            ? customPrimarySwatch.withOpacity(0.9)
+                            : customPrimarySwatch.withOpacity(0.5)),
                   ),
                 )),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(width: 1.0, color: historyUnderline),
+                        bottom: BorderSide(
+                            width: 1.0,
+                            color: !onFavorites
+                                ? customPrimarySwatch.withOpacity(0.15)
+                                : Colors.transparent),
                       ),
                     ),
                     child: TextButton(
                       onPressed: () {
-                        // TODO Change to history view
-                        setState(() {
-                          if (historyUnderline == inactiveUnderline) {
-                            favoriteUnderline = inactiveUnderline;
-                            favoriteIconColor = inactiveIcon;
-                            historyIconColor = activeIcon;
-                            historyUnderline = activeUnderline;
-                          }
-                          onFavorites = !onFavorites;
-                        });
+                        if (onFavorites) {
+                          setState(() {
+                            onFavorites = !onFavorites;
+                          });
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                       ),
-                      child: Icon(Icons.history_edu, color: historyIconColor),
+                      child: Icon(Icons.history_edu,
+                          color: !onFavorites
+                              ? customPrimarySwatch.withOpacity(0.9)
+                              : customPrimarySwatch.withOpacity(0.5)),
                     ),
                   ),
                 )
@@ -174,12 +177,10 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                 ? const Expanded(
                     child: FavoritesView(),
                   )
-                : Expanded(
-                    child: HistoryView(userID: currentUserID))), // TODO dynamically change userid
+                : Expanded(child: HistoryView(userID: currentUserID))),
           ],
         ),
       ),
     );
   }
 }
-
