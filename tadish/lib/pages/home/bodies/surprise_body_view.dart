@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:tadish/data_model/restaurant_db.dart';
 import '../../../components/roll_button.dart';
 import '../../../../components/star_confetti.dart';
@@ -10,55 +9,88 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
 import '../../../data_model/user_db.dart';
 
-
-final isAnimatingProvider = StateProvider<bool>((ref) => false);
-final showFriendsProvider = StateProvider<bool>((ref) => false);
-
-class SurpriseBodyView extends ConsumerWidget {
+class SurpriseBodyView extends ConsumerStatefulWidget {
+  const SurpriseBodyView({
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final isAnimating = ref.watch(isAnimatingProvider);
-    final showFriends = ref.watch(showFriendsProvider);
-    final items = restaurantDB.getRestaurantNames();
+  ConsumerState<SurpriseBodyView> createState() => _SurpriseBodyViewState();
+}
+
+class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
+  final items = restaurantDB.getRestaurantNames();
+
+  final alternatingColors = [
+    Colors.lightBlue,
+    Colors.red,
+    Colors.lightGreen,
+    Colors.yellow
+  ];
+
+  StreamController<int> selected = StreamController<int>();
+
+  int selectedIndex = 0;
+  bool isAnimating = false;
+  bool showFriends = false;
+
+  @override
+  void initState() {
+    super.initState();
+    selected = StreamController<int>();
+    selectedIndex = 0;
+    isAnimating = false;
+    showFriends = false;
+  }
+
+  @override
+  void dispose() {
+    selected.close();
+    super.dispose();
+  }
+
+  // A function to show the results popup
+  void showResultsPopup(String result) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Results'),
+          content: Text('The wheel stopped at $result!'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            const StarConfetti(),
+          ],
+        );
+      },
+    );
+  }
+
+  void handleRoll() {
+    final result = roll(items.length);
+    selected.add(result);
+
+    // Show the results popup when the wheel stops
+    Future.delayed(const Duration(seconds: 3), () {
+      showResultsPopup(items[result]);
+      setState(() {
+        isAnimating = false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final UserDB userDB = ref.watch(userDBProvider);
     final UserData currentUser = userDB.getUser(currentUserID);
     List<UserData?> friendsList =userDB.getFriends(currentUserID);
 
-    final alternatingColors = [
-      Colors.lightBlue,
-      Colors.red,
-      Colors.lightGreen,
-      Colors.yellow
-    ];
-
-    StreamController<int> selected = useStreamController<int>();
-
-    final selectedIndex = useStream(selected.stream, initialData: 0).data ?? 0;
-
-    // A function to show the results popup
-    void showResultsPopup(String result) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Results'),
-            content: Text('The wheel stopped at $result!'),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              const StarConfetti(),
-            ],
-          );
-        },
-      );
-    }
-
-    // A function to show the results popup
+    // A function to show the friends list popup
     void showFriendsListPopup() {
       showDialog(
         context: context,
@@ -73,73 +105,78 @@ class SurpriseBodyView extends ConsumerWidget {
             ),
             content: SingleChildScrollView(
                 child: Container(
-                    width: 400,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        FriendsListRow(name: currentUser.name, tastePreference: currentUser.tastePreference, icon: const Icon(Icons.person)),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            const Expanded(
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  labelText: 'Add a friend',
+                  width: 400,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      FriendsListRow(
+                          name: currentUser.name,
+                          tastePreference: currentUser.tastePreference,
+                          icon: const Icon(Icons.person)),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          const Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                labelText: 'Add a friend',
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Adding a friend'),
                                 ),
-                              ),
+                              );
+                            },
+                            child: const Text('Add'),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 1,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                        children: [
+                          friendsList.isEmpty
+                              ? Container(
+                            alignment: Alignment.center,
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('No friends'),
+                              ],
                             ),
-                            TextButton(
-                              onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Adding a friend'),
-                                  ),
-                                );
-                              },
-                              child: const Text('Add'),
+                          )
+                              : Container(
+                            height: 200,
+                            child: ListView(
+                              children: friendsList
+                                  .map((friend) => FriendsListRow(
+                                  name: friend!.name,
+                                  tastePreference: friend.tastePreference,
+                                  icon: const Icon(Icons.add_outlined)))
+                                  .toList(),
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Column(
-                          children: [
-                            friendsList.isEmpty
-                                ? Container(
-                              alignment: Alignment.center,
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('No friends'),
-                                ],
-                              ),
-                            )
-                                : Container(
-                                height: 200,
-                                child: ListView(
-                                  children: friendsList.map((friend) =>
-                                      FriendsListRow(name: friend!.name, tastePreference: friend.tastePreference,  icon: const Icon(Icons.add_outlined)),
-                                  ).toList(),
-                                )
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                )
-            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                )),
             actions: <Widget>[
               TextButton(
                 child: const Text('OK'),
@@ -151,17 +188,6 @@ class SurpriseBodyView extends ConsumerWidget {
           );
         },
       );
-    }
-
-    void handleRoll() {
-      final result = roll(items.length);
-      selected.add(result);
-
-      // Show the results popup when the wheel stops
-      Future.delayed(const Duration(seconds: 3), () {
-        showResultsPopup(items[result]);
-        ref.read(isAnimatingProvider.notifier).state = false;
-      });
     }
 
     return Stack(children: [
@@ -179,12 +205,15 @@ class SurpriseBodyView extends ConsumerWidget {
               const SizedBox(height: 8),
               const Text(
                 'Spin the Wheel',
-                style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
-                  ref.read(showFriendsProvider.notifier).state = true;
+                  setState(() {
+                    showFriends = true;
+                  });
                   showFriendsListPopup();
                 },
                 child: const Text('FriendsList'),
@@ -193,15 +222,23 @@ class SurpriseBodyView extends ConsumerWidget {
               RollButtonWithPreview(
                 selected: selectedIndex,
                 items: items,
-                onPressed: ref.read(isAnimatingProvider.notifier).state ? null : handleRoll,
+                onPressed: isAnimating ? null : handleRoll,
               ),
               const SizedBox(height: 8),
               Expanded(
                 child: FortuneWheel(
                   selected: selected.stream,
                   // Use the same stream here
-                  onAnimationStart: () => ref.read(isAnimatingProvider.notifier).state = true,
-                  onAnimationEnd: () => ref.read(isAnimatingProvider.notifier).state = false,
+                  onAnimationStart: () {
+                    setState(() {
+                      isAnimating = true;
+                    });
+                  },
+                  onAnimationEnd: () {
+                    setState(() {
+                      isAnimating = false;
+                    });
+                  },
                   onFling: handleRoll,
                   animateFirst: false,
                   duration: const Duration(seconds: 3),
@@ -215,8 +252,7 @@ class SurpriseBodyView extends ConsumerWidget {
                             )),
                         onTap: () => print(items[i]),
                         style: FortuneItemStyle(
-                          color:
-                          alternatingColors[i % alternatingColors.length],
+                          color: alternatingColors[i % alternatingColors.length],
                         ),
                       ),
                   ],

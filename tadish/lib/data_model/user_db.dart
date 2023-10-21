@@ -153,11 +153,5 @@ final currentUserIDProvider = StateProvider<String>((ref) {
   return 'user-001';
 });
 
-final favoriteIconColorProvider = StateProvider<Color>((_) => customPrimarySwatch.withOpacity(0.9));
-final favoriteUnderlineProvider =  StateProvider<Color>((_) => customPrimarySwatch.withOpacity(0.15));
-final historyIconColorProvider =  StateProvider<Color>((_) => customPrimarySwatch.withOpacity(0.15));
-final historyUnderlineProvider =  StateProvider<Color>((_) => customPrimarySwatch.withOpacity(0.15));
-final onFavoritesProvider = StateProvider<bool>((_) => true);
-
 /// The currently logged in user.
 String currentUserID = 'user-001';
