@@ -37,7 +37,7 @@ class HomeView extends StatefulWidget {
     },
     2: {
       'title': const Text('Camera'),
-      'body': const CameraBodyView(),
+      'body': CameraBodyView(),
       'navItem': const BottomNavigationBarItem(
         label: '',
         icon: Icon(Icons.camera, size: 40),
@@ -85,7 +85,8 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: widget.pages[_selectedIndex]['body'],
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed, // needed when more than 3 items
+        type: BottomNavigationBarType.fixed,
+        // needed when more than 3 items
         items: [
           widget.pages[0]['navItem'],
           widget.pages[1]['navItem'],
