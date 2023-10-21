@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../components/drawer_view.dart';
 import '../../../data_model/user_db.dart';
 import '../../../components/friends_list_row.dart';
 
-class FriendsListView extends StatelessWidget {
-  final UserData currentUser = UserDB().getUser(currentUserID);
-  final List<UserData?> friendsList = UserDB().getFriends(currentUserID);
+class FriendsListView extends ConsumerWidget {
 
   static const routeName = '/friendslist';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final UserDB userDB = ref.watch(userDBProvider);
+    final UserData currentUser = userDB.getUser(currentUserID);
+    final List<UserData?> friendsList = userDB.getFriends(currentUserID);
     return Scaffold(
       drawer: const DrawerView(),
       appBar: AppBar(

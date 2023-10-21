@@ -1,3 +1,7 @@
+import 'dart:ui';
+import '../../../custom_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 class UserData {
   UserData(
       {required this.id,
@@ -44,6 +48,10 @@ class UserData {
 }
 
 class UserDB {
+  UserDB(this.ref);
+
+  final ProviderRef<UserDB> ref;
+
   final List<UserData> _users = [
     UserData(
       id : 'user-000',
@@ -137,7 +145,13 @@ class UserDB {
 
 }
 
-UserDB usersDB = UserDB();
+final userDBProvider = Provider<UserDB>((ref) {
+  return UserDB(ref);
+});
+
+final currentUserIDProvider = StateProvider<String>((ref) {
+  return 'user-001';
+});
 
 /// The currently logged in user.
 String currentUserID = 'user-001';

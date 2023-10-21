@@ -25,7 +25,8 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
     final ratingsDB = ref.watch(ratingsDBProvider);
 
     const secondaryTextColor = Colors.grey;
-    UserData currentUser = UserDB().getUser(currentUserID);
+    final UserDB userDB = ref.watch(userDBProvider);
+    final UserData currentUser = userDB.getUser(currentUserID);
 
     return Center(
       child: SafeArea(
@@ -88,7 +89,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
                 ),
                 Column(
                   children: [
-                    Text(usersDB.getFriends(currentUserID).length.toString(),
+                    Text(userDB.getFriends(currentUserID).length.toString(),
                         style: const TextStyle(
                           fontSize: 20,
                         )),
@@ -98,7 +99,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
                 ),
                 Column(
                   children: [
-                    Text(usersDB.getUser(currentUserID).taggedDishes.toString(),
+                    Text(userDB.getUser(currentUserID).taggedDishes.toString(),
                         style: const TextStyle(
                           fontSize: 20,
                         )),
