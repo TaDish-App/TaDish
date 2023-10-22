@@ -1,4 +1,7 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 class RestaurantData {
+
   RestaurantData({required this.id,
     required this.name,
     required this.city,
@@ -15,6 +18,10 @@ class RestaurantData {
 }
 
 class RestaurantDB {
+  RestaurantDB(this.ref);
+
+  final ProviderRef<RestaurantDB> ref;
+
   final List<RestaurantData> _restaurant = [
   RestaurantData(
         id: 'restaurant-001',
@@ -95,4 +102,6 @@ class RestaurantDB {
   }
 }
 
-RestaurantDB restaurantDB = RestaurantDB();
+final restaurantDBProvider = Provider<RestaurantDB>((ref) {
+  return RestaurantDB(ref);
+});

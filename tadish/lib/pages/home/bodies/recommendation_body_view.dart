@@ -1,44 +1,49 @@
 import 'package:flutter/material.dart';
 import '../../../components/dish_card.dart';
 import '../../../data_model/dish_db.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RecommendationBodyView extends StatefulWidget {
+
+class RecommendationBodyView extends ConsumerStatefulWidget {
   @override
-  _RecommendationBodyViewState createState() => _RecommendationBodyViewState();
+  ConsumerState<RecommendationBodyView> createState() => _RecommendationBodyViewState();
 }
 
-class _RecommendationBodyViewState extends State<RecommendationBodyView> {
-  List<DishData> dishes = dishDB.getDishes();
-
-  void _swipeLeft() {
-    setState(() {
-      dishes.removeAt(0);
-    });
-  }
-
-  void _swipeRight() {
-    setState(() {
-      saved.add(dishes[0].name);
-      dishes.removeAt(0);
-    });
-  }
+class _RecommendationBodyViewState extends ConsumerState<RecommendationBodyView> {
 
   List<String> saved = [];
 
   @override
   Widget build(BuildContext context) {
+    final dishDB = ref.watch(dishDBProvider);
+    List<DishData> dishes = dishDB.getDishes();
+    void swipeLeft() {
+      setState(() {
+        print('LEFT');
+        dishes.removeAt(0);
+      });
+    }
+
+    void swipeRight() {
+      setState(() {
+        print('RIGHT');
+        saved.add(dishes[0].name);
+        dishes.removeAt(0);
+      });
+    }
+
     return Center(
       child: dishes.isEmpty
           ? Container(
-            alignment: Alignment.center,
-            child: Column (
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('No more cards to swipe!'),
-                  Text('Saved: $saved'),
-                ]
-            )
+          alignment: Alignment.center,
+          child: Column (
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('No more cards to swipe!'),
+                Text('Saved: $saved'),
+              ]
           )
+      )
           : Stack(
         alignment: Alignment.center,
         children: dishes.map((dish) {
@@ -52,10 +57,10 @@ class _RecommendationBodyViewState extends State<RecommendationBodyView> {
               onDragEnd: (details) {
                 if (details.offset.dx < -100) {
                   // Swiped left
-                  _swipeLeft();
+                  swipeLeft();
                 } else if (details.offset.dx > 100) {
                   // Swiped right
-                  _swipeRight();
+                  swipeRight();
                 }
               },
               feedback: Material(

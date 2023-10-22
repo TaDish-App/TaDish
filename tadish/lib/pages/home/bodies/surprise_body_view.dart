@@ -19,7 +19,6 @@ class SurpriseBodyView extends ConsumerStatefulWidget {
 }
 
 class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
-  final items = restaurantDB.getRestaurantNames();
 
   final alternatingColors = [
     Colors.lightBlue,
@@ -71,21 +70,10 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
     );
   }
 
-  void handleRoll() {
-    final result = roll(items.length);
-    selected.add(result);
-
-    // Show the results popup when the wheel stops
-    Future.delayed(const Duration(seconds: 3), () {
-      showResultsPopup(items[result]);
-      setState(() {
-        isAnimating = false;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final restaurantDB = ref.watch(restaurantDBProvider);
+    final items = restaurantDB.getRestaurantNames();
     final String currentUserID = ref.watch(currentUserIDProvider);
     final UserDB userDB = ref.watch(userDBProvider);
     final UserData currentUser = userDB.getUser(currentUserID);
@@ -189,6 +177,19 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
           );
         },
       );
+    }
+
+    void handleRoll() {
+      final result = roll(items.length);
+      selected.add(result);
+
+      // Show the results popup when the wheel stops
+      Future.delayed(const Duration(seconds: 3), () {
+        showResultsPopup(items[result]);
+        setState(() {
+          isAnimating = false;
+        });
+      });
     }
 
     return Stack(children: [
