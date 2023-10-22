@@ -9,33 +9,23 @@ import 'pages/recommendation/recommendation_view.dart';
 import 'pages/surprise/surprise_view.dart';
 import 'pages/profile/profile_view.dart';
 import 'pages/friends_list/friends_list_view.dart';
-import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// The Widget that configures your application.
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({
     super.key,
-    required this.settingsController,
   });
 
-  final SettingsController settingsController;
-
   @override
-  Widget build(BuildContext context) {
-    // Glue the SettingsController to the MaterialApp.
-    //
-    // The ListenableBuilder Widget listens to the SettingsController for changes.
-    // Whenever the user updates their settings, the MaterialApp is rebuilt.
-    return AnimatedBuilder(
-      animation: settingsController,
-      builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ThemeMode currentTheme = ref.watch(currentThemeModeProvider);
+    return MaterialApp(
           theme: FlexThemeData.light(scheme: FlexScheme.espresso),
           darkTheme: FlexThemeData.dark(scheme: FlexScheme.espresso),
-          themeMode: settingsController.themeMode,
+          themeMode: currentTheme,
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
           onGenerateRoute: (RouteSettings routeSettings) {
@@ -48,7 +38,7 @@ class MyApp extends StatelessWidget {
                   case HomeView.routeName:
                     return HomeView();
                   case SettingsView.routeName:
-                    return SettingsView(controller: settingsController);
+                    return const SettingsView();
                   case SigninView.routeName:
                     return SigninView();
                   case SignupView.routeName:
@@ -72,7 +62,5 @@ class MyApp extends StatelessWidget {
             );
           },
         );
-      },
-    );
-  }
+      }
 }
