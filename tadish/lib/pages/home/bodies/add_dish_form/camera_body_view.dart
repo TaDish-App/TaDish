@@ -3,10 +3,12 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:tadish/components/field_padding.dart';
 import '../../../../components/circle_image_selector.dart';
 import '../../../../components/fields/single_line_text_field.dart';
+import '../../../../components/fields/slider_field.dart';
 import '../../../../components/fields/star_field.dart';
 import '../../../../components/fields/tags_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../components/slider.dart';
 import '../../../../components/submit_button.dart';
 
 class CameraBodyView extends ConsumerWidget {
@@ -18,6 +20,10 @@ class CameraBodyView extends ConsumerWidget {
   final _tagsFieldKey = GlobalKey<FormBuilderFieldState>();
   final _publicNotesFieldKey = GlobalKey<FormBuilderFieldState>();
   final _privateNotesFieldKey = GlobalKey<FormBuilderFieldState>();
+  final _sliderSweetnessFieldKey = GlobalKey<FormBuilderFieldState>();
+  final _sliderSournessFieldKey = GlobalKey<FormBuilderFieldState>();
+  final _sliderSaltinessFieldKey = GlobalKey<FormBuilderFieldState>();
+  final _sliderSpicinessFieldKey = GlobalKey<FormBuilderFieldState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,6 +39,10 @@ class CameraBodyView extends ConsumerWidget {
       List<String> tags = _tagsFieldKey.currentState?.value;
       String publicNotes = _publicNotesFieldKey.currentState?.value;
       String privateNotes = _privateNotesFieldKey.currentState?.value;
+      double sweetnessSlider = _sliderSweetnessFieldKey.currentState?.value;
+      double sournessSlider = _sliderSournessFieldKey.currentState?.value;
+      double spicinessSlider = _sliderSpicinessFieldKey.currentState?.value;
+      double saltinessSlider = _sliderSaltinessFieldKey.currentState?.value;
 
       // Add the new rating
       print("stars $stars");
@@ -41,6 +51,10 @@ class CameraBodyView extends ConsumerWidget {
       print(tags);
       print("publicNotes $publicNotes");
       print("privateNotes $privateNotes");
+      print("sweetnessSlider $sweetnessSlider");
+      print("sournessSlider $sournessSlider");
+      print("spicinessSlider $spicinessSlider");
+      print("saltinessSlider $saltinessSlider");
 
       // Reset form
       _formKey.currentState?.reset();
@@ -88,6 +102,25 @@ class CameraBodyView extends ConsumerWidget {
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              SliderField(
+                  fieldKey: _sliderSweetnessFieldKey,
+                  name: "Sweetness",
+                  color: Colors.pink),
+              SliderField(
+                  fieldKey: _sliderSournessFieldKey,
+                  name: "Sourness",
+                  color: Colors.lime),
+              SliderField(
+                  fieldKey: _sliderSpicinessFieldKey,
+                  name: "Spiciness",
+                  color: Colors.orange),
+              SliderField(
+                  fieldKey: _sliderSaltinessFieldKey,
+                  name: "Saltiness",
+                  color: Colors.blueGrey),
               SubmitButton(onSubmit: onSubmit),
             ],
           )),
