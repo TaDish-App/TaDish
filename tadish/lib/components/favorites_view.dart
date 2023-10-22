@@ -14,6 +14,7 @@ class FavoritesView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ratingsDB = ref.watch(ratingsDBProvider);
+    final String currentUserID = ref.watch(currentUserIDProvider);
 
     var favorites = ratingsDB.getSingularUserRatings(currentUserID);
     favorites.sort((a, b) => a.starRating.compareTo(b.starRating));

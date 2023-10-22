@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
                   case SigninView.routeName:
-                    return const SigninView();
+                    return SigninView();
                   case SignupView.routeName:
                     return const SignupView();
                   case FeedView.routeName:
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
                   case FriendsListView.routeName:
                     return FriendsListView();
                   default:
-                    return const SigninView();
+                    return SigninView();
                 }
               },
             );

@@ -71,8 +71,8 @@ class UserDB {
     UserData(
         id : 'user-001',
         name : 'Timothy Huo',
-        username : 'thuo_hawaii',
-        email : 'thuo_hawaii@gmail.com',
+        username : 'thuo',
+        email : 'thuo@gmail.com',
         tastePreference : [0.10, 0.0, 0.6, 0.3],
         friendsIDList : ['user-002', 'user-003'],
         savedDishesID : ['dish-001', 'dish-002', 'dish-005'],
@@ -86,8 +86,8 @@ class UserDB {
     UserData(
       id : 'user-002',
       name : 'Alyssia Chen',
-      username : 'alyssia_hawaii',
-      email : 'alyssia_hawaii@gmail.com',
+      username : 'abc8',
+      email : 'abc8@gmail.com',
       tastePreference : [0.30, .50, 0.3, 0.8],
       friendsIDList : ['user-001', 'user-003'],
       savedDishesID : ['dish-004', 'dish-005'],
@@ -143,6 +143,22 @@ class UserDB {
     return _users.where((userData) => friends.contains(userData.id)).toList();
   }
 
+  bool isUserEmail(String email) {
+    List<String> emails = _users.map((userData) => userData.email).toList();
+    return emails.contains(email);
+  }
+
+  String getUserID(String emailOrUsername) {
+    return (emailOrUsername.startsWith('@'))
+        ? _users
+        .firstWhere((userData) => userData.username == emailOrUsername)
+        .id
+        : _users.firstWhere((userData) => userData.email == emailOrUsername).id;
+  }
+
+  List<String> getAllEmails() {
+    return _users.map((userData) => userData.email).toList();
+  }
 }
 
 final userDBProvider = Provider<UserDB>((ref) {
@@ -152,6 +168,3 @@ final userDBProvider = Provider<UserDB>((ref) {
 final currentUserIDProvider = StateProvider<String>((ref) {
   return 'user-001';
 });
-
-/// The currently logged in user.
-String currentUserID = 'user-001';

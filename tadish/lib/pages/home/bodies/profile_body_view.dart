@@ -25,6 +25,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
     final ratingsDB = ref.watch(ratingsDBProvider);
 
     const secondaryTextColor = Colors.grey;
+    final String currentUserID = ref.watch(currentUserIDProvider);
     final UserDB userDB = ref.watch(userDBProvider);
     final UserData currentUser = userDB.getUser(currentUserID);
 

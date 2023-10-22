@@ -86,6 +86,7 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
 
   @override
   Widget build(BuildContext context) {
+    final String currentUserID = ref.watch(currentUserIDProvider);
     final UserDB userDB = ref.watch(userDBProvider);
     final UserData currentUser = userDB.getUser(currentUserID);
     List<UserData?> friendsList =userDB.getFriends(currentUserID);
