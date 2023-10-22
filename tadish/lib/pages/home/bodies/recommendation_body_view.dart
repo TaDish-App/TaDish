@@ -1,53 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../components/dish_card.dart';
 import '../../../data_model/dish_db.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
-class RecommendationBodyView extends ConsumerStatefulWidget {
-  @override
-  ConsumerState<RecommendationBodyView> createState() => _RecommendationBodyViewState();
-}
-
-class _RecommendationBodyViewState extends ConsumerState<RecommendationBodyView> {
-
-  List<String> saved = [];
-
-  @override
-  Widget build(BuildContext context) {
+final dishesProvider = StateProvider<List<DishData>>((ref) {
     final dishDB = ref.watch(dishDBProvider);
-    List<DishData> dishes = dishDB.getDishes();
+    List<DishData> dishList = dishDB.getDishRestaurant();
+    return dishList;
+});
+
+final dishesSavedProvider = StateProvider<List>((ref) {
+  return [];
+});
+
+class RecommendationBodyView extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final saved = ref.watch(dishesSavedProvider);
+    final dishes = ref.watch(dishesProvider);
+
     void swipeLeft() {
-      setState(() {
-        print('LEFT');
-        dishes.removeAt(0);
-      });
+      ref.read(dishesProvider.notifier).state = dishes.sublist(1);
     }
 
     void swipeRight() {
-      setState(() {
-        print('RIGHT');
-        saved.add(dishes[0].name);
-        dishes.removeAt(0);
-      });
+      // saved.add(dishes[0].name);
+      ref.read(dishesSavedProvider.notifier).state = [...saved, dishes[0].name];
+      ref.read(dishesProvider.notifier).state = dishes.sublist(1);
+      // You can also save the dish to your 'saved' list if needed.
     }
 
     return Center(
       child: dishes.isEmpty
           ? Container(
-          alignment: Alignment.center,
-          child: Column (
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('No more cards to swipe!'),
-                Text('Saved: $saved'),
-              ]
-          )
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('No more cards to swipe!'),
+            Text('Saved: $saved'),
+            // Display your saved dishes here.
+          ],
+        ),
       )
           : Stack(
         alignment: Alignment.center,
-        children: dishes.map((dish) {
-          final index = dishes.indexOf(dish);
+        children: dishes.asMap().entries.map((entry) {
+          final index = entry.key;
+          final dish = entry.value;
           final isFrontCard = index == 0;
 
           return SizedBox(
