@@ -12,6 +12,7 @@ class HistoryView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ratingsDB = ref.watch(ratingsDBProvider);
+    final dishDB = ref.watch(dishDBProvider);
     final List<RatingData> ratings = ratingsDB.getSingularUserRatings(userID);
 
     return ratings.isNotEmpty

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../../components/dish_row_tile.dart';
 import '../../../data_model/dish_db.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FeedBodyView extends StatelessWidget {
-  final List<DishData> dishes = dishDB.getDishRestaurant();
-
-  FeedBodyView({super.key});
+class FeedBodyView extends ConsumerWidget {
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dishDB = ref.watch(dishDBProvider);
+    final List<DishData> dishes = dishDB.getDishRestaurant();
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: Column(

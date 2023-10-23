@@ -10,6 +10,7 @@ class FriendsListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final String currentUserID = ref.watch(currentUserIDProvider);
     final UserDB userDB = ref.watch(userDBProvider);
     final UserData currentUser = userDB.getUser(currentUserID);
     final List<UserData?> friendsList = userDB.getFriends(currentUserID);

@@ -1,4 +1,5 @@
 import 'restaurant_db.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DishData {
   DishData(
@@ -36,6 +37,10 @@ class DishData {
 }
 
 class DishDB {
+  DishDB(this.ref);
+
+  final ProviderRef<DishDB> ref;
+
   final List<DishData> _dishes = [
     DishData(
         id: 'dish-001',
@@ -114,6 +119,7 @@ class DishDB {
   }
   List<DishData> getDishRestaurant() {
     List<DishData> dishes = _dishes.toList();
+    RestaurantDB restaurantDB = ref.read(restaurantDBProvider);
     for (var dish in dishes) {
       RestaurantData restaurant = restaurantDB.getRestaurant(dish.restaurantID);
       dish.restaurant = restaurant;
@@ -130,4 +136,6 @@ class DishDB {
   }
 }
 
-DishDB dishDB = DishDB();
+final dishDBProvider = Provider<DishDB>((ref) {
+  return DishDB(ref);
+});

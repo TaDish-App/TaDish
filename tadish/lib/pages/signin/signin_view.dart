@@ -1,21 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'form-fields/email_field.dart';
+import 'form-fields/submit_button.dart';
+
+import '../../data_model/user_db.dart';
 
 /// Presents the page containing fields to enter a username and password, plus buttons.
-class SigninView extends StatefulWidget {
-  const SigninView({Key? key}) : super(key: key);
+class SigninView extends ConsumerWidget {
+  SigninView({Key? key}) : super(key: key);
 
   static const routeName = '/signin';
 
-  @override
-  State<SigninView> createState() => _SigninViewState();
-}
-
-class _SigninViewState extends State<SigninView> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormBuilderState>();
+  final _emailKey = GlobalKey<FormBuilderFieldState>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    void onSubmit() {
+      bool validEmailAndPassword =
+      _formKey.currentState?.saveAndValidate() ?? false;
+      UserDB userDB = ref.read(userDBProvider);
+
+      if (validEmailAndPassword) {
+        String email = _formKey.currentState?.value['email'];
+        if (userDB.isUserEmail(email)) {
+          String userID = userDB.getUserID(email);
+          ref.read(currentUserIDProvider.notifier).state = userID;
+          Navigator.pushReplacementNamed(context, '/home');
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+                "Unknown User, try one of: ${userDB.getAllEmails().join(', ')}"),
+            duration: const Duration(seconds: 10),
+          ));
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Invalid Email or Password.'),
+          duration: Duration(seconds: 2),
+        ));
+      }
+    }
+
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -38,20 +66,20 @@ class _SigninViewState extends State<SigninView> {
               ],
             ),
             const SizedBox(height: 120.0),
-            // [Name]
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
+            FormBuilder(
+              key: _formKey,
+              // autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                children: [
+                  EmailField(fieldKey: _emailKey),
+                  const SizedBox(height: 10),
+                  FormBuilderTextField(
+                    name: 'password',
+                    decoration: const InputDecoration(labelText: 'Password'),
+                    obscureText: true,
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 12.0),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-              ),
-              obscureText: true,
             ),
             Align(
               alignment: Alignment.centerRight,
@@ -61,12 +89,10 @@ class _SigninViewState extends State<SigninView> {
               ),
             ),
             const SizedBox(height: 12.0),
-            ElevatedButton(
-                onPressed: () {
-                  // Eventually: pushReplacementNamed
-                  Navigator.pushReplacementNamed(context, '/home');
-                },
-                child: const Text('Sign in')),
+            SizedBox(
+              height: 40,
+              child: SubmitButton(onSubmit: onSubmit),
+            ),
             const SizedBox(height: 12.0),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               const Text("Don't have an account? "),
