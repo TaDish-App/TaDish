@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tadish/data_model/dish_db.dart';
 
 /// The data associated with users.
 class RatingData {
@@ -220,6 +221,53 @@ class RatingsDB {
 
   List<RatingData> getSingularUserRatings(userID) {
     return _ratings.where((data) => data.raterID == userID).toList();
+  }
+
+  void addRating({
+    required name,
+    required raterID,
+    required starRating,
+    required sweetness,
+    required sourness,
+    required saltiness,
+    required spiciness,
+    required List<String>? tags,
+    required String? picture,
+    String? publicNote,
+    String? privateNote,}) {
+
+    // id
+    String id = 'rating-${(_ratings.length + 1).toString().padLeft(3, '0')}';
+
+    // dishID - create new dish if it's a new dish
+    DishDB dishesDB = ref.read(dishDBProvider);
+    String dishID = 'dish-001';
+    // if (dishesDB.checkDishExists(name)) {
+    //   // grab dish id
+    //   dishesDB.getDishID(name); // TODO This is bad because name may not be unique
+    // } else {
+    //   // create new dish entity
+    //   dishID  = 'dish-${(dishesDB.getSize() + 1).toString().padLeft(3, '0')}';
+    // }
+
+    // created On
+    DateTime createdOn = DateTime.now();
+
+    RatingData data = RatingData(
+        id: id,
+        dishID: dishID,
+        raterID: raterID,
+        starRating: starRating,
+        sweetness: sweetness,
+        sourness: sourness,
+        saltiness: saltiness,
+        spiciness: spiciness,
+        tags: tags,
+        picture: picture,
+        publicNote: publicNote,
+        privateNote: privateNote,
+        createdOn: createdOn);
+    _ratings.add(data);
   }
 }
 

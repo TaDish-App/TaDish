@@ -127,8 +127,20 @@ class DishDB {
     return dishes;
   }
 
+  String getDishID(String dishName) {
+    return _dishes.singleWhere((dish) => dish.name == dishName).id;
+  }
+
+  int getSize() {
+    return _dishes.length;
+  }
+
   String getDishName(String dishID) {
     return _dishes.singleWhere((dish) => dish.id == dishID).name;
+  }
+
+  DishData getDishData(String dishID) {
+    return _dishes.singleWhere((dish) => dish.id == dishID);
   }
 
   String getDishRestaurantName(String dishID) {

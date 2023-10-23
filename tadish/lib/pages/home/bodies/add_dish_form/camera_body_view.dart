@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:tadish/data_model/rating_db.dart';
 import '../../../../components/fields/images_field.dart';
 import '../../../../components/fields/single_line_text_field.dart';
 import '../../../../components/fields/slider_field.dart';
@@ -8,6 +9,7 @@ import '../../../../components/fields/tags_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../components/submit_button.dart';
+import '../../../../data_model/user_db.dart';
 
 class CameraBodyView extends ConsumerWidget {
   final _formKey = GlobalKey<FormBuilderState>();
@@ -22,10 +24,12 @@ class CameraBodyView extends ConsumerWidget {
   final _sliderSournessFieldKey = GlobalKey<FormBuilderFieldState>();
   final _sliderSaltinessFieldKey = GlobalKey<FormBuilderFieldState>();
   final _sliderSpicinessFieldKey = GlobalKey<FormBuilderFieldState>();
-  bool formReset = false;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final RatingsDB ratingsDB = ref.watch(ratingsDBProvider);
+    final String currentUser = ref.watch(currentUserIDProvider);
+
     void onSubmit() {
       print("Creating a new rating!");
 
@@ -45,18 +49,19 @@ class CameraBodyView extends ConsumerWidget {
       double saltinessSlider = _sliderSaltinessFieldKey.currentState?.value;
       String image = _imageFieldKey.currentState?.value;
 
-      // Add the new rating
-      // print("stars $stars");
-      // print("restaurantName $restaurantName");
-      // print("dishName $dishName");
-      // print(tags);
-      // print("publicNotes $publicNotes");
-      // print("privateNotes $privateNotes");
-      // print("sweetnessSlider $sweetnessSlider");
-      // print("sournessSlider $sournessSlider");
-      // print("spicinessSlider $spicinessSlider");
-      // print("saltinessSlider $saltinessSlider");
-      // print("image: $image");
+      // Add the new rating.
+      ratingsDB.addRating(
+          name: dishName,
+          raterID: currentUser,
+          starRating: stars,
+          sweetness: sweetnessSlider,
+          sourness: sournessSlider,
+          saltiness: saltinessSlider,
+          spiciness: spicinessSlider,
+          tags: tags,
+          picture: image,
+          publicNote: publicNotes,
+          privateNote: privateNotes);
 
       // Reset form
       _formKey.currentState?.reset();
