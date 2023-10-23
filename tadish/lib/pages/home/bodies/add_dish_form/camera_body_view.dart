@@ -22,6 +22,7 @@ class CameraBodyView extends ConsumerWidget {
   final _sliderSournessFieldKey = GlobalKey<FormBuilderFieldState>();
   final _sliderSaltinessFieldKey = GlobalKey<FormBuilderFieldState>();
   final _sliderSpicinessFieldKey = GlobalKey<FormBuilderFieldState>();
+  bool formReset = false;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,21 +46,19 @@ class CameraBodyView extends ConsumerWidget {
       String image = _imageFieldKey.currentState?.value;
 
       // Add the new rating
-      print("stars $stars");
-      print("restaurantName $restaurantName");
-      print("dishName $dishName");
-      print(tags);
-      print("publicNotes $publicNotes");
-      print("privateNotes $privateNotes");
-      print("sweetnessSlider $sweetnessSlider");
-      print("sournessSlider $sournessSlider");
-      print("spicinessSlider $spicinessSlider");
-      print("saltinessSlider $saltinessSlider");
-      print("image: $image");
+      // print("stars $stars");
+      // print("restaurantName $restaurantName");
+      // print("dishName $dishName");
+      // print(tags);
+      // print("publicNotes $publicNotes");
+      // print("privateNotes $privateNotes");
+      // print("sweetnessSlider $sweetnessSlider");
+      // print("sournessSlider $sournessSlider");
+      // print("spicinessSlider $spicinessSlider");
+      // print("saltinessSlider $saltinessSlider");
+      // print("image: $image");
 
       // Reset form
-      _formKey.currentState!.fields['Image']
-          ?.reset();
       _formKey.currentState?.reset();
     }
 
@@ -110,17 +109,20 @@ class CameraBodyView extends ConsumerWidget {
                 height: 10,
               ),
               SliderField(
-                  fieldKey: _sliderSweetnessFieldKey,
-                  name: "Sweetness",
-                  color: Colors.pink),
+                fieldKey: _sliderSweetnessFieldKey,
+                name: "Sweetness",
+                color: Colors.pink,
+              ),
               SliderField(
-                  fieldKey: _sliderSournessFieldKey,
-                  name: "Sourness",
-                  color: Colors.lime),
+                fieldKey: _sliderSournessFieldKey,
+                name: "Sourness",
+                color: Colors.lime,
+              ),
               SliderField(
-                  fieldKey: _sliderSpicinessFieldKey,
-                  name: "Spiciness",
-                  color: Colors.orange),
+                fieldKey: _sliderSpicinessFieldKey,
+                name: "Spiciness",
+                color: Colors.orange,
+              ),
               SliderField(
                   fieldKey: _sliderSaltinessFieldKey,
                   name: "Saltiness",

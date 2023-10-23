@@ -3,7 +3,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../circle_image_selector.dart';
-import '../field_padding.dart';
 
 class ImagesField extends StatelessWidget {
   final String name;

@@ -37,13 +37,9 @@ class _CircleImageSelectorState extends State<CircleImageSelector> {
         setState(() {
           _image = img;
           widget.field.didChange(img.toString());
-          print(img);
           Navigator.of(context).pop();
         });
-      } on PlatformException catch (e) {
-        print(e);
-        Navigator.of(context).pop();
-      }
+      } on PlatformException catch (e) {}
     }
 
     void showSelectPhotoOptions(BuildContext context) {
