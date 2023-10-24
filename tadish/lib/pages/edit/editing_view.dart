@@ -37,15 +37,21 @@ class EditingView extends ConsumerWidget {
     final DishDB dishesDB = ref.watch(dishDBProvider);
     final String currentUser = ref.watch(currentUserIDProvider);
 
+
+    final ratingID = ModalRoute.of(context)!.settings.arguments as String;
+    final rating = ratingsDB.getRating(ratingID);
+    final restaurantName = dishesDB.getDishRestaurantName(rating.dishID);
+    final dishName = dishesDB.getDishName(rating.dishID);
+
     void onSubmit() {
-      print("Creating a new rating!");
+      print("Editing a rating!");
 
       bool isValid = _formKey.currentState?.saveAndValidate() ?? false;
 
       if (!isValid) return;
       // Since validation passed, we can safely access the values.
       double stars = _starsFieldKey.currentState?.value;
-      String restaurantName = _restaurantNameFieldKey.currentState?.value;
+      String restaurantName = _restaurantNameFieldKey.currentState?.value; // TODO any changes to this should update dishDB
       String dishName = _dishNameFieldKey.currentState?.value;
       List<String> tags = _tagsFieldKey.currentState?.value;
       String publicNotes = _publicNotesFieldKey.currentState?.value;
@@ -57,9 +63,8 @@ class EditingView extends ConsumerWidget {
       String image = _imageFieldKey.currentState?.value;
 
       // Edit the rating.
-      ratingsDB.addRating(
+      ratingsDB.editRating(
           name: dishName,
-          raterID: currentUser,
           starRating: stars,
           sweetness: sweetnessSlider,
           sourness: sournessSlider,
@@ -68,16 +73,16 @@ class EditingView extends ConsumerWidget {
           tags: tags,
           picture: image,
           publicNote: publicNotes,
-          privateNote: privateNotes);
+          privateNote: privateNotes,
+          ratingID: ratingID,
+          dishID: rating.dishID,
+          raterID: rating.raterID,
+          createdOn: rating.createdOn);
 
       // pop out back to view of rating
+      Navigator.pop(context);
+      Navigator.pop(context);
     }
-
-    final ratingID = ModalRoute.of(context)!.settings.arguments as String;
-    final rating = ratingsDB.getRating(ratingID);
-    final restaurantName = dishesDB.getDishRestaurantName(rating.dishID);
-    final dishName = dishesDB.getDishName(rating.dishID);
-    // getDishRestaurantName(String dishID)
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -98,18 +103,21 @@ class EditingView extends ConsumerWidget {
                           fieldKey: _starsFieldKey,
                           currStars: rating.starRating),
                       SingleLineTextField(
-                          name: "Restaurant",
-                          hint: "Enter the location",
-                          fieldKey: _restaurantNameFieldKey,
-                          currText: restaurantName,
+                        name: "Restaurant",
+                        hint: "Enter the location",
+                        fieldKey: _restaurantNameFieldKey,
+                        currText: restaurantName,
                       ),
                       SingleLineTextField(
-                          name: "Dish Name",
-                          hint: "Enter the dish name",
-                          fieldKey: _dishNameFieldKey,
-                          currText: dishName,
+                        name: "Dish Name",
+                        hint: "Enter the dish name",
+                        fieldKey: _dishNameFieldKey,
+                        currText: dishName,
                       ),
-                      TagsField(name: "Tags", fieldKey: _tagsFieldKey, currTags: rating.tags),
+                      TagsField(
+                          name: "Tags",
+                          fieldKey: _tagsFieldKey,
+                          currTags: rating.tags),
                       Row(
                         children: [
                           Flexible(
@@ -159,7 +167,8 @@ class EditingView extends ConsumerWidget {
                     ],
                   ),
                 ),
-                SubmitButton(onSubmit: onSubmit, submissionText: "Finalize Edits"),
+                SubmitButton(
+                    onSubmit: onSubmit, submissionText: "Finalize Edits"),
               ],
             )),
       ),

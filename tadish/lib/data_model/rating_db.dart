@@ -273,6 +273,44 @@ class RatingsDB {
         createdOn: createdOn);
     _ratings.add(data);
   }
+
+  void editRating({
+    required ratingID,
+    required dishID,
+    required name,
+    required raterID,
+    required starRating,
+    required sweetness,
+    required sourness,
+    required saltiness,
+    required spiciness,
+    required List<String>? tags,
+    required String? picture,
+    String? publicNote,
+    String? privateNote,
+    required DateTime createdOn,
+  }) {
+
+
+    RatingData data = RatingData(
+        id: ratingID,
+        dishID: dishID,
+        raterID: raterID,
+        starRating: starRating,
+        sweetness: sweetness,
+        sourness: sourness,
+        saltiness: saltiness,
+        spiciness: spiciness,
+        tags: tags,
+        picture: picture,
+        publicNote: publicNote,
+        privateNote: privateNote,
+        createdOn: createdOn);
+
+    _ratings.removeWhere((ratingData) => ratingData.id == ratingID);
+
+    _ratings.add(data);
+  }
 }
 
 /// The singleton instance providing access to all user data for clients.
