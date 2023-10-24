@@ -7,12 +7,14 @@ class SliderField extends StatefulWidget {
       fieldKey;
   final String name;
   final MaterialColor color;
+  final double? currValue;
 
   const SliderField({
     super.key,
     required this.fieldKey,
     required this.name,
     required this.color,
+    this.currValue,
   });
 
   @override
@@ -20,22 +22,22 @@ class SliderField extends StatefulWidget {
 }
 
 class _SliderFieldState extends State<SliderField> {
-  final double _initialSliderValue = 50;
   double _currentSliderValue = 20;
 
   @override
   Widget build(BuildContext context) {
+    final double initialSliderValue = widget.currValue ?? 50;
     return FormBuilderField(
       name: widget.name,
       key: widget.fieldKey,
       // _sliderSweetnessFieldKey.currentState?.value
-      initialValue: _initialSliderValue,
+      initialValue: initialSliderValue,
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),
       ]),
       builder: (FormFieldState<dynamic> field) {
-        _currentSliderValue = field.value == _initialSliderValue
-            ? _initialSliderValue
+        _currentSliderValue = field.value == initialSliderValue
+            ? initialSliderValue
             : _currentSliderValue;
         return Column(
           children: [

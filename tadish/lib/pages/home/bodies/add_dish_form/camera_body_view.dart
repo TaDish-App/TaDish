@@ -133,7 +133,7 @@ class CameraBodyView extends ConsumerWidget {
                 ),
               ),
 
-              SubmitButton(onSubmit: onSubmit),
+              SubmitButton(onSubmit: onSubmit, submissionText: "Submit a new Rating!"),
             ],
           )),
     );

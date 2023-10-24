@@ -84,10 +84,15 @@ class EditingView extends ConsumerWidget {
                   child: Column(
                     children: <Widget>[
                       // TODO Image picking
-                      ImagesField(fieldKey: _imageFieldKey, name: "Image", currImage: rating.picture),
+                      ImagesField(
+                          fieldKey: _imageFieldKey,
+                          name: "Image",
+                          currImage: rating.picture),
                       // FieldPadding(
                       //     child: CircleImageSelector(fieldKey: _imageFieldKey)),
-                      StarField(fieldKey: _starsFieldKey, currStars: rating.starRating),
+                      StarField(
+                          fieldKey: _starsFieldKey,
+                          currStars: rating.starRating),
                       SingleLineTextField(
                           name: "Restaurant",
                           hint: "Enter the location",
@@ -103,42 +108,50 @@ class EditingView extends ConsumerWidget {
                             child: SingleLineTextField(
                                 name: "Public Notes",
                                 hint: "Public Notes",
-                                fieldKey: _publicNotesFieldKey),
+                                fieldKey: _publicNotesFieldKey,
+                                currText: rating.publicNote),
                           ),
                           Flexible(
                             child: SingleLineTextField(
-                                name: "Private Notes",
-                                hint: "Private Notes",
-                                fieldKey: _privateNotesFieldKey),
+                              name: "Private Notes",
+                              hint: "Private Notes",
+                              fieldKey: _privateNotesFieldKey,
+                              currText: rating.privateNote,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
                           ),
                         ],
+                      ),
+                      SliderField(
+                        fieldKey: _sliderSweetnessFieldKey,
+                        name: "Sweetness",
+                        color: Colors.pink,
+                        currValue: rating.sweetness,
+                      ),
+                      SliderField(
+                        fieldKey: _sliderSournessFieldKey,
+                        name: "Sourness",
+                        color: Colors.lime,
+                        currValue: rating.sourness,
+                      ),
+                      SliderField(
+                        fieldKey: _sliderSpicinessFieldKey,
+                        name: "Spiciness",
+                        color: Colors.orange,
+                        currValue: rating.spiciness,
+                      ),
+                      SliderField(
+                        fieldKey: _sliderSaltinessFieldKey,
+                        name: "Saltiness",
+                        color: Colors.blueGrey,
+                        currValue: rating.saltiness,
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                SliderField(
-                  fieldKey: _sliderSweetnessFieldKey,
-                  name: "Sweetness",
-                  color: Colors.pink,
-                ),
-                SliderField(
-                  fieldKey: _sliderSournessFieldKey,
-                  name: "Sourness",
-                  color: Colors.lime,
-                ),
-                SliderField(
-                  fieldKey: _sliderSpicinessFieldKey,
-                  name: "Spiciness",
-                  color: Colors.orange,
-                ),
-                SliderField(
-                    fieldKey: _sliderSaltinessFieldKey,
-                    name: "Saltiness",
-                    color: Colors.blueGrey),
-                SubmitButton(onSubmit: onSubmit),
+                SubmitButton(onSubmit: onSubmit, submissionText: "Finalize Edits"),
               ],
             )),
       ),

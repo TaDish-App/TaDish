@@ -9,11 +9,13 @@ class SingleLineTextField extends StatelessWidget {
   final String name;
   final String hint;
   final Key fieldKey;
+  final String? currText;
 
   const SingleLineTextField({
     required this.name,
     required this.hint,
     required this.fieldKey,
+    this.currText,
     super.key,
   });
 
@@ -24,6 +26,7 @@ class SingleLineTextField extends StatelessWidget {
         children: [
           FormBuilderTextField(
             key: fieldKey,
+            initialValue: currText ?? "",
             textAlign: TextAlign.center,
             name: name,
             decoration: TextFieldDecoration.textFieldStyle(
