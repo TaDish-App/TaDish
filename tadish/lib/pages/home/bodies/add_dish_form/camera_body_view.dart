@@ -107,31 +107,32 @@ class CameraBodyView extends ConsumerWidget {
                         ),
                       ],
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SliderField(
+                      fieldKey: _sliderSweetnessFieldKey,
+                      name: "Sweetness",
+                      color: Colors.pink,
+                    ),
+                    SliderField(
+                      fieldKey: _sliderSournessFieldKey,
+                      name: "Sourness",
+                      color: Colors.lime,
+                    ),
+                    SliderField(
+                      fieldKey: _sliderSpicinessFieldKey,
+                      name: "Spiciness",
+                      color: Colors.orange,
+                    ),
+                    SliderField(
+                        fieldKey: _sliderSaltinessFieldKey,
+                        name: "Saltiness",
+                        color: Colors.blueGrey),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              SliderField(
-                fieldKey: _sliderSweetnessFieldKey,
-                name: "Sweetness",
-                color: Colors.pink,
-              ),
-              SliderField(
-                fieldKey: _sliderSournessFieldKey,
-                name: "Sourness",
-                color: Colors.lime,
-              ),
-              SliderField(
-                fieldKey: _sliderSpicinessFieldKey,
-                name: "Spiciness",
-                color: Colors.orange,
-              ),
-              SliderField(
-                  fieldKey: _sliderSaltinessFieldKey,
-                  name: "Saltiness",
-                  color: Colors.blueGrey),
+
               SubmitButton(onSubmit: onSubmit),
             ],
           )),
