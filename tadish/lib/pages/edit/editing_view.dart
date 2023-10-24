@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tadish/data_model/dish_db.dart';
-import 'package:tadish/pages/home/bodies/recommendation_body_view.dart';
 
 import '../../components/fields/images_field.dart';
 import '../../components/fields/single_line_text_field.dart';
@@ -37,7 +36,6 @@ class EditingView extends ConsumerWidget {
     final DishDB dishesDB = ref.watch(dishDBProvider);
     final String currentUser = ref.watch(currentUserIDProvider);
 
-
     final ratingID = ModalRoute.of(context)!.settings.arguments as String;
     final rating = ratingsDB.getRating(ratingID);
     final restaurantName = dishesDB.getDishRestaurantName(rating.dishID);
@@ -51,7 +49,8 @@ class EditingView extends ConsumerWidget {
       if (!isValid) return;
       // Since validation passed, we can safely access the values.
       double stars = _starsFieldKey.currentState?.value;
-      String restaurantName = _restaurantNameFieldKey.currentState?.value; // TODO any changes to this should update dishDB
+      String restaurantName = _restaurantNameFieldKey
+          .currentState?.value; // TODO any changes to this should update dishDB
       String dishName = _dishNameFieldKey.currentState?.value;
       List<String> tags = _tagsFieldKey.currentState?.value;
       String publicNotes = _publicNotesFieldKey.currentState?.value;

@@ -35,16 +35,32 @@ class HistoryView extends ConsumerWidget {
                         context: context,
                         builder: (BuildContext context) => Dialog(
                           child: Column(children: [
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: IconButton(
+                                icon: const Icon(Icons.create_outlined),
+                                tooltip: 'Edit your rating',
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    EditingView.routeName,
+                                    arguments: rating.id,
+                                  );
+                                },
+                              ),
+                            ),
                             Center(
                               child: Container(
-                                  margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                  height: 200.0,
-                                  width: 200.0,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.grey.shade200,
-                                    image: DecorationImage(image: AssetImage(rating.picture), fit: BoxFit.cover),
-                                  ),
+                                margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                height: 200.0,
+                                width: 200.0,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey.shade200,
+                                  image: DecorationImage(
+                                      image: AssetImage(rating.picture),
+                                      fit: BoxFit.cover),
+                                ),
                               ),
                             ),
                             Text(
@@ -73,8 +89,9 @@ class HistoryView extends ConsumerWidget {
                                 InputChip(
                                   avatar: const Icon(Icons.energy_savings_leaf),
                                   label: const Text('Vegan'),
-                                  backgroundColor:
-                                  Theme.of(context).primaryColor.withAlpha(95),
+                                  backgroundColor: Theme.of(context)
+                                      .primaryColor
+                                      .withAlpha(95),
                                 ),
                                 InputChip(
                                   avatar:
@@ -113,17 +130,6 @@ class HistoryView extends ConsumerWidget {
                             Text("Private Note: ${rating.privateNote}"),
                             const SizedBox(
                               height: 10,
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.create_outlined),
-                              tooltip: 'Edit your rating',
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  EditingView.routeName,
-                                  arguments: rating.id,
-                                );
-                              },
                             ),
                           ]),
                         ),
