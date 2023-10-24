@@ -9,8 +9,9 @@ import 'camera_gallery_choice_modal.dart';
 
 class CircleImageSelector extends StatefulWidget {
   final FormFieldState<dynamic> field;
+  final String? currImage;
 
-  const CircleImageSelector({super.key, required this.field});
+  const CircleImageSelector({super.key, required this.field, this.currImage});
 
   @override
   State<CircleImageSelector> createState() => _CircleImageSelectorState();
@@ -69,7 +70,9 @@ class _CircleImageSelectorState extends State<CircleImageSelector> {
 
     // to reset the image shown in the image display
     _image = widget.field.value == null ? null : _image;
+    _image = widget.currImage == null ? _image : File(widget.currImage!.toString());
 
+    print("_image: $_image");
     return Center(
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
@@ -90,9 +93,14 @@ class _CircleImageSelectorState extends State<CircleImageSelector> {
                         'No image selected',
                         style: TextStyle(fontSize: 20),
                       )
-                    : CircleAvatar(
-                        backgroundImage: FileImage(_image!),
-                        radius: 200.0,
+                    : Container(
+                        height: 200.0,
+                        width: 200.0,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey.shade200,
+                          image: (widget.currImage == null) ? DecorationImage(image:  FileImage(_image!), fit: BoxFit.cover) : DecorationImage(image: AssetImage(widget.currImage.toString()), fit: BoxFit.cover),
+                        ),
                       ),
               )),
         ),

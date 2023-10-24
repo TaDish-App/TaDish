@@ -27,7 +27,7 @@ class ImagesField extends StatelessWidget {
         FormBuilderValidators.required(),
       ]),
       builder: (FormFieldState<dynamic> field) {
-        return CircleImageSelector(field: field);
+        return CircleImageSelector(field: field, currImage: currImage);
       },
     );
   }

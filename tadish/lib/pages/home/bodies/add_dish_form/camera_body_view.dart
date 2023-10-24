@@ -48,6 +48,7 @@ class CameraBodyView extends ConsumerWidget {
       double spicinessSlider = _sliderSpicinessFieldKey.currentState?.value;
       double saltinessSlider = _sliderSaltinessFieldKey.currentState?.value;
       String image = _imageFieldKey.currentState?.value;
+      image = 'assets/images/2.jpg';
 
       // Add the new rating.
       ratingsDB.addRating(

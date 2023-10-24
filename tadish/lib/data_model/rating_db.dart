@@ -165,7 +165,7 @@ class RatingsDB {
       createdOn: DateTime.parse('2023-08-23 01:58:04Z'),
     ),
     RatingData(
-      id: 'rating-008',
+      id: 'rating-009',
       raterID: 'user-002',
       dishID: 'dish-003',
       starRating: 5,
@@ -180,7 +180,7 @@ class RatingsDB {
       createdOn: DateTime.parse('2023-04-13 11:49:04Z'),
     ),
     RatingData(
-      id: 'rating-008',
+      id: 'rating-010',
       raterID: 'user-001',
       dishID: 'dish-002',
       starRating: 5,
@@ -195,7 +195,7 @@ class RatingsDB {
       createdOn: DateTime.parse('2023-04-13 11:49:04Z'),
     ),
     RatingData(
-      id: 'rating-008',
+      id: 'rating-011',
       raterID: 'user-001',
       dishID: 'dish-003',
       starRating: 5,
