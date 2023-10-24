@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tadish/data_model/dish_db.dart';
+import 'package:tadish/pages/home/bodies/recommendation_body_view.dart';
 
 import '../../components/fields/images_field.dart';
 import '../../components/fields/single_line_text_field.dart';
@@ -32,6 +34,7 @@ class EditingView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final RatingsDB ratingsDB = ref.watch(ratingsDBProvider);
+    final DishDB dishesDB = ref.watch(dishDBProvider);
     final String currentUser = ref.watch(currentUserIDProvider);
 
     void onSubmit() {
@@ -72,6 +75,9 @@ class EditingView extends ConsumerWidget {
 
     final ratingID = ModalRoute.of(context)!.settings.arguments as String;
     final rating = ratingsDB.getRating(ratingID);
+    final restaurantName = dishesDB.getDishRestaurantName(rating.dishID);
+    final dishName = dishesDB.getDishName(rating.dishID);
+    // getDishRestaurantName(String dishID)
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -88,19 +94,21 @@ class EditingView extends ConsumerWidget {
                           fieldKey: _imageFieldKey,
                           name: "Image",
                           currImage: rating.picture),
-                      // FieldPadding(
-                      //     child: CircleImageSelector(fieldKey: _imageFieldKey)),
                       StarField(
                           fieldKey: _starsFieldKey,
                           currStars: rating.starRating),
                       SingleLineTextField(
                           name: "Restaurant",
                           hint: "Enter the location",
-                          fieldKey: _restaurantNameFieldKey),
+                          fieldKey: _restaurantNameFieldKey,
+                          currText: restaurantName,
+                      ),
                       SingleLineTextField(
                           name: "Dish Name",
                           hint: "Enter the dish name",
-                          fieldKey: _dishNameFieldKey),
+                          fieldKey: _dishNameFieldKey,
+                          currText: dishName,
+                      ),
                       TagsField(name: "Tags", fieldKey: _tagsFieldKey),
                       Row(
                         children: [
