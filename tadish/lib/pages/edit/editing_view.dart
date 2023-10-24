@@ -109,7 +109,7 @@ class EditingView extends ConsumerWidget {
                           fieldKey: _dishNameFieldKey,
                           currText: dishName,
                       ),
-                      TagsField(name: "Tags", fieldKey: _tagsFieldKey),
+                      TagsField(name: "Tags", fieldKey: _tagsFieldKey, currTags: rating.tags),
                       Row(
                         children: [
                           Flexible(

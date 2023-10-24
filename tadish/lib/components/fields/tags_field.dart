@@ -4,14 +4,16 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 class TagsField extends StatelessWidget {
   final Key fieldKey;
   final String name;
+  final List<String>? currTags;
 
   TagsField({
     super.key,
     required this.fieldKey,
     required this.name,
+    this.currTags,
   });
 
-  static final List<String> tagValues = ["Vegan", "Local", "Vegetarian"];
+  static final List<String> tagValues = ["vegan", "local", "vegetarian"];
   static final List<Icon> tagIcons = [
     const Icon(Icons.energy_savings_leaf),
     const Icon(Icons.assistant_photo_rounded),
@@ -35,6 +37,7 @@ class TagsField extends StatelessWidget {
       key: fieldKey,
       name: name,
       options: tags,
+      initialValue: currTags,
       decoration: const InputDecoration(
           border: InputBorder.none, fillColor: Colors.transparent),
       alignment: WrapAlignment.center,
