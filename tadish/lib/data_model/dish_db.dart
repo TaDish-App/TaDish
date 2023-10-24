@@ -144,7 +144,9 @@ class DishDB {
   }
 
   String getDishRestaurantName(String dishID) {
-    return _dishes.singleWhere((dish) => dish.id == dishID).restaurant!.name;
+    List<DishData> dishes = getDishRestaurant();
+    RestaurantData? restaurantData = dishes.singleWhere((dish) => dish.id == dishID).restaurant;
+    return restaurantData == null ? "default" : restaurantData.name;
   }
 }
 

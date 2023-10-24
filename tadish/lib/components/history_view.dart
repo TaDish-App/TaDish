@@ -4,7 +4,7 @@ import '../../../data_model/rating_db.dart';
 import '../../../data_model/dish_db.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'expand_rating_view.dart';
+import '../pages/edit/editing_view.dart';
 
 class HistoryView extends ConsumerWidget {
   final String userID;
@@ -118,7 +118,11 @@ class HistoryView extends ConsumerWidget {
                               icon: const Icon(Icons.create_outlined),
                               tooltip: 'Edit your rating',
                               onPressed: () {
-
+                                Navigator.pushNamed(
+                                  context,
+                                  EditingView.routeName,
+                                  arguments: rating.id,
+                                );
                               },
                             ),
                           ]),

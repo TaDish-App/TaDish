@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pages/edit/editing_view.dart';
 import 'pages/signin/signin_view.dart';
 import 'pages/signup/signup_view.dart';
 import 'pages/home/home_view.dart';
@@ -55,6 +56,8 @@ class MyApp extends ConsumerWidget {
                     return CameraView();
                   case FriendsListView.routeName:
                     return FriendsListView();
+                  case EditingView.routeName:
+                    return EditingView();
                   default:
                     return SigninView();
                 }

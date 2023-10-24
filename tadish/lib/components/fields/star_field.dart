@@ -9,9 +9,9 @@ import '../field_padding.dart';
 
 /// A text field to support defining new or revised garden names.
 class StarField extends StatelessWidget {
-  const StarField({super.key, required this.fieldKey, this.currName});
+  const StarField({super.key, required this.fieldKey, this.currStars});
 
-  final String? currName;
+  final double? currStars;
   final GlobalKey<FormBuilderFieldState<FormBuilderField<dynamic>, dynamic>>
       fieldKey;
 
@@ -20,14 +20,14 @@ class StarField extends StatelessWidget {
     return FormBuilderField(
       name: 'Stars Field',
       key: fieldKey,
-      initialValue: 3.0,
+      initialValue: currStars ?? 3.0,
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),
       ]),
       builder: (FormFieldState<dynamic> field) {
         return FieldPadding(
           child: RatingBar.builder(
-            initialRating: 3,
+            initialRating: currStars ?? 3.0,
             minRating: 1,
             direction: Axis.horizontal,
             allowHalfRating: true,

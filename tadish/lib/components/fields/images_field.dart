@@ -7,10 +7,12 @@ import '../circle_image_selector.dart';
 class ImagesField extends StatelessWidget {
   final String name;
   final Key fieldKey;
+  final String? currImage;
 
   const ImagesField({
     required this.name,
     required this.fieldKey,
+    this.currImage,
     super.key,
   });
 
@@ -19,7 +21,7 @@ class ImagesField extends StatelessWidget {
     return FormBuilderField<String>(
       name: 'Images Field',
       key: fieldKey,
-      initialValue: null,
+      initialValue: currImage,
       // TODO replace with template image
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(),

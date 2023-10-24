@@ -215,6 +215,10 @@ class RatingsDB {
     return _ratings.map((data) => data.id).toList();
   }
 
+  RatingData getRating(String ratingID) {
+    return _ratings.singleWhere((data) => data.id == ratingID);
+  }
+
   List<RatingData> getRatingsOfDish(dishID) {
     return _ratings.where((data) => data.dishID == dishID).toList();
   }
