@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:tadish/features/ratings/domain/rating_db.dart';
+import '../../common/star_confetti.dart';
 import 'form-fields/images_field.dart';
 import 'form-fields/single_line_text_field.dart';
 import 'form-fields/slider_field.dart';
@@ -29,6 +30,35 @@ class CameraBodyView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final RatingsDB ratingsDB = ref.watch(ratingsDBProvider);
     final String currentUser = ref.watch(currentUserIDProvider);
+
+    displayConfirmationModal(String dishName) {
+      return showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => Dialog(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const StarConfetti(),
+                  const SizedBox(height: 15),
+                  Text(
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 20),
+                      'Nice one! Your rating for $dishName has been recorded!'),
+                  const SizedBox(height: 10),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'),
+                  ),
+                ],
+              ),
+            ),
+          ));
+    }
 
     void onSubmit() {
       print("Creating a new rating!");
@@ -66,6 +96,9 @@ class CameraBodyView extends ConsumerWidget {
 
       // Reset form
       _formKey.currentState?.reset();
+
+      // Display confirmation modal
+      displayConfirmationModal(dishName);
     }
 
     // Build a Form widget using the _formKey created above.
@@ -133,8 +166,8 @@ class CameraBodyView extends ConsumerWidget {
                   ],
                 ),
               ),
-
-              SubmitButton(onSubmit: onSubmit, submissionText: "Submit a new Rating!"),
+              SubmitButton(
+                  onSubmit: onSubmit, submissionText: "Submit a new Rating!"),
             ],
           )),
     );
