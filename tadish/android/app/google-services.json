@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "328223965531",
+    "project_id": "tadish-57c14",
+    "storage_bucket": "tadish-57c14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328223965531:android:073c8a2033ad4687a49a7e",
+        "android_client_info": {
+          "package_name": "com.example.tadish"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuxyC_aJFbqiDyqjL1zbTXl8HmXwisktg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
