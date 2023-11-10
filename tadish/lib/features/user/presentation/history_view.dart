@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tadish/features/common/star_rating_static.dart';
 import '../../common/dish_row_tile.dart';
-import '../../ratings/domain/rating_db.dart';
+import '../../ratings/domain/rating.dart';
 import '../../review/domain/dish_db.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,7 +17,7 @@ class HistoryView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ratingsDB = ref.watch(ratingsDBProvider);
     final dishDB = ref.watch(dishDBProvider);
-    final List<RatingData> ratings = ratingsDB.getSingularUserRatings(userID);
+    final List<Rating> ratings = ratingsDB.getSingularUserRatings(userID);
 
     return ratings.isNotEmpty
         ? ListView(

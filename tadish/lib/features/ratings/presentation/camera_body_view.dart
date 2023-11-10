@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:tadish/features/ratings/domain/rating_db.dart';
+import 'package:tadish/features/ratings/domain/rating.dart';
 import '../../common/star_confetti.dart';
 import 'form-fields/images_field.dart';
 import 'form-fields/single_line_text_field.dart';

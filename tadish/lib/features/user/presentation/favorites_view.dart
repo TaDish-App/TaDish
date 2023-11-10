@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:tadish/features/review/domain/dish_db.dart';
-import 'package:tadish/features/ratings/domain/rating_db.dart';
+import 'package:tadish/features/ratings/domain/rating.dart';
 import 'package:tadish/features/user/domain/user_db.dart';
 import '../../common/Tile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

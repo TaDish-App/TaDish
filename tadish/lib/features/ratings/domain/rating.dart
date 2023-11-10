@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tadish/features/review/domain/dish_db.dart';
 
 /// The data associated with users.
-class RatingData {
-  RatingData(
+class Rating {
+  Rating(
       {required this.id,
       required this.raterID,
       required this.dishID,
@@ -43,8 +43,8 @@ class RatingsDB {
 
   final ProviderRef<RatingsDB> ref;
 
-  final List<RatingData> _ratings = [
-    RatingData(
+  final List<Rating> _ratings = [
+    Rating(
         id: 'rating-001',
         raterID: 'user-001',
         dishID: 'dish-001',
@@ -58,7 +58,7 @@ class RatingsDB {
         publicNote: 'taste very sweet',
         privateNote: 'better than the one from Costco',
         createdOn: DateTime.parse('2023-07-20 20:18:04Z')),
-    RatingData(
+    Rating(
       id: 'rating-002',
       raterID: 'user-002',
       dishID: 'dish-001',
@@ -73,7 +73,7 @@ class RatingsDB {
       privateNote: 'never eat again',
       createdOn: DateTime.parse('2023-01-05 05:29:04Z'),
     ),
-    RatingData(
+    Rating(
       id: 'rating-003',
       raterID: 'user-003',
       dishID: 'dish-002',
@@ -88,7 +88,7 @@ class RatingsDB {
       privateNote: 'give to boyfriend',
       createdOn: DateTime.parse('2023-12-23 12:22:04Z'),
     ),
-    RatingData(
+    Rating(
       id: 'rating-004',
       raterID: 'user-004',
       dishID: 'dish-003',
@@ -104,7 +104,7 @@ class RatingsDB {
       privateNote: 'buy at least 1 a year',
       createdOn: DateTime.parse('2023-09-23 01:58:04Z'),
     ),
-    RatingData(
+    Rating(
       id: 'rating-005',
       raterID: 'user-004',
       dishID: 'dish-004',
@@ -119,7 +119,7 @@ class RatingsDB {
       privateNote: '',
       createdOn: DateTime.parse('2023-03-05 01:58:04Z'),
     ),
-    RatingData(
+    Rating(
       id: 'rating-006',
       raterID: 'user-001',
       dishID: 'dish-005',
@@ -134,7 +134,7 @@ class RatingsDB {
       privateNote: '',
       createdOn: DateTime.parse('2023-02-14 01:58:04Z'),
     ),
-    RatingData(
+    Rating(
       id: 'rating-007',
       raterID: 'user-001',
       dishID: 'dish-004',
@@ -149,7 +149,7 @@ class RatingsDB {
       privateNote: '',
       createdOn: DateTime.parse('2023-02-14 01:58:04Z'),
     ),
-    RatingData(
+    Rating(
       id: 'rating-008',
       raterID: 'user-001',
       dishID: 'dish-003',
@@ -164,7 +164,7 @@ class RatingsDB {
       privateNote: 'yumz',
       createdOn: DateTime.parse('2023-08-23 01:58:04Z'),
     ),
-    RatingData(
+    Rating(
       id: 'rating-009',
       raterID: 'user-002',
       dishID: 'dish-003',
@@ -179,7 +179,7 @@ class RatingsDB {
       privateNote: 'yumz',
       createdOn: DateTime.parse('2023-04-13 11:49:04Z'),
     ),
-    RatingData(
+    Rating(
       id: 'rating-010',
       raterID: 'user-001',
       dishID: 'dish-002',
@@ -194,7 +194,7 @@ class RatingsDB {
       privateNote: 'yumz',
       createdOn: DateTime.parse('2023-04-13 11:49:04Z'),
     ),
-    RatingData(
+    Rating(
       id: 'rating-011',
       raterID: 'user-001',
       dishID: 'dish-003',
@@ -215,15 +215,15 @@ class RatingsDB {
     return _ratings.map((data) => data.id).toList();
   }
 
-  RatingData getRating(String ratingID) {
+  Rating getRating(String ratingID) {
     return _ratings.singleWhere((data) => data.id == ratingID);
   }
 
-  List<RatingData> getRatingsOfDish(dishID) {
+  List<Rating> getRatingsOfDish(dishID) {
     return _ratings.where((data) => data.dishID == dishID).toList();
   }
 
-  List<RatingData> getSingularUserRatings(userID) {
+  List<Rating> getSingularUserRatings(userID) {
     return _ratings.where((data) => data.raterID == userID).toList();
   }
 
@@ -257,7 +257,7 @@ class RatingsDB {
     // created On
     DateTime createdOn = DateTime.now();
 
-    RatingData data = RatingData(
+    Rating data = Rating(
         id: id,
         dishID: dishID,
         raterID: raterID,
@@ -292,7 +292,7 @@ class RatingsDB {
   }) {
 
 
-    RatingData data = RatingData(
+    Rating data = Rating(
         id: ratingID,
         dishID: dishID,
         raterID: raterID,

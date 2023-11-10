@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tadish/features/user/presentation/favorites_view.dart';
-import 'package:tadish/features/ratings/domain/rating_db.dart';
+import 'package:tadish/features/ratings/domain/rating.dart';
 import 'history_view.dart';
 import '../../common/taste_prefs_radar_chart.dart';
 import '../../../custom_theme.dart';
