@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tadish/features/user/presentation/favorites_view.dart';
 import 'package:tadish/features/ratings/domain/rating.dart';
+import '../../ratings/data/rating_provider.dart';
+import '../../ratings/domain/rating_collection.dart';
+import '../../tadish_error.dart';
+import '../../tadish_loading.dart';
 import 'history_view.dart';
 import '../../common/taste_prefs_radar_chart.dart';
 import '../../../custom_theme.dart';
@@ -22,7 +26,22 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
 
   @override
   Widget build(BuildContext context) {
-    final ratingsDB = ref.watch(ratingsDBProvider);
+    final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
+
+    return asyncRatingsDB.when(
+        data: (ratings) => _build(
+            context: context,
+            ratings: ratings,
+            ref: ref),
+        loading: () => const TadishLoading(),
+        error: (error, stacktrace) =>
+            TadishError(error.toString(), stacktrace.toString()));
+  }
+
+  Widget _build({required BuildContext context,
+    required List<Rating> ratings,
+    required WidgetRef ref}) {
+    RatingCollection ratingCollection = RatingCollection(ratings);
 
     const secondaryTextColor = Colors.grey;
     final String currentUserID = ref.watch(currentUserIDProvider);
@@ -77,7 +96,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
                 Column(
                   children: [
                     Text(
-                        ratingsDB
+                        ratingCollection
                             .getSingularUserRatings(currentUserID)
                             .length
                             .toString(),

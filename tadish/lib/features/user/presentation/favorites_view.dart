@@ -6,6 +6,11 @@ import 'package:tadish/features/user/domain/user_db.dart';
 import '../../common/Tile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../ratings/data/rating_provider.dart';
+import '../../ratings/domain/rating_collection.dart';
+import '../../tadish_error.dart';
+import '../../tadish_loading.dart';
+
 class FavoritesView extends ConsumerWidget {
   const FavoritesView({
     super.key,
@@ -13,17 +18,32 @@ class FavoritesView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ratingsDB = ref.watch(ratingsDBProvider);
+    final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
+
+    return asyncRatingsDB.when(
+        data: (ratings) => _build(
+            context: context,
+            ratings: ratings,
+            ref: ref),
+        loading: () => const TadishLoading(),
+        error: (error, stacktrace) =>
+            TadishError(error.toString(), stacktrace.toString()));
+  }
+
+  Widget _build({required BuildContext context,
+    required List<Rating> ratings,
+    required WidgetRef ref}) {
+    RatingCollection ratingCollection = RatingCollection(ratings);
     final String currentUserID = ref.watch(currentUserIDProvider);
     final dishDB = ref.watch(dishDBProvider);
 
-    var favorites = ratingsDB.getSingularUserRatings(currentUserID);
+    var favorites = ratingCollection.getSingularUserRatings(currentUserID);
     favorites.sort((a, b) => a.starRating.compareTo(b.starRating));
     favorites = favorites.toList();
     favorites = (favorites.length <= 8) ? favorites : favorites.sublist(0, 8);
     int favoriteImagesIndex = 0;
 
-    String getImage() {
+    String? getImage() {
       return favoriteImagesIndex < favorites.length
           ? favorites[favoriteImagesIndex++].picture
           : 'assets/images/cloche_dark.png';
@@ -33,7 +53,7 @@ class FavoritesView extends ConsumerWidget {
       return Tile(
           index: favoriteImagesIndex,
           image: favoriteImagesIndex < favorites.length
-              ? favorites[favoriteImagesIndex].picture
+              ? favorites[favoriteImagesIndex].picture!
               : 'assets/images/cloche_dark.png',
           dishName: favoriteImagesIndex < favorites.length
               ? dishDB.getDishName(favorites[favoriteImagesIndex++].dishID)

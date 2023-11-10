@@ -3,6 +3,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tadish/features/review/domain/dish_db.dart';
 
+import '../../tadish_error.dart';
+import '../../tadish_loading.dart';
+import '../data/rating_provider.dart';
+import '../domain/rating_collection.dart';
 import 'form-fields/images_field.dart';
 import 'form-fields/single_line_text_field.dart';
 import 'form-fields/slider_field.dart';
@@ -32,12 +36,28 @@ class EditingView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final RatingsDB ratingsDB = ref.watch(ratingsDBProvider);
+    final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
+
+    return asyncRatingsDB.when(
+        data: (ratings) => _build(
+            context: context,
+            ratings: ratings,
+            ref: ref),
+        loading: () => const TadishLoading(),
+        error: (error, stacktrace) =>
+            TadishError(error.toString(), stacktrace.toString()));
+  }
+
+  Widget _build({required BuildContext context,
+    required List<Rating> ratings,
+    required WidgetRef ref}) {
+
+    RatingCollection ratingCollection = RatingCollection(ratings);
     final DishDB dishesDB = ref.watch(dishDBProvider);
     final String currentUser = ref.watch(currentUserIDProvider);
 
     final ratingID = ModalRoute.of(context)!.settings.arguments as String;
-    final rating = ratingsDB.getRating(ratingID);
+    final rating = ratingCollection.getRating(ratingID);
     final restaurantName = dishesDB.getDishRestaurantName(rating.dishID);
     final dishName = dishesDB.getDishName(rating.dishID);
 
@@ -62,7 +82,7 @@ class EditingView extends ConsumerWidget {
       String image = _imageFieldKey.currentState?.value;
 
       // Edit the rating.
-      ratingsDB.editRating(
+      ratingCollection.editRating(
           name: dishName,
           starRating: stars,
           sweetness: sweetnessSlider,
