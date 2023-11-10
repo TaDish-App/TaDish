@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tadish/features/review/domain/dish_db.dart';
 
@@ -272,6 +273,12 @@ class RatingsDB {
         privateNote: privateNote,
         createdOn: createdOn);
     _ratings.add(data);
+
+    FirebaseFirestore.instance
+        .collection('ratings')
+        .add(<String, dynamic>{
+      id: "FROM-HERE"
+    });
   }
 
   void editRating({
