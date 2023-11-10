@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:tadish/features/ratings/domain/rating.dart';
 import '../../common/star_confetti.dart';
+import '../../tadish_error.dart';
+import '../../tadish_loading.dart';
+import '../data/rating_provider.dart';
+import '../domain/rating_collection.dart';
 import 'form-fields/images_field.dart';
 import 'form-fields/single_line_text_field.dart';
 import 'form-fields/slider_field.dart';
@@ -28,7 +32,23 @@ class CameraBodyView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final RatingsDB ratingsDB = ref.watch(ratingsDBProvider);
+    final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
+
+    return asyncRatingsDB.when(
+        data: (ratings) => _build(
+            context: context,
+            ratings: ratings,
+            ref: ref),
+        loading: () => const TadishLoading(),
+        error: (error, stacktrace) =>
+            TadishError(error.toString(), stacktrace.toString()));
+  }
+
+  Widget _build({required BuildContext context,
+    required List<Rating> ratings,
+    required WidgetRef ref}) {
+    RatingCollection ratingCollection = RatingCollection(ratings);
+
     final String currentUser = ref.watch(currentUserIDProvider);
 
     displayConfirmationModal(String dishName) {
@@ -81,7 +101,7 @@ class CameraBodyView extends ConsumerWidget {
       image = 'assets/images/2.jpg';
 
       // Add the new rating.
-      ratingsDB.addRating(
+      ratingCollection.addRating(
           name: dishName,
           raterID: currentUser,
           starRating: stars,
