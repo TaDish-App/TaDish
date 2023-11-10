@@ -6,7 +6,7 @@ import '../../common/taste_prefs_radar_chart.dart';
 import '../../../custom_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../domain/user_db.dart';
+import '../domain/user.dart';
 
 class ProfileBodyView extends ConsumerStatefulWidget {
   const ProfileBodyView({

@@ -7,7 +7,7 @@ import '../../user/presentation/friends_list_row.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'dart:async';
-import '../../user/domain/user_db.dart';
+import '../../user/domain/user.dart';
 
 class SurpriseBodyView extends ConsumerStatefulWidget {
   const SurpriseBodyView({

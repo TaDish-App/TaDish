@@ -10,7 +10,7 @@ import 'form-fields/star_field.dart';
 import 'form-fields/tags_field.dart';
 import '../../common/form-fields/submit_button.dart';
 import '../domain/rating_db.dart';
-import '../../user/domain/user_db.dart';
+import '../../user/domain/user.dart';
 
 /// Presents the page containing fields to enter a username and password, plus buttons.
 class EditingView extends ConsumerWidget {
