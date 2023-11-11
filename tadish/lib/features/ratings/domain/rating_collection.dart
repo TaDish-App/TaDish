@@ -26,7 +26,7 @@ class RatingCollection {
     return _ratings.where((data) => data.raterID == userID).toList();
   }
 
-  void addRating({
+  /* void addRating({
     required name,
     required raterID,
     required starRating,
@@ -71,9 +71,9 @@ class RatingCollection {
         privateNote: privateNote,
         createdOn: createdOn);
     _ratings.add(data);
-  }
+  } */
 
-  void editRating({
+  /* void editRating({
     required ratingID,
     required dishID,
     required name,
@@ -107,5 +107,5 @@ class RatingCollection {
     _ratings.removeWhere((ratingData) => ratingData.id == ratingID);
 
     _ratings.add(data);
-  }
+  } */
 }

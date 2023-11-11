@@ -82,21 +82,21 @@ class EditingView extends ConsumerWidget {
       String image = _imageFieldKey.currentState?.value;
 
       // Edit the rating.
-      ratingCollection.editRating(
-          name: dishName,
-          starRating: stars,
-          sweetness: sweetnessSlider,
-          sourness: sournessSlider,
-          saltiness: saltinessSlider,
-          spiciness: spicinessSlider,
-          tags: tags,
-          picture: image,
-          publicNote: publicNotes,
-          privateNote: privateNotes,
-          ratingID: ratingID,
-          dishID: rating.dishID,
-          raterID: rating.raterID,
-          createdOn: rating.createdOn);
+      // ratingCollection.editRating(
+      //     name: dishName,
+      //     starRating: stars,
+      //     sweetness: sweetnessSlider,
+      //     sourness: sournessSlider,
+      //     saltiness: saltinessSlider,
+      //     spiciness: spicinessSlider,
+      //     tags: tags,
+      //     picture: image,
+      //     publicNote: publicNotes,
+      //     privateNote: privateNotes,
+      //     ratingID: ratingID,
+      //     dishID: rating.dishID,
+      //     raterID: rating.raterID,
+      //     createdOn: rating.createdOn);
 
       // pop out back to view of rating
       Navigator.pop(context);
