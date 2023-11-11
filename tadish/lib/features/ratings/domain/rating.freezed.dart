@@ -28,11 +28,11 @@ mixin _$Rating {
   double? get sourness => throw _privateConstructorUsedError;
   double? get saltiness => throw _privateConstructorUsedError;
   double? get spiciness => throw _privateConstructorUsedError;
+  String get createdOn => throw _privateConstructorUsedError;
   List<String>? get tags => throw _privateConstructorUsedError;
   String? get picture => throw _privateConstructorUsedError;
   String? get publicNote => throw _privateConstructorUsedError;
   String? get privateNote => throw _privateConstructorUsedError;
-  DateTime get createdOn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,11 +53,11 @@ abstract class $RatingCopyWith<$Res> {
       double? sourness,
       double? saltiness,
       double? spiciness,
+      String createdOn,
       List<String>? tags,
       String? picture,
       String? publicNote,
-      String? privateNote,
-      DateTime createdOn});
+      String? privateNote});
 }
 
 /// @nodoc
@@ -81,11 +81,11 @@ class _$RatingCopyWithImpl<$Res, $Val extends Rating>
     Object? sourness = freezed,
     Object? saltiness = freezed,
     Object? spiciness = freezed,
+    Object? createdOn = null,
     Object? tags = freezed,
     Object? picture = freezed,
     Object? publicNote = freezed,
     Object? privateNote = freezed,
-    Object? createdOn = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -120,6 +120,10 @@ class _$RatingCopyWithImpl<$Res, $Val extends Rating>
           ? _value.spiciness
           : spiciness // ignore: cast_nullable_to_non_nullable
               as double?,
+      createdOn: null == createdOn
+          ? _value.createdOn
+          : createdOn // ignore: cast_nullable_to_non_nullable
+              as String,
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -136,10 +140,6 @@ class _$RatingCopyWithImpl<$Res, $Val extends Rating>
           ? _value.privateNote
           : privateNote // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdOn: null == createdOn
-          ? _value.createdOn
-          : createdOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ) as $Val);
   }
 }
@@ -160,11 +160,11 @@ abstract class _$$RatingImplCopyWith<$Res> implements $RatingCopyWith<$Res> {
       double? sourness,
       double? saltiness,
       double? spiciness,
+      String createdOn,
       List<String>? tags,
       String? picture,
       String? publicNote,
-      String? privateNote,
-      DateTime createdOn});
+      String? privateNote});
 }
 
 /// @nodoc
@@ -186,11 +186,11 @@ class __$$RatingImplCopyWithImpl<$Res>
     Object? sourness = freezed,
     Object? saltiness = freezed,
     Object? spiciness = freezed,
+    Object? createdOn = null,
     Object? tags = freezed,
     Object? picture = freezed,
     Object? publicNote = freezed,
     Object? privateNote = freezed,
-    Object? createdOn = null,
   }) {
     return _then(_$RatingImpl(
       id: null == id
@@ -225,6 +225,10 @@ class __$$RatingImplCopyWithImpl<$Res>
           ? _value.spiciness
           : spiciness // ignore: cast_nullable_to_non_nullable
               as double?,
+      createdOn: null == createdOn
+          ? _value.createdOn
+          : createdOn // ignore: cast_nullable_to_non_nullable
+              as String,
       tags: freezed == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -241,10 +245,6 @@ class __$$RatingImplCopyWithImpl<$Res>
           ? _value.privateNote
           : privateNote // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdOn: null == createdOn
-          ? _value.createdOn
-          : createdOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ));
   }
 }
@@ -252,7 +252,7 @@ class __$$RatingImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$RatingImpl implements _Rating {
-  const _$RatingImpl(
+  _$RatingImpl(
       {required this.id,
       required this.raterID,
       required this.dishID,
@@ -261,11 +261,11 @@ class _$RatingImpl implements _Rating {
       this.sourness,
       this.saltiness,
       this.spiciness,
+      required this.createdOn,
       final List<String>? tags = const [],
       this.picture = '',
       this.publicNote = '',
-      this.privateNote = '',
-      required this.createdOn})
+      this.privateNote = ''})
       : _tags = tags;
 
   factory _$RatingImpl.fromJson(Map<String, dynamic> json) =>
@@ -287,6 +287,8 @@ class _$RatingImpl implements _Rating {
   final double? saltiness;
   @override
   final double? spiciness;
+  @override
+  final String createdOn;
   final List<String>? _tags;
   @override
   @JsonKey()
@@ -307,12 +309,10 @@ class _$RatingImpl implements _Rating {
   @override
   @JsonKey()
   final String? privateNote;
-  @override
-  final DateTime createdOn;
 
   @override
   String toString() {
-    return 'Rating(id: $id, raterID: $raterID, dishID: $dishID, starRating: $starRating, sweetness: $sweetness, sourness: $sourness, saltiness: $saltiness, spiciness: $spiciness, tags: $tags, picture: $picture, publicNote: $publicNote, privateNote: $privateNote, createdOn: $createdOn)';
+    return 'Rating(id: $id, raterID: $raterID, dishID: $dishID, starRating: $starRating, sweetness: $sweetness, sourness: $sourness, saltiness: $saltiness, spiciness: $spiciness, createdOn: $createdOn, tags: $tags, picture: $picture, publicNote: $publicNote, privateNote: $privateNote)';
   }
 
   @override
@@ -333,14 +333,14 @@ class _$RatingImpl implements _Rating {
                 other.saltiness == saltiness) &&
             (identical(other.spiciness, spiciness) ||
                 other.spiciness == spiciness) &&
+            (identical(other.createdOn, createdOn) ||
+                other.createdOn == createdOn) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             (identical(other.picture, picture) || other.picture == picture) &&
             (identical(other.publicNote, publicNote) ||
                 other.publicNote == publicNote) &&
             (identical(other.privateNote, privateNote) ||
-                other.privateNote == privateNote) &&
-            (identical(other.createdOn, createdOn) ||
-                other.createdOn == createdOn));
+                other.privateNote == privateNote));
   }
 
   @JsonKey(ignore: true)
@@ -355,11 +355,11 @@ class _$RatingImpl implements _Rating {
       sourness,
       saltiness,
       spiciness,
+      createdOn,
       const DeepCollectionEquality().hash(_tags),
       picture,
       publicNote,
-      privateNote,
-      createdOn);
+      privateNote);
 
   @JsonKey(ignore: true)
   @override
@@ -376,7 +376,7 @@ class _$RatingImpl implements _Rating {
 }
 
 abstract class _Rating implements Rating {
-  const factory _Rating(
+  factory _Rating(
       {required final String id,
       required final String raterID,
       required final String dishID,
@@ -385,11 +385,11 @@ abstract class _Rating implements Rating {
       final double? sourness,
       final double? saltiness,
       final double? spiciness,
+      required final String createdOn,
       final List<String>? tags,
       final String? picture,
       final String? publicNote,
-      final String? privateNote,
-      required final DateTime createdOn}) = _$RatingImpl;
+      final String? privateNote}) = _$RatingImpl;
 
   factory _Rating.fromJson(Map<String, dynamic> json) = _$RatingImpl.fromJson;
 
@@ -410,6 +410,8 @@ abstract class _Rating implements Rating {
   @override
   double? get spiciness;
   @override
+  String get createdOn;
+  @override
   List<String>? get tags;
   @override
   String? get picture;
@@ -417,8 +419,6 @@ abstract class _Rating implements Rating {
   String? get publicNote;
   @override
   String? get privateNote;
-  @override
-  DateTime get createdOn;
   @override
   @JsonKey(ignore: true)
   _$$RatingImplCopyWith<_$RatingImpl> get copyWith =>

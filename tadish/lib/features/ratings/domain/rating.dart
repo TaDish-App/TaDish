@@ -10,7 +10,7 @@ part 'rating.g.dart';
 /// You must tell Firestore to use the 'id' field as the documentID
 @freezed
 class Rating with _$Rating {
-  const factory Rating({
+  factory Rating({
     required String id,
     required String raterID,
     required String dishID,
@@ -19,11 +19,11 @@ class Rating with _$Rating {
     double? sourness,
     double? saltiness,
     double? spiciness,
+    required String createdOn,
     @Default([]) List<String>? tags,
     @Default('') String? picture,
     @Default('') String? publicNote,
     @Default('') String? privateNote,
-    required DateTime createdOn,
   }) = _Rating;
 
   factory Rating.fromJson(Map<String, dynamic> json) => _$RatingFromJson(json);

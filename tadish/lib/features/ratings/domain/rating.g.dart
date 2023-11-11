@@ -15,13 +15,13 @@ _$RatingImpl _$$RatingImplFromJson(Map<String, dynamic> json) => _$RatingImpl(
       sourness: (json['sourness'] as num?)?.toDouble(),
       saltiness: (json['saltiness'] as num?)?.toDouble(),
       spiciness: (json['spiciness'] as num?)?.toDouble(),
+      createdOn: json['createdOn'] as String,
       tags:
           (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               const [],
       picture: json['picture'] as String? ?? '',
       publicNote: json['publicNote'] as String? ?? '',
       privateNote: json['privateNote'] as String? ?? '',
-      createdOn: DateTime.parse(json['createdOn'] as String),
     );
 
 Map<String, dynamic> _$$RatingImplToJson(_$RatingImpl instance) =>
@@ -34,9 +34,9 @@ Map<String, dynamic> _$$RatingImplToJson(_$RatingImpl instance) =>
       'sourness': instance.sourness,
       'saltiness': instance.saltiness,
       'spiciness': instance.spiciness,
+      'createdOn': instance.createdOn,
       'tags': instance.tags,
       'picture': instance.picture,
       'publicNote': instance.publicNote,
       'privateNote': instance.privateNote,
-      'createdOn': instance.createdOn.toIso8601String(),
     };

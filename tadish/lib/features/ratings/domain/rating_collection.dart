@@ -10,6 +10,10 @@ class RatingCollection {
     return _ratings.map((data) => data.id).toList();
   }
 
+  int size() {
+    return _ratings.length;
+  }
+
   Rating getRating(String ratingID) {
     return _ratings.singleWhere((data) => data.id == ratingID);
   }
@@ -50,7 +54,7 @@ class RatingCollection {
     // }
 
     // created On
-    DateTime createdOn = DateTime.now();
+    String createdOn = DateTime.now().toString();
 
     Rating data = Rating(
         id: id,
@@ -83,7 +87,7 @@ class RatingCollection {
     required String? picture,
     String? publicNote,
     String? privateNote,
-    required DateTime createdOn,
+    required String createdOn,
   }) {
 
 

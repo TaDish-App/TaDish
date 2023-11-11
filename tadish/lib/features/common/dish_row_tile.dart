@@ -8,7 +8,7 @@ class DishRowTile extends StatelessWidget {
   final String restaurantName;
   final double starRating;
   final List<double>? tastePrefs;
-  final DateTime? ratingDateTime;
+  final String? ratingDateTime;
 
   const DishRowTile({
     super.key, this.imageUrl = 'assets/images/5.jpg', this.ratingDateTime, this.tastePrefs, required this.dishName, required this.restaurantName, required this.starRating,
@@ -16,6 +16,7 @@ class DishRowTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime? ratingDateTimeConverted = DateTime == null ? null : DateTime.parse(ratingDateTime!);
     return ListTile(
       leading: ConstrainedBox(
         constraints: const BoxConstraints(
@@ -39,7 +40,7 @@ class DishRowTile extends StatelessWidget {
       subtitle: Text(
           restaurantName),
       trailing: ratingDateTime != null ? Text(
-        "${ratingDateTime!.month.toString().padLeft(2,'0')}-${ratingDateTime!.day.toString().padLeft(2,'0')}-${ratingDateTime!.year.toString().substring(2)}",
+        "${ratingDateTimeConverted!.month.toString().padLeft(2,'0')}-${ratingDateTimeConverted.day.toString().padLeft(2,'0')}-${ratingDateTimeConverted.year.toString().substring(2)}",
         style: const TextStyle(fontWeight: FontWeight.normal),
       ) : TastePrefsRadarChart(tastePrefsData: tastePrefs!, radius: 15),
     );

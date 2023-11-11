@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:tadish/features/home/presentation/home_view.dart';
 import 'package:tadish/features/ratings/domain/rating.dart';
+import 'package:tadish/features/ratings/presentation/add_rating_controller.dart';
 import '../../common/star_confetti.dart';
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
 import '../data/rating_provider.dart';
 import '../domain/rating_collection.dart';
+import 'camera_view.dart';
 import 'form-fields/images_field.dart';
 import 'form-fields/single_line_text_field.dart';
 import 'form-fields/slider_field.dart';
@@ -33,15 +36,24 @@ class CameraBodyView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
-
     return asyncRatingsDB.when(
-        data: (ratings) => _build(
-            context: context,
-            ratings: ratings,
-            ref: ref),
-        loading: () => const TadishLoading(),
-        error: (error, stacktrace) =>
-            TadishError(error.toString(), stacktrace.toString()));
+        data: (ratings) {
+          print("data");
+          return _build(
+              context: context,
+              ratings: ratings,
+              ref: ref);
+        },
+        loading: () {
+          print("loading");
+          return const TadishLoading();
+        },
+        error: (error, stacktrace) {
+          print("error");
+          print(error.toString());
+          return TadishError(error.toString(), stacktrace.toString());
+        }
+    );
   }
 
   Widget _build({required BuildContext context,
@@ -81,8 +93,6 @@ class CameraBodyView extends ConsumerWidget {
     }
 
     void onSubmit() {
-      print("Creating a new rating!");
-
       bool isValid = _formKey.currentState?.saveAndValidate() ?? false;
 
       if (!isValid) return;
@@ -100,9 +110,13 @@ class CameraBodyView extends ConsumerWidget {
       String image = _imageFieldKey.currentState?.value;
       image = 'assets/images/2.jpg';
 
-      // Add the new rating.
-      ratingCollection.addRating(
-          name: dishName,
+      String dishID = 'dish-001';
+      int numRatings = ratingCollection.size();
+      String id = 'rating-${(numRatings + 1).toString().padLeft(3, '0')}';
+
+      Rating rating = Rating(
+          id: id,
+          dishID: dishID,
           raterID: currentUser,
           starRating: stars,
           sweetness: sweetnessSlider,
@@ -112,7 +126,21 @@ class CameraBodyView extends ConsumerWidget {
           tags: tags,
           picture: image,
           publicNote: publicNotes,
-          privateNote: privateNotes);
+          privateNote: privateNotes,
+          createdOn: DateTime.now().toString(),
+      );
+
+      // Add the new rating.
+      ref.read(addRatingControllerProvider.notifier).addRating(
+        rating: rating,
+        dishName: dishName,
+        restaurantName: restaurantName,
+        onSuccess: () {
+          // Navigator.pushReplacementNamed(context, HomeView.routeName);
+          // GlobalSnackBar.show('Garden "$name" added.');
+        },
+      );
+
 
       // Reset form
       _formKey.currentState?.reset();
