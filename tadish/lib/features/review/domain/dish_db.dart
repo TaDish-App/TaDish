@@ -1,4 +1,4 @@
-import '../../picker/domain/restaurant_db.dart';
+import '../../picker/domain/restaurant.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DishData {
@@ -16,7 +16,7 @@ class DishData {
         List<String>? pictures,
         List<String>? publicNotes,
         List<String>? tags,
-        RestaurantData? restaurant})
+        Restaurant? restaurant})
       : pictures = pictures ?? [],
         publicNotes = publicNotes ?? [],
         tags = tags ?? [];
@@ -33,7 +33,7 @@ class DishData {
     List<String> pictures;
     List<String> publicNotes;
     List<String> tags;
-    RestaurantData? restaurant;
+    Restaurant? restaurant;
 }
 
 class DishDB {
@@ -118,13 +118,14 @@ class DishDB {
     return _dishes.toList();
   }
   List<DishData> getDishRestaurant() {
-    List<DishData> dishes = _dishes.toList();
-    RestaurantDB restaurantDB = ref.read(restaurantDBProvider);
-    for (var dish in dishes) {
-      RestaurantData restaurant = restaurantDB.getRestaurant(dish.restaurantID);
-      dish.restaurant = restaurant;
-    }
-    return dishes;
+    // List<DishData> dishes = _dishes.toList();
+    // RestaurantDB restaurantDB = ref.read(restaurantDBProvider);
+    // for (var dish in dishes) {
+    //   RestaurantData restaurant = restaurantDB.getRestaurant(dish.restaurantID);
+    //   dish.restaurant = restaurant;
+    // }
+    // return dishes;
+    return [];
   }
 
   String getDishID(String dishName) {
@@ -144,9 +145,10 @@ class DishDB {
   }
 
   String getDishRestaurantName(String dishID) {
-    List<DishData> dishes = getDishRestaurant();
-    RestaurantData? restaurantData = dishes.singleWhere((dish) => dish.id == dishID).restaurant;
-    return restaurantData == null ? "default" : restaurantData.name;
+    // List<DishData> dishes = getDishRestaurant();
+    // RestaurantData? restaurantData = dishes.singleWhere((dish) => dish.id == dishID).restaurant;
+    // return restaurantData == null ? "default" : restaurantData.name;
+    return "default";
   }
 }
 

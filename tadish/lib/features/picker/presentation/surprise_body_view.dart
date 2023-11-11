@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
-import 'package:tadish/features/picker/domain/restaurant_db.dart';
+import 'package:tadish/features/picker/domain/restaurant.dart';
+import 'package:tadish/features/picker/domain/restaurant_collection.dart';
 import 'roll_button.dart';
 import '../../common/star_confetti.dart';
 import '../../user/presentation/friends_list_row.dart';
@@ -8,6 +9,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'dart:async';
 import '../../user/domain/user_db.dart';
+
+import '../../tadish_error.dart';
+import '../../tadish_loading.dart';
+import '../data/restaurant_database.dart';
+import '../data/restaurant_provider.dart';
+import '../domain/restaurant.dart';
 
 class SurpriseBodyView extends ConsumerStatefulWidget {
   const SurpriseBodyView({
@@ -69,11 +76,30 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
       },
     );
   }
-
+  
   @override
   Widget build(BuildContext context) {
-    final restaurantDB = ref.watch(restaurantDBProvider);
-    final items = restaurantDB.getRestaurantNames();
+    final AsyncValue<List<Restaurant>> asyncRestaurantsDB = ref.watch(restaurantsProvider);
+    return asyncRestaurantsDB.when(data: (restaurants) {
+      print("data");
+      return _build(context: context, restaurants: restaurants, ref: ref);
+    }, loading: () {
+      print("loading");
+      return const TadishLoading();
+    }, error: (error, stacktrace) {
+      print("error");
+      print(error.toString());
+      return TadishError(error.toString(), stacktrace.toString());
+    });
+  }
+  
+  Widget _build(
+    {required BuildContext context,
+      required List<Restaurant> restaurants,
+      required WidgetRef ref}) {
+
+    RestaurantCollection restaurantCollection = RestaurantCollection(restaurants);
+    final items = restaurantCollection.getRestaurantNames();
     final String currentUserID = ref.watch(currentUserIDProvider);
     final UserDB userDB = ref.watch(userDBProvider);
     final UserData currentUser = userDB.getUser(currentUserID);

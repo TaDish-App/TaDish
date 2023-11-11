@@ -7,7 +7,7 @@ part of 'edit_rating_controller.dart';
 // **************************************************************************
 
 String _$editRatingControllerHash() =>
-    r'e254ff3cc38e4f3c16257de17f85b939e40f2ad0';
+    r'28516bf76f00cc70cbb048552d372088961db6ce';
 
 /// See also [EditRatingController].
 @ProviderFor(EditRatingController)

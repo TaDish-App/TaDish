@@ -1,0 +1,66 @@
+[
+  {
+    "id": "restaurant-001",
+    "name": "Chong Qing Hot Pot",
+    "city": "Honolulu",
+    "state": "Hawaii",
+    "location": "2500 Campus Rd, Honolulu, HI 96822",
+    "createdOn": "2023-07-20 20:18:04Z"
+  },
+  {
+    "id": "restaurant-002",
+    "name": "HiTEA",
+    "city": "Honolulu",
+    "state": "Hawaii",
+    "location": "2500 Campus Rd, Honolulu, HI 96822",
+    "createdOn": "2023-07-20 20:18:04Z"
+  },
+  {
+    "id": "restaurant-003",
+    "name": "Golden Pork",
+    "city": "Honolulu",
+    "state": "Hawaii",
+    "location": "2500 Campus Rd, Honolulu, HI 96822",
+    "createdOn": "2023-07-20 20:18:04Z"
+  },
+  {
+    "id": "restaurant-004",
+    "name": "Ruscello",
+    "city": "Honolulu",
+    "state": "Hawaii",
+    "location": "2500 Campus Rd, Honolulu, HI 96822",
+    "createdOn": "2023-07-20 20:18:04Z"
+  },
+  {
+    "id": "restaurant-005",
+    "name": "Gyu-Kaku",
+    "city": "Honolulu",
+    "state": "Hawaii",
+    "location": "2500 Campus Rd, Honolulu, HI 96822",
+    "createdOn": "2023-07-20 20:18:04Z"
+  },
+  {
+    "id": "restaurant-006",
+    "name": "Gometei",
+    "city": "Honolulu",
+    "state": "Hawaii",
+    "location": "2500 Campus Rd, Honolulu, HI 96822",
+    "createdOn": "2023-07-20 20:18:04Z"
+  },
+  {
+    "id": "restaurant-007",
+    "name": "Nicos Pier 38",
+    "city": "Honolulu",
+    "state": "Hawaii",
+    "location": "2500 Campus Rd, Honolulu, HI 96822",
+    "createdOn": "2023-07-20 20:18:04Z"
+  },
+  {
+    "id": "restaurant-008",
+    "name": "Ginza Sushi",
+    "city": "Honolulu",
+    "state": "Hawaii",
+    "location": "2500 Campus Rd, Honolulu, HI 96822",
+    "createdOn": "2023-07-20 20:18:04Z"
+  }
+]
