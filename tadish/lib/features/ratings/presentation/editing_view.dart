@@ -7,6 +7,7 @@ import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
 import '../data/rating_provider.dart';
 import '../domain/rating_collection.dart';
+import 'edit_rating_controller.dart';
 import 'form-fields/images_field.dart';
 import 'form-fields/single_line_text_field.dart';
 import 'form-fields/slider_field.dart';
@@ -38,14 +39,17 @@ class EditingView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
 
-    return asyncRatingsDB.when(
-        data: (ratings) => _build(
-            context: context,
-            ratings: ratings,
-            ref: ref),
-        loading: () => const TadishLoading(),
-        error: (error, stacktrace) =>
-            TadishError(error.toString(), stacktrace.toString()));
+    return asyncRatingsDB.when(data: (ratings) {
+      print("data");
+      return _build(context: context, ratings: ratings, ref: ref);
+    }, loading: () {
+      print("loading");
+      return const TadishLoading();
+    }, error: (error, stacktrace) {
+      print("error");
+      print(error.toString());
+      return TadishError(error.toString(), stacktrace.toString());
+    });
   }
 
   Widget _build({required BuildContext context,
@@ -98,9 +102,29 @@ class EditingView extends ConsumerWidget {
       //     raterID: rating.raterID,
       //     createdOn: rating.createdOn);
 
-      // pop out back to view of rating
-      Navigator.pop(context);
-      Navigator.pop(context);
+      Rating newRating = Rating(
+              id: ratingID,
+              starRating: stars,
+              sweetness: sweetnessSlider,
+              sourness: sournessSlider,
+              saltiness: saltinessSlider,
+              spiciness: spicinessSlider,
+              tags: tags,
+              picture: image,
+              publicNote: publicNotes,
+              privateNote: privateNotes,
+              dishID: rating.dishID,
+              raterID: rating.raterID,
+              createdOn: rating.createdOn);
+      ref.read(editRatingControllerProvider.notifier).updateRating(
+        rating: newRating,
+        dishName: dishName,
+        onSuccess: () {
+          Navigator.pop(context);
+          Navigator.pop(context);
+          // GlobalSnackBar.show('Rating "$dishName" updated.');
+        },
+      );
     }
 
     return Scaffold(
