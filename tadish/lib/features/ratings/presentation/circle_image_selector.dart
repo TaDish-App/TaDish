@@ -72,7 +72,6 @@ class _CircleImageSelectorState extends State<CircleImageSelector> {
     _image = widget.field.value == null ? null : _image;
     _image = widget.currImage == null ? _image : File(widget.currImage!.toString());
 
-    print("_image: $_image");
     return Center(
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
