@@ -32,9 +32,8 @@ class AddRatingController extends _$AddRatingController {
     RatingDatabase ratingDatabase = ref.watch(ratingDatabaseProvider);
 
     final newState =
-    await AsyncValue.guard(() => ratingDatabase.setRating(rating));
+        await AsyncValue.guard(() => ratingDatabase.setRating(rating));
     if (mounted) {
-
       state = newState;
     }
     // Weird. Can't use "if (state.hasValue)" below.
@@ -50,7 +49,7 @@ class AddRatingController extends _$AddRatingController {
     state = const AsyncLoading();
     RatingDatabase ratingDatabase = ref.watch(ratingDatabaseProvider);
     final newState =
-    await AsyncValue.guard(() => ratingDatabase.deleteRating(rating));
+        await AsyncValue.guard(() => ratingDatabase.deleteRating(rating));
     if (mounted) {
       state = newState;
     }

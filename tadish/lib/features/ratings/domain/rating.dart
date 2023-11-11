@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'rating.freezed.dart';
+
 part 'rating.g.dart';
 
 /// Rating Document.
@@ -31,7 +32,7 @@ class Rating with _$Rating {
   // Test that the json file can be converted into entities.
   static Future<List<Rating>> checkInitialData() async {
     String content =
-    await rootBundle.loadString("assets/initialData/ratings.json");
+        await rootBundle.loadString("assets/initialData/ratings.json");
     List<dynamic> initialData = json.decode(content);
     return initialData.map((jsonData) => Rating.fromJson(jsonData)).toList();
   }

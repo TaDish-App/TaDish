@@ -11,12 +11,19 @@ class DishRowTile extends StatelessWidget {
   final String? ratingDateTime;
 
   const DishRowTile({
-    super.key, this.imageUrl = 'assets/images/5.jpg', this.ratingDateTime, this.tastePrefs, required this.dishName, required this.restaurantName, required this.starRating,
+    super.key,
+    this.imageUrl = 'assets/images/5.jpg',
+    this.ratingDateTime,
+    this.tastePrefs,
+    required this.dishName,
+    required this.restaurantName,
+    required this.starRating,
   });
 
   @override
   Widget build(BuildContext context) {
-    DateTime? ratingDateTimeConverted = DateTime == null ? null : DateTime.parse(ratingDateTime!);
+    DateTime? ratingDateTimeConverted =
+        DateTime == null ? null : DateTime.parse(ratingDateTime!);
     return ListTile(
       leading: ConstrainedBox(
         constraints: const BoxConstraints(
@@ -33,17 +40,16 @@ class DishRowTile extends StatelessWidget {
             height: 18,
             child: StarRatingStatic(starRating: starRating),
           ),
-          Text(
-              dishName),
+          Text(dishName),
         ],
       ),
-      subtitle: Text(
-          restaurantName),
-      trailing: ratingDateTime != null ? Text(
-        "${ratingDateTimeConverted!.month.toString().padLeft(2,'0')}-${ratingDateTimeConverted.day.toString().padLeft(2,'0')}-${ratingDateTimeConverted.year.toString().substring(2)}",
-        style: const TextStyle(fontWeight: FontWeight.normal),
-      ) : TastePrefsRadarChart(tastePrefsData: tastePrefs!, radius: 15),
+      subtitle: Text(restaurantName),
+      trailing: ratingDateTime != null
+          ? Text(
+              "${ratingDateTimeConverted!.month.toString().padLeft(2, '0')}-${ratingDateTimeConverted.day.toString().padLeft(2, '0')}-${ratingDateTimeConverted.year.toString().substring(2)}",
+              style: const TextStyle(fontWeight: FontWeight.normal),
+            )
+          : TastePrefsRadarChart(tastePrefsData: tastePrefs!, radius: 15),
     );
   }
 }
-

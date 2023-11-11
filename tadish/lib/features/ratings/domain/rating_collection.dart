@@ -37,8 +37,8 @@ class RatingCollection {
     required List<String>? tags,
     required String? picture,
     String? publicNote,
-    String? privateNote,}) {
-
+    String? privateNote,
+  }) {
     // id
     String id = 'rating-${(_ratings.length + 1).toString().padLeft(3, '0')}';
 
@@ -89,8 +89,6 @@ class RatingCollection {
     String? privateNote,
     required String createdOn,
   }) {
-
-
     Rating data = Rating(
         id: ratingID,
         dishID: dishID,

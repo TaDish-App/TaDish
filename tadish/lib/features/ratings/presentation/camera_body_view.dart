@@ -36,29 +36,23 @@ class CameraBodyView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
-    return asyncRatingsDB.when(
-        data: (ratings) {
-          print("data");
-          return _build(
-              context: context,
-              ratings: ratings,
-              ref: ref);
-        },
-        loading: () {
-          print("loading");
-          return const TadishLoading();
-        },
-        error: (error, stacktrace) {
-          print("error");
-          print(error.toString());
-          return TadishError(error.toString(), stacktrace.toString());
-        }
-    );
+    return asyncRatingsDB.when(data: (ratings) {
+      print("data");
+      return _build(context: context, ratings: ratings, ref: ref);
+    }, loading: () {
+      print("loading");
+      return const TadishLoading();
+    }, error: (error, stacktrace) {
+      print("error");
+      print(error.toString());
+      return TadishError(error.toString(), stacktrace.toString());
+    });
   }
 
-  Widget _build({required BuildContext context,
-    required List<Rating> ratings,
-    required WidgetRef ref}) {
+  Widget _build(
+      {required BuildContext context,
+      required List<Rating> ratings,
+      required WidgetRef ref}) {
     RatingCollection ratingCollection = RatingCollection(ratings);
 
     final String currentUser = ref.watch(currentUserIDProvider);
@@ -67,29 +61,29 @@ class CameraBodyView extends ConsumerWidget {
       return showDialog<String>(
           context: context,
           builder: (BuildContext context) => Dialog(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const StarConfetti(),
-                  const SizedBox(height: 15),
-                  Text(
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 20),
-                      'Nice one! Your rating for $dishName has been recorded!'),
-                  const SizedBox(height: 10),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Close'),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const StarConfetti(),
+                      const SizedBox(height: 15),
+                      Text(
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 20),
+                          'Nice one! Your rating for $dishName has been recorded!'),
+                      const SizedBox(height: 10),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Close'),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ));
+                ),
+              ));
     }
 
     void onSubmit() {
@@ -115,32 +109,31 @@ class CameraBodyView extends ConsumerWidget {
       String id = 'rating-${(numRatings + 1).toString().padLeft(3, '0')}';
 
       Rating rating = Rating(
-          id: id,
-          dishID: dishID,
-          raterID: currentUser,
-          starRating: stars,
-          sweetness: sweetnessSlider,
-          sourness: sournessSlider,
-          saltiness: saltinessSlider,
-          spiciness: spicinessSlider,
-          tags: tags,
-          picture: image,
-          publicNote: publicNotes,
-          privateNote: privateNotes,
-          createdOn: DateTime.now().toString(),
+        id: id,
+        dishID: dishID,
+        raterID: currentUser,
+        starRating: stars,
+        sweetness: sweetnessSlider,
+        sourness: sournessSlider,
+        saltiness: saltinessSlider,
+        spiciness: spicinessSlider,
+        tags: tags,
+        picture: image,
+        publicNote: publicNotes,
+        privateNote: privateNotes,
+        createdOn: DateTime.now().toString(),
       );
 
       // Add the new rating.
       ref.read(addRatingControllerProvider.notifier).addRating(
-        rating: rating,
-        dishName: dishName,
-        restaurantName: restaurantName,
-        onSuccess: () {
-          // Navigator.pushReplacementNamed(context, HomeView.routeName);
-          // GlobalSnackBar.show('Garden "$name" added.');
-        },
-      );
-
+            rating: rating,
+            dishName: dishName,
+            restaurantName: restaurantName,
+            onSuccess: () {
+              // Navigator.pushReplacementNamed(context, HomeView.routeName);
+              // GlobalSnackBar.show('Garden "$name" added.');
+            },
+          );
 
       // Reset form
       _formKey.currentState?.reset();
