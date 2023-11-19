@@ -13,7 +13,7 @@ class FeedView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Feed'),
       ),
-      body: FeedBodyView(),
+      body: SavedBodyView(),
     );
   }
 }
