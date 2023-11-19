@@ -23,7 +23,13 @@ class RatingCollection {
   }
 
   List<Rating> getSingularUserRatings(userID) {
-    return _ratings.where((data) => data.raterID == userID).toList();
+    // Filter ratings for the specified user
+    List<Rating> userRatings = _ratings.where((data) => data.raterID == userID).toList();
+
+    // Sort the copy in reverse chronological order based on the 'createdOn' field
+    userRatings.sort((a, b) => b.createdOn.compareTo(a.createdOn));
+
+    return userRatings;
   }
 
   /* void addRating({
