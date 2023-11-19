@@ -8,7 +8,7 @@ import '../data/dish_provider.dart';
 import '../domain/dish.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FeedBodyView extends ConsumerWidget {
+class SavedBodyView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<Dish>> asyncDishesDB = ref.watch(dishesProvider);
