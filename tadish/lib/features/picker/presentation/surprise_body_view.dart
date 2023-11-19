@@ -14,9 +14,6 @@ import '../../user/domain/user.dart';
 
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
-import '../data/restaurant_database.dart';
-import '../data/restaurant_provider.dart';
-import '../domain/restaurant.dart';
 
 class SurpriseBodyView extends ConsumerStatefulWidget {
   const SurpriseBodyView({
@@ -83,7 +80,7 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
   Widget build(BuildContext context) {
     final AsyncValue<UserRestaurant> asyncUserRestaurant = ref.watch(userRestaurantProvider);
     return asyncUserRestaurant.when(data: (userRestaurant) {
-      return _build(context: context, userID: userRestaurant.currentUserID, users: userRestaurant.user, restaurants: userRestaurant.restaurant, ref: ref);
+      return _build(context: context, userID: userRestaurant.currentUserEmail, users: userRestaurant.user, restaurants: userRestaurant.restaurant, ref: ref);
     }, loading: () {
       print("loading");
       return const TadishLoading();
@@ -100,13 +97,13 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
       required List<User> users,
       required String userID,
       required WidgetRef ref}) {
-
+    
     RestaurantCollection restaurantCollection = RestaurantCollection(restaurants);
     final items = restaurantCollection.getRestaurantNames();
     final String currentUserID = userID;
     final UserCollection userDB =UserCollection(users);
     final User currentUser = userDB.getUser(currentUserID);
-    List<User?> friendsList =userDB.getFriends(currentUserID);
+    List<User?> friendsList = userDB.getFriends(currentUserID);
 
     // A function to show the friends list popup
     void showFriendsListPopup() {

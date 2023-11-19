@@ -11,7 +11,7 @@ class UserCollection {
   }
 
   User getUser(String userID) {
-    return _users.firstWhere((userData) => userData.id == userID);
+    return _users.firstWhere((userData) => userData.email == userID);
   }
 
   bool areUserNames(List<String> userNames) {
@@ -39,8 +39,8 @@ class UserCollection {
     return _users.map((user) => user.email).toList();
   }
   List<User> getFriends(String userID) {
-    List<String> friends = _users.singleWhere((user) => user.id == userID).friendsIDList;
-    return _users.where((userData) => friends.contains(userData.id)).toList();
+    List<String> friends = _users.singleWhere((user) => user.email == userID).friendsIDList;
+    return _users.where((userData) => friends.contains(userData.email)).toList();
   }
 }
 
