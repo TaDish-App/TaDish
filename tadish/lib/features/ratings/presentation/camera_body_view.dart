@@ -15,6 +15,7 @@ import 'form-fields/slider_field.dart';
 import 'form-fields/star_field.dart';
 import 'form-fields/tags_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../user/data/user_providers.dart';
 
 import '../../common/form-fields/submit_button.dart';
 import '../../user/domain/user.dart';

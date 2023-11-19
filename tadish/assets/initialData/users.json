@@ -12,6 +12,9 @@
     "gender" : "Prefer not to respond",
     "age" : 100,
     "ethnicity" : "Prefer not to respond",
+    "createdOn": "2023-07-20 20:18:04Z",
+    "updatedOn": "2023-07-20 20:18:04Z",
+    "isActive": true,
     "taggedDishes" : 10
   },
   {
@@ -27,6 +30,9 @@
     "gender" : "M",
     "age" : 21,
     "ethnicity" : "Asian",
+    "createdOn": "2023-07-20 20:18:04Z",
+    "updatedOn": "2023-07-20 20:18:04Z",
+    "isActive": true,
     "taggedDishes" : 14
   },
   {
@@ -42,6 +48,9 @@
     "gender" : "F",
     "age" : 21,
     "ethnicity" : "Asian",
+    "createdOn": "2023-07-20 20:18:04Z",
+    "updatedOn": "2023-07-20 20:18:04Z",
+    "isActive": true,
     "taggedDishes" : 12
   },
   {
@@ -56,7 +65,10 @@
     "role" : "user",
     "gender" : "M",
     "age" : 24,
-    "ethnicity" : "Black or African American,",
+    "ethnicity" : "Black or African American",
+    "createdOn": "2023-07-20 20:18:04Z",
+    "updatedOn": "2023-07-20 20:18:04Z",
+    "isActive": true,
     "taggedDishes" : 6
   },
   {
@@ -72,6 +84,9 @@
     "gender" : "F",
     "age" : 19,
     "ethnicity" : "White",
+    "createdOn": "2023-07-20 20:18:04Z",
+    "updatedOn": "2023-07-20 20:18:04Z",
+    "isActive": true,
     "taggedDishes" : 5
   }
 ]

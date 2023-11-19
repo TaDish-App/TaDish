@@ -12,6 +12,7 @@ import '../../ratings/domain/rating_collection.dart';
 import '../../review/domain/dish_collection.dart';
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
+import '../../user/data/user_providers.dart';
 
 class FavoritesView extends ConsumerWidget {
   const FavoritesView({

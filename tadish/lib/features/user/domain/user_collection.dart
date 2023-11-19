@@ -21,13 +21,13 @@ class UserCollection {
   }
 
   String getUserID(String emailOrUsername) {
-    return (emailOrUsername.startsWith('@'))
-        ? _users.firstWhere((user) => user.username == emailOrUsername).id
+    return (emailOrUsername.contains('@'))
+        ? _users.firstWhere((user) => user.email == emailOrUsername).id
         : _users.firstWhere((user) => user.id == emailOrUsername).id;
   }
 
   bool isUserEmail(String email) {
-    List<String> emails = _users.map((user) => user.id).toList();
+    List<String> emails = _users.map((user) => user.email).toList();
     return emails.contains(email);
   }
 
@@ -36,7 +36,11 @@ class UserCollection {
   }
 
   List<String> getAllEmails() {
-    return _users.map((user) => user.id).toList();
+    return _users.map((user) => user.email).toList();
+  }
+  List<User> getFriends(String userID) {
+    List<String> friends = _users.singleWhere((user) => user.id == userID).friendsIDList;
+    return _users.where((userData) => friends.contains(userData.id)).toList();
   }
 }
 
