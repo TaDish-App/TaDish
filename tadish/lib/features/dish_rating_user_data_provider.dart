@@ -4,7 +4,7 @@ import 'review/data/dish_provider.dart';
 import 'review/domain/dish.dart';
 import 'ratings/data/rating_provider.dart';
 import 'ratings/domain/rating.dart';
-import 'user/domain/user_db.dart';
+import 'user/domain/user.dart';
 
 part 'dish_rating_user_data_provider.g.dart';
 

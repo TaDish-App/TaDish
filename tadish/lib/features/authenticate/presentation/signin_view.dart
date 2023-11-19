@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'form-fields/email_field.dart';
 import 'form-fields/submit_button.dart';
 
-import '../../user/domain/user_db.dart';
+import '../../user/domain/user.dart';
 
 /// Presents the page containing fields to enter a username and password, plus buttons.
 class SigninView extends ConsumerWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../common/drawer_view.dart';
-import '../domain/user_db.dart';
+import '../domain/user.dart';
 import 'friends_list_row.dart';
 
 class FriendsListView extends ConsumerWidget {

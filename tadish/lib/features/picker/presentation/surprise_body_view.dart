@@ -8,7 +8,7 @@ import '../../user/presentation/friends_list_row.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'dart:async';
-import '../../user/domain/user_db.dart';
+import '../../user/domain/user.dart';
 
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';

@@ -17,7 +17,7 @@ import 'form-fields/tags_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../common/form-fields/submit_button.dart';
-import '../../user/domain/user_db.dart';
+import '../../user/domain/user.dart';
 
 class CameraBodyView extends ConsumerWidget {
   final _formKey = GlobalKey<FormBuilderState>();
