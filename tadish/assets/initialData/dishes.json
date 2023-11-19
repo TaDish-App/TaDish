@@ -18,7 +18,8 @@
     ],
     "tags": [
       "local"
-    ]
+    ],
+    "restaurantName": "Chong Qing Hot Pot"
   },
   {
     "id": "dish-002",
@@ -39,7 +40,8 @@
     ],
     "tags": [
       "local"
-    ]
+    ],
+    "restaurantName": "Chong Qing Hot Pot"
   },
   {
     "id": "dish-003",
@@ -60,7 +62,8 @@
     ],
     "tags": [
       "local"
-    ]
+    ],
+    "restaurantName": "Ruscello"
   },
   {
     "id": "dish-004",
@@ -81,7 +84,8 @@
     ],
     "tags": [
       "local"
-    ]
+    ],
+    "restaurantName": "Gometei"
   },
   {
     "id": "dish-005",
@@ -102,6 +106,7 @@
     ],
     "tags": [
       "local"
-    ]
+    ],
+    "restaurantName": "Gyu-Kaku"
   }
 ]

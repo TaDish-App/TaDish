@@ -16,6 +16,7 @@ class Rating with _$Rating {
     required String raterID,
     required String dishID,
     required double starRating,
+    required String restaurantName,
     double? sweetness,
     double? sourness,
     double? saltiness,

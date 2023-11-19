@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'features/ratings/domain/rating.dart';
+import 'features/review/domain/dish.dart';
 import 'firebase_options.dart';
 import 'app.dart';
 
@@ -10,6 +11,7 @@ import 'app.dart';
 // Check that Freezed data models and json data files are compatible.
 Future<bool> verifyInitialData() async {
   await Rating.checkInitialData();
+  await Dish.checkInitialData();
 
   return true;
 }

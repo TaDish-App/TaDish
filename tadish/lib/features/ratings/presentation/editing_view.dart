@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tadish/features/review/domain/dish_db.dart';
+import 'package:tadish/features/dish_rating_user_data_provider.dart';
+import 'package:tadish/features/review/data/dish_provider.dart';
+import 'package:tadish/features/review/domain/dish.dart';
+import 'package:tadish/features/review/domain/dish_collection.dart';
 
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
@@ -37,11 +40,17 @@ class EditingView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
+    final AsyncValue<DishRatingUser> asyncDishRatingUserData =
+        ref.watch(dishRatingUserProvider);
 
-    return asyncRatingsDB.when(data: (ratings) {
+    return asyncDishRatingUserData.when(data: (dishRatingUserData) {
       print("data");
-      return _build(context: context, ratings: ratings, ref: ref);
+      return _build(
+          context: context,
+          currentUserID: dishRatingUserData.currentUserID,
+          ratings: dishRatingUserData.ratings,
+          dishes: dishRatingUserData.dishes,
+          ref: ref);
     }, loading: () {
       print("loading");
       return const TadishLoading();
@@ -52,17 +61,19 @@ class EditingView extends ConsumerWidget {
     });
   }
 
-  Widget _build({required BuildContext context,
-    required List<Rating> ratings,
-    required WidgetRef ref}) {
-
+  Widget _build(
+      {required BuildContext context,
+      required List<Rating> ratings,
+      required List<Dish> dishes,
+      required String currentUserID,
+      required WidgetRef ref}) {
     RatingCollection ratingCollection = RatingCollection(ratings);
-    final DishDB dishesDB = ref.watch(dishDBProvider);
-    final String currentUser = ref.watch(currentUserIDProvider);
+    DishCollection dishesDB = DishCollection(dishes);
+    final String currentUser = currentUserID;
 
     final ratingID = ModalRoute.of(context)!.settings.arguments as String;
     final rating = ratingCollection.getRating(ratingID);
-    final restaurantName = dishesDB.getDishRestaurantName(rating.dishID);
+    final restaurantName = rating.restaurantName;
     final dishName = dishesDB.getDishName(rating.dishID);
 
     void onSubmit() {
@@ -103,28 +114,29 @@ class EditingView extends ConsumerWidget {
       //     createdOn: rating.createdOn);
 
       Rating newRating = Rating(
-              id: ratingID,
-              starRating: stars,
-              sweetness: sweetnessSlider,
-              sourness: sournessSlider,
-              saltiness: saltinessSlider,
-              spiciness: spicinessSlider,
-              tags: tags,
-              picture: image,
-              publicNote: publicNotes,
-              privateNote: privateNotes,
-              dishID: rating.dishID,
-              raterID: rating.raterID,
-              createdOn: rating.createdOn);
+          id: ratingID,
+          starRating: stars,
+          restaurantName: restaurantName,
+          sweetness: sweetnessSlider,
+          sourness: sournessSlider,
+          saltiness: saltinessSlider,
+          spiciness: spicinessSlider,
+          tags: tags,
+          picture: image,
+          publicNote: publicNotes,
+          privateNote: privateNotes,
+          dishID: rating.dishID,
+          raterID: rating.raterID,
+          createdOn: rating.createdOn);
       ref.read(editRatingControllerProvider.notifier).updateRating(
-        rating: newRating,
-        dishName: dishName,
-        onSuccess: () {
-          Navigator.pop(context);
-          Navigator.pop(context);
-          // GlobalSnackBar.show('Rating "$dishName" updated.');
-        },
-      );
+            rating: newRating,
+            dishName: dishName,
+            onSuccess: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              // GlobalSnackBar.show('Rating "$dishName" updated.');
+            },
+          );
     }
 
     return Scaffold(

@@ -24,6 +24,7 @@ mixin _$Rating {
   String get raterID => throw _privateConstructorUsedError;
   String get dishID => throw _privateConstructorUsedError;
   double get starRating => throw _privateConstructorUsedError;
+  String get restaurantName => throw _privateConstructorUsedError;
   double? get sweetness => throw _privateConstructorUsedError;
   double? get sourness => throw _privateConstructorUsedError;
   double? get saltiness => throw _privateConstructorUsedError;
@@ -49,6 +50,7 @@ abstract class $RatingCopyWith<$Res> {
       String raterID,
       String dishID,
       double starRating,
+      String restaurantName,
       double? sweetness,
       double? sourness,
       double? saltiness,
@@ -77,6 +79,7 @@ class _$RatingCopyWithImpl<$Res, $Val extends Rating>
     Object? raterID = null,
     Object? dishID = null,
     Object? starRating = null,
+    Object? restaurantName = null,
     Object? sweetness = freezed,
     Object? sourness = freezed,
     Object? saltiness = freezed,
@@ -104,6 +107,10 @@ class _$RatingCopyWithImpl<$Res, $Val extends Rating>
           ? _value.starRating
           : starRating // ignore: cast_nullable_to_non_nullable
               as double,
+      restaurantName: null == restaurantName
+          ? _value.restaurantName
+          : restaurantName // ignore: cast_nullable_to_non_nullable
+              as String,
       sweetness: freezed == sweetness
           ? _value.sweetness
           : sweetness // ignore: cast_nullable_to_non_nullable
@@ -156,6 +163,7 @@ abstract class _$$RatingImplCopyWith<$Res> implements $RatingCopyWith<$Res> {
       String raterID,
       String dishID,
       double starRating,
+      String restaurantName,
       double? sweetness,
       double? sourness,
       double? saltiness,
@@ -182,6 +190,7 @@ class __$$RatingImplCopyWithImpl<$Res>
     Object? raterID = null,
     Object? dishID = null,
     Object? starRating = null,
+    Object? restaurantName = null,
     Object? sweetness = freezed,
     Object? sourness = freezed,
     Object? saltiness = freezed,
@@ -209,6 +218,10 @@ class __$$RatingImplCopyWithImpl<$Res>
           ? _value.starRating
           : starRating // ignore: cast_nullable_to_non_nullable
               as double,
+      restaurantName: null == restaurantName
+          ? _value.restaurantName
+          : restaurantName // ignore: cast_nullable_to_non_nullable
+              as String,
       sweetness: freezed == sweetness
           ? _value.sweetness
           : sweetness // ignore: cast_nullable_to_non_nullable
@@ -257,6 +270,7 @@ class _$RatingImpl implements _Rating {
       required this.raterID,
       required this.dishID,
       required this.starRating,
+      required this.restaurantName,
       this.sweetness,
       this.sourness,
       this.saltiness,
@@ -279,6 +293,8 @@ class _$RatingImpl implements _Rating {
   final String dishID;
   @override
   final double starRating;
+  @override
+  final String restaurantName;
   @override
   final double? sweetness;
   @override
@@ -312,7 +328,7 @@ class _$RatingImpl implements _Rating {
 
   @override
   String toString() {
-    return 'Rating(id: $id, raterID: $raterID, dishID: $dishID, starRating: $starRating, sweetness: $sweetness, sourness: $sourness, saltiness: $saltiness, spiciness: $spiciness, createdOn: $createdOn, tags: $tags, picture: $picture, publicNote: $publicNote, privateNote: $privateNote)';
+    return 'Rating(id: $id, raterID: $raterID, dishID: $dishID, starRating: $starRating, restaurantName: $restaurantName, sweetness: $sweetness, sourness: $sourness, saltiness: $saltiness, spiciness: $spiciness, createdOn: $createdOn, tags: $tags, picture: $picture, publicNote: $publicNote, privateNote: $privateNote)';
   }
 
   @override
@@ -325,6 +341,8 @@ class _$RatingImpl implements _Rating {
             (identical(other.dishID, dishID) || other.dishID == dishID) &&
             (identical(other.starRating, starRating) ||
                 other.starRating == starRating) &&
+            (identical(other.restaurantName, restaurantName) ||
+                other.restaurantName == restaurantName) &&
             (identical(other.sweetness, sweetness) ||
                 other.sweetness == sweetness) &&
             (identical(other.sourness, sourness) ||
@@ -351,6 +369,7 @@ class _$RatingImpl implements _Rating {
       raterID,
       dishID,
       starRating,
+      restaurantName,
       sweetness,
       sourness,
       saltiness,
@@ -381,6 +400,7 @@ abstract class _Rating implements Rating {
       required final String raterID,
       required final String dishID,
       required final double starRating,
+      required final String restaurantName,
       final double? sweetness,
       final double? sourness,
       final double? saltiness,
@@ -401,6 +421,8 @@ abstract class _Rating implements Rating {
   String get dishID;
   @override
   double get starRating;
+  @override
+  String get restaurantName;
   @override
   double? get sweetness;
   @override

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:tadish/features/review/domain/dish_db.dart';
+import 'package:tadish/features/review/domain/dish.dart';
 import 'package:tadish/features/ratings/domain/rating.dart';
 import 'package:tadish/features/user/domain/user_db.dart';
 import '../../common/Tile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../dish_rating_user_data_provider.dart';
 import '../../ratings/data/rating_provider.dart';
 import '../../ratings/domain/rating_collection.dart';
+import '../../review/domain/dish_collection.dart';
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
 
@@ -18,24 +20,39 @@ class FavoritesView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
+    final AsyncValue<DishRatingUser> asyncDishRatingUserData =
+        ref.watch(dishRatingUserProvider);
+    // final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
 
-    return asyncRatingsDB.when(
-        data: (ratings) => _build(
+    // return asyncRatingsDB.when(
+    //     data: (ratings){
+    //       print("data");
+    //       return _build(context: context, ratings: ratings, ref: ref);
+    //     },
+    //     loading: () => const TadishLoading(),
+    //     error: (error, stacktrace) =>
+    //         TadishError(error.toString(), stacktrace.toString()));
+    return asyncDishRatingUserData.when(
+        data: (dishRatingUserData) => _build(
             context: context,
-            ratings: ratings,
+            currentUserID: dishRatingUserData.currentUserID,
+            ratings: dishRatingUserData.ratings,
+            dishes: dishRatingUserData.dishes,
             ref: ref),
         loading: () => const TadishLoading(),
         error: (error, stacktrace) =>
             TadishError(error.toString(), stacktrace.toString()));
   }
 
-  Widget _build({required BuildContext context,
-    required List<Rating> ratings,
-    required WidgetRef ref}) {
+  Widget _build(
+      {required BuildContext context,
+      required List<Rating> ratings,
+      required List<Dish> dishes,
+      required String currentUserID,
+      required WidgetRef ref}) {
     RatingCollection ratingCollection = RatingCollection(ratings);
     final String currentUserID = ref.watch(currentUserIDProvider);
-    final dishDB = ref.watch(dishDBProvider);
+    DishCollection dishDB = DishCollection(dishes);
 
     var favorites = ratingCollection.getSingularUserRatings(currentUserID);
     favorites.sort((a, b) => a.starRating.compareTo(b.starRating));

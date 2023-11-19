@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:tadish/features/common/star_rating_static.dart';
 import '../../common/dish_row_tile.dart';
-import '../../ratings/data/rating_provider.dart';
+import '../../dish_rating_user_data_provider.dart';
 import '../../ratings/domain/rating.dart';
 import '../../ratings/domain/rating_collection.dart';
-import '../../review/domain/dish_db.dart';
+import '../../review/domain/dish.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../ratings/presentation/editing_view.dart';
 import '../../common/inactive_slider.dart';
+import '../../review/domain/dish_collection.dart';
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
 
@@ -19,24 +20,29 @@ class HistoryView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
+    final AsyncValue<DishRatingUser> asyncDishRatingUserData =
+        ref.watch(dishRatingUserProvider);
 
-    return asyncRatingsDB.when(
-        data: (ratings) => _build(
+    return asyncDishRatingUserData.when(
+        data: (dishRatingUserData) => _build(
             context: context,
-            ratings: ratings,
+            ratings: dishRatingUserData.ratings,
+            dishes: dishRatingUserData.dishes,
             ref: ref),
         loading: () => const TadishLoading(),
         error: (error, stacktrace) =>
             TadishError(error.toString(), stacktrace.toString()));
   }
 
-  Widget _build({required BuildContext context,
-    required List<Rating> ratings,
-    required WidgetRef ref}) {
+  Widget _build(
+      {required BuildContext context,
+      required List<Rating> ratings,
+      required List<Dish> dishes,
+      required WidgetRef ref}) {
     RatingCollection ratingCollection = RatingCollection(ratings);
-    final dishDB = ref.watch(dishDBProvider);
-    final List<Rating> userRatings = ratingCollection.getSingularUserRatings(userID);
+    DishCollection dishDB = DishCollection(dishes);
+    final List<Rating> userRatings =
+        ratingCollection.getSingularUserRatings(userID);
 
     return userRatings.isNotEmpty
         ? ListView(
@@ -46,8 +52,7 @@ class HistoryView extends ConsumerWidget {
                     child: DishRowTile(
                         imageUrl: rating.picture!,
                         dishName: dishDB.getDishName(rating.dishID),
-                        restaurantName:
-                            dishDB.getDishRestaurantName(rating.dishID),
+                        restaurantName: rating.restaurantName,
                         starRating: rating.starRating,
                         ratingDateTime: rating.createdOn),
                     onTap: () {
@@ -97,7 +102,7 @@ class HistoryView extends ConsumerWidget {
                                 ),
                               ),
                               Text(
-                                dishDB.getDishRestaurantName(rating.dishID),
+                                rating.restaurantName,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,

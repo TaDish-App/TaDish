@@ -113,6 +113,7 @@ class CameraBodyView extends ConsumerWidget {
         dishID: dishID,
         raterID: currentUser,
         starRating: stars,
+        restaurantName: restaurantName,
         sweetness: sweetnessSlider,
         sourness: sournessSlider,
         saltiness: saltinessSlider,
