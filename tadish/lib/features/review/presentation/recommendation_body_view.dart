@@ -53,10 +53,13 @@ class _RecommendationBodyViewState extends ConsumerState<RecommendationBodyView>
       DishCollection dishDB = DishCollection(dishes);
       final dishesRest = dishDB.getDishRestaurant();
       
-      ref.read(dishesDisplay.notifier).state = dishesRest;
-      
       final dishesSwipe = ref.watch(dishesDisplay);
       final saved = ref.watch(savedDisplay);
+      
+      void refresh() {
+        ref.read(dishesDisplay.notifier).state = dishesRest;
+        ref.read(savedDisplay.notifier).state = [];
+      }
       
       void swipeLeft() {
         ref.read(dishesDisplay.notifier).state = dishesSwipe.sublist(1);
@@ -76,6 +79,12 @@ class _RecommendationBodyViewState extends ConsumerState<RecommendationBodyView>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text('No more cards to swipe!'),
+              ElevatedButton(
+                onPressed: () {
+                  refresh();
+                },
+                child: Text('Reload'),
+              ),
               Text('Saved $saved'),
               // Display your saved dishes here.
             ],
