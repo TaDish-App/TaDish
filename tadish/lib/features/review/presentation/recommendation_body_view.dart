@@ -31,9 +31,6 @@ class _RecommendationBodyViewState extends ConsumerState<RecommendationBodyView>
     final AsyncValue<List<Dish>> asyncDishesDB = ref.watch(dishesProvider);
     return asyncDishesDB.when(data: (dishes) {
       print("data");
-      final dishDB = DishCollection(dishes);
-      List<Dish> dishList = dishDB.getDishRestaurant();
-      // ref.read(dishesDisplay.notifier).state = dishList;
       return _build(context: context, dishes: dishes, ref: ref);
     }, loading: () {
       print("loading");
@@ -56,7 +53,7 @@ class _RecommendationBodyViewState extends ConsumerState<RecommendationBodyView>
       DishCollection dishDB = DishCollection(dishes);
       final dishesRest = dishDB.getDishRestaurant();
       
-      // ref.read(dishesDisplay.notifier).state = dishesRest;
+      ref.read(dishesDisplay.notifier).state = dishesRest;
       
       final dishesSwipe = ref.watch(dishesDisplay);
       final saved = ref.watch(savedDisplay);
