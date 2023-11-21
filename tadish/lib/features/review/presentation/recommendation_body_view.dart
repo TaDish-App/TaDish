@@ -7,7 +7,6 @@ import '../../tadish_loading.dart';
 import '../domain/dish.dart';
 import '../data/dish_provider.dart';
 import '../../common/dish_card.dart';
-import 'dart:async';
 
 class RecommendationBodyView extends ConsumerStatefulWidget {
   const RecommendationBodyView({
