@@ -7,16 +7,34 @@ import '../../tadish_loading.dart';
 import '../domain/dish.dart';
 import '../data/dish_provider.dart';
 import '../../common/dish_card.dart';
+import 'dart:async';
 
-class RecommendationBodyView extends ConsumerWidget {
-  const RecommendationBodyView({super.key});
+class RecommendationBodyView extends ConsumerStatefulWidget {
+  const RecommendationBodyView({
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<RecommendationBodyView> createState() => _RecommendationBodyViewState();
+}
+
+class _RecommendationBodyViewState extends ConsumerState<RecommendationBodyView> {
+  
+  final dishesDisplay = StateProvider<List<Dish>>((ref) {
+    return [];
+  });
+  final savedDisplay = StateProvider<List>((ref) {
+    return [];
+  });
+  @override
+  Widget build(BuildContext context) {
     final AsyncValue<List<Dish>> asyncDishesDB = ref.watch(dishesProvider);
     return asyncDishesDB.when(data: (dishes) {
       print("data");
-      return _build(context: context, dishesParent: dishes, ref: ref);
+      final dishDB = DishCollection(dishes);
+      List<Dish> dishList = dishDB.getDishRestaurant();
+      // ref.read(dishesDisplay.notifier).state = dishList;
+      return _build(context: context, dishes: dishes, ref: ref);
     }, loading: () {
       print("loading");
       return const TadishLoading();
@@ -32,36 +50,43 @@ class RecommendationBodyView extends ConsumerWidget {
   
   Widget _build(
       {required BuildContext context,
-      required List<Dish> dishesParent,
+      required List<Dish> dishes,
       required WidgetRef ref}) {
       
-      DishCollection dishDB = DishCollection(dishesParent);
-      final dishes = dishDB.getDishRestaurant();
+      DishCollection dishDB = DishCollection(dishes);
+      final dishesRest = dishDB.getDishRestaurant();
+      
+      // ref.read(dishesDisplay.notifier).state = dishesRest;
+      
+      final dishesSwipe = ref.watch(dishesDisplay);
+      final saved = ref.watch(savedDisplay);
       
       void swipeLeft() {
-        print(dishes);
+        ref.read(dishesDisplay.notifier).state = dishesSwipe.sublist(1);
       }
 
     void swipeRight() {
-        print(dishes);
+        final dish = dishesSwipe[0].name;
+        ref.read(savedDisplay.notifier).state = [...saved, dish];
+        ref.read(dishesDisplay.notifier).state = dishesSwipe.sublist(1);
     }
 
       return Center(
-        child: dishes.isEmpty
+        child: dishesSwipe.isEmpty
             ? Container(
           alignment: Alignment.center,
-          child: const Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('No more cards to swipe!'),
-              Text('Saved'),
+              const Text('No more cards to swipe!'),
+              Text('Saved $saved'),
               // Display your saved dishes here.
             ],
           ),
         )
             : Stack(
           alignment: Alignment.center,
-          children: dishes.asMap().entries.map((entry) {
+          children: dishesSwipe.asMap().entries.map((entry) {
             final index = entry.key;
             final dish = entry.value;
             final isFrontCard = index == 0;
