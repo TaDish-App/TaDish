@@ -51,8 +51,8 @@ class SignInView extends StatelessWidget {
       styles: const {
         EmailFormStyle(signInButtonVariant: ButtonVariant.filled),
       },
-      headerBuilder: headerImage('assets/images/cloche_dark.png'),
-      sideBuilder: sideImage('assets/images/cloche_dark.png'),
+      headerBuilder: headerImage('assets/images/logo_dark.png'),
+      sideBuilder: sideImage('assets/images/logo_dark.png'),
       subtitleBuilder: (context, action) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 8),

@@ -63,7 +63,7 @@ class FavoritesView extends ConsumerWidget {
     String? getImage() {
       return favoriteImagesIndex < favorites.length
           ? favorites[favoriteImagesIndex++].picture
-          : 'assets/images/cloche_dark.png';
+          : 'assets/images/logo_dark.png';
     }
 
     Widget getTile() {
@@ -71,7 +71,7 @@ class FavoritesView extends ConsumerWidget {
           index: favoriteImagesIndex,
           image: favoriteImagesIndex < favorites.length
               ? favorites[favoriteImagesIndex].picture!
-              : 'assets/images/cloche_dark.png',
+              : 'assets/images/logo_dark.png',
           dishName: favoriteImagesIndex < favorites.length
               ? dishDB.getDishName(favorites[favoriteImagesIndex++].dishID)
               : '');
