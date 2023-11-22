@@ -1,7 +1,7 @@
 [
   {
     "id": "rating-001",
-    "raterID": "user-001",
+    "raterEmail": "thuo@hawaii.edu",
     "dishID": "dish-001",
     "starRating": 3.5,
     "restaurantName": "Chong Qing Hot Pot",
@@ -19,7 +19,7 @@
   },
   {
     "id": "rating-002",
-    "raterID": "user-002",
+    "raterEmail": "thuo@hawaii.edu",
     "dishID": "dish-001",
     "starRating": 2,
     "restaurantName": "Chong Qing Hot Pot",
@@ -37,7 +37,7 @@
   },
   {
     "id": "rating-003",
-    "raterID": "user-003",
+    "raterEmail": "thuo@hawaii.edu",
     "dishID": "dish-002",
     "starRating": 4,
     "restaurantName": "Chong Qing Hot Pot",
@@ -55,7 +55,7 @@
   },
   {
     "id": "rating-004",
-    "raterID": "user-004",
+    "raterEmail": "thuo@hawaii.edu",
     "dishID": "dish-003",
     "starRating": 5,
     "restaurantName": "Ruscello",
@@ -73,7 +73,7 @@
   },
   {
     "id": "rating-005",
-    "raterID": "user-004",
+    "raterEmail": "thuo@hawaii.edu",
     "dishID": "dish-004",
     "starRating": 4,
     "restaurantName": "Gometei",
@@ -91,7 +91,7 @@
   },
   {
     "id": "rating-006",
-    "raterID": "user-001",
+    "raterEmail": "thuo@hawaii.edu",
     "dishID": "dish-005",
     "starRating": 1,
     "restaurantName": "Gyu-Kaku",
@@ -109,7 +109,7 @@
   },
   {
     "id": "rating-007",
-    "raterID": "user-001",
+    "raterEmail": "thuo@hawaii.edu",
     "dishID": "dish-004",
     "starRating": 1,
     "restaurantName": "Gometei",
@@ -127,7 +127,7 @@
   },
   {
     "id": "rating-008",
-    "raterID": "user-001",
+    "raterEmail": "thuo@hawaii.edu",
     "dishID": "dish-003",
     "starRating": 5,
     "restaurantName": "Ruscello",
@@ -145,7 +145,7 @@
   },
   {
     "id": "rating-009",
-    "raterID": "user-002",
+    "raterEmail": "thuo@hawaii.edu",
     "dishID": "dish-003",
     "starRating": 5,
     "restaurantName": "Ruscello",
@@ -163,7 +163,7 @@
   },
   {
     "id": "rating-010",
-    "raterID": "user-001",
+    "raterEmail": "thuo@hawaii.edu",
     "dishID": "dish-002",
     "starRating": 5,
     "restaurantName": "Chong Qing Hot Pot",
@@ -181,7 +181,7 @@
   },
   {
     "id": "rating-011",
-    "raterID": "user-001",
+    "raterEmail": "thuo@hawaii.edu",
     "dishID": "dish-003",
     "starRating": 5,
     "restaurantName": "Ruscello",

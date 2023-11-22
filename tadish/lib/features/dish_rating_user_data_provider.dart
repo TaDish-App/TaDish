@@ -16,12 +16,12 @@ class DishRatingUser {
       {required this.dishes,
       required this.ratings,
       required this.users,
-      required this.currentUserID});
+      required this.currentUserEmail});
 
   final List<Dish> dishes;
   final List<Rating> ratings;
   final List<User> users;
-  final String currentUserID;
+  final String currentUserEmail;
 }
 
 @riverpod
@@ -29,10 +29,10 @@ Future<DishRatingUser> dishRatingUser(DishRatingUserRef ref) async {
   final dishes = ref.watch(dishesProvider.future);
   final ratings = ref.watch(ratingsProvider.future);
   final users = ref.watch(usersProvider.future);
-  final currentUserID = ref.watch(currentUserIDProvider);
+  final currentUserEmail = ref.watch(currentUserEmailProvider);
   return DishRatingUser(
       dishes: await dishes,
       ratings: await ratings,
       users: await users,
-      currentUserID: currentUserID);
+      currentUserEmail: currentUserEmail);
 }

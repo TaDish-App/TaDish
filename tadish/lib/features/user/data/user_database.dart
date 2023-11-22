@@ -24,8 +24,8 @@ class UserDatabase {
       path: FirestorePath.users(),
       builder: (data, documentId) => User.fromJson(data!));
 
-  Future<User> fetchUser(String userId) => _service.fetchDocument(
-      path: FirestorePath.user(userId),
+  Future<User> fetchUser(String userEmail) => _service.fetchDocument(
+      path: FirestorePath.user(userEmail),
       builder: (data, documentId) => User.fromJson(data!));
 
   Future<void> setUser(User user) =>

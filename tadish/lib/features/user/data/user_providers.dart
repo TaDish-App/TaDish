@@ -19,16 +19,16 @@ Stream<List<User>> users(UsersRef ref) {
 }
 
 @riverpod
-String currentUserID(CurrentUserIDRef ref) {
+String currentUserEmail(CurrentUserEmailRef ref) {
   final FirebaseAuth instance = ref.watch(firebaseAuthProvider);
   return instance.currentUser!.email!;
 }
 
 @riverpod
 Future<User> currentUser(CurrentUserRef ref) async {
-  final String currentUserId = ref.watch(currentUserIDProvider);
+  final String currentUserEmail = ref.watch(currentUserEmailProvider);
   final database = ref.watch(userDatabaseProvider);
-  return await database.fetchUser(currentUserId);
+  return await database.fetchUser(currentUserEmail);
 }
 
 // Old way:

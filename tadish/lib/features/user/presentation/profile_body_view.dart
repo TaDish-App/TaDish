@@ -36,7 +36,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
             context: context,
             ratings: dishRatingUser.ratings,
             users: dishRatingUser.users,
-            userID: dishRatingUser.currentUserID,
+            currentUserEmail: dishRatingUser.currentUserEmail,
             ref: ref),
         loading: () => const TadishLoading(),
         error: (error, stacktrace) =>
@@ -46,14 +46,13 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
   Widget _build({required BuildContext context,
     required List<Rating> ratings,
     required List<User> users,
-    required String userID,
+    required String currentUserEmail,
     required WidgetRef ref}) {
     RatingCollection ratingCollection = RatingCollection(ratings);
 
     const secondaryTextColor = Colors.grey;
-    final String currentUserID = userID;
     final UserCollection userDB = UserCollection(users);
-    final User currentUser = userDB.getUser(currentUserID);
+    final User currentUser = userDB.getUser(currentUserEmail);
 
     return Center(
       child: SafeArea(
@@ -104,7 +103,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
                   children: [
                     Text(
                         ratingCollection
-                            .getSingularUserRatings(currentUserID)
+                            .getSingularUserRatings(currentUserEmail)
                             .length
                             .toString(),
                         style: const TextStyle(
@@ -116,7 +115,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
                 ),
                 Column(
                   children: [
-                    Text(userDB.getFriends(currentUserID).length.toString(),
+                    Text(userDB.getFriends(currentUserEmail).length.toString(),
                         style: const TextStyle(
                           fontSize: 20,
                         )),
@@ -126,7 +125,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
                 ),
                 Column(
                   children: [
-                    Text(userDB.getUser(currentUserID).taggedDishes.toString(),
+                    Text(userDB.getUser(currentUserEmail).taggedDishes.toString(),
                         style: const TextStyle(
                           fontSize: 20,
                         )),
@@ -205,7 +204,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
                 ? const Expanded(
                     child: FavoritesView(),
                   )
-                : Expanded(child: HistoryView(userID: currentUserID))),
+                : Expanded(child: HistoryView(userID: currentUserEmail))),
           ],
         ),
       ),

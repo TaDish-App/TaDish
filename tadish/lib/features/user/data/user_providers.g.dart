@@ -34,22 +34,22 @@ final usersProvider = AutoDisposeStreamProvider<List<User>>.internal(
 );
 
 typedef UsersRef = AutoDisposeStreamProviderRef<List<User>>;
-String _$currentUserIDHash() => r'fcc1b736638289871b82e61abfd9a5984bede617';
+String _$currentUserEmailHash() => r'ebe2437f6972ee97697eb35d2bdd8970c77871da';
 
-/// See also [currentUserID].
-@ProviderFor(currentUserID)
-final currentUserIDProvider = AutoDisposeProvider<String>.internal(
-  currentUserID,
-  name: r'currentUserIDProvider',
+/// See also [currentUserEmail].
+@ProviderFor(currentUserEmail)
+final currentUserEmailProvider = AutoDisposeProvider<String>.internal(
+  currentUserEmail,
+  name: r'currentUserEmailProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$currentUserIDHash,
+      : _$currentUserEmailHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef CurrentUserIDRef = AutoDisposeProviderRef<String>;
-String _$currentUserHash() => r'df977552e228aa614e5f1ba325dd0b22a113a13e';
+typedef CurrentUserEmailRef = AutoDisposeProviderRef<String>;
+String _$currentUserHash() => r'c8e5ae074617aaf87c1376b72fa90c7b52111d59';
 
 /// See also [currentUser].
 @ProviderFor(currentUser)

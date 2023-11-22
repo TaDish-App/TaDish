@@ -6,7 +6,7 @@ part of 'dish_rating_user_data_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dishRatingUserHash() => r'588ff7813bcdeb489640b87831583a91b5ab6d38';
+String _$dishRatingUserHash() => r'55ad4704e4934be279581358da8209bb8100634a';
 
 /// See also [dishRatingUser].
 @ProviderFor(dishRatingUser)

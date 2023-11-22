@@ -28,7 +28,7 @@ class UserRestaurant {
 Future<UserRestaurant> userRestaurant(UserRestaurantRef ref) async {
   final restaurant = ref.watch(restaurantsProvider.future);
   final user = ref.watch(usersProvider.future);
-  final currentUserEmail = ref.watch(currentUserIDProvider);
+  final currentUserEmail = ref.watch(currentUserEmailProvider);
   return UserRestaurant(
       restaurant: await restaurant,
       user: await user,

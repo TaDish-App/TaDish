@@ -19,8 +19,8 @@ class UserAll {
 @riverpod
 Future<UserAll> userAll(UserAllRef ref) async {
   final user = ref.watch(usersProvider.future);
-  final currentUserID = ref.watch(currentUserIDProvider);
+  final currentUserEmail = ref.watch(currentUserEmailProvider);
   return UserAll(
       user: await user,
-      currentUserID: currentUserID);
+      currentUserID: currentUserEmail);
 }

@@ -56,7 +56,7 @@ class CameraBodyView extends ConsumerWidget {
       required WidgetRef ref}) {
     RatingCollection ratingCollection = RatingCollection(ratings);
 
-    final String currentUser = ref.watch(currentUserIDProvider);
+    final String currentUserEmail = ref.watch(currentUserEmailProvider);
 
     displayConfirmationModal(String dishName) {
       return showDialog<String>(
@@ -112,7 +112,7 @@ class CameraBodyView extends ConsumerWidget {
       Rating rating = Rating(
         id: id,
         dishID: dishID,
-        raterID: currentUser,
+        raterEmail: currentUserEmail,
         starRating: stars,
         restaurantName: restaurantName,
         sweetness: sweetnessSlider,

@@ -36,7 +36,7 @@ class FavoritesView extends ConsumerWidget {
     return asyncDishRatingUserData.when(
         data: (dishRatingUserData) => _build(
             context: context,
-            currentUserID: dishRatingUserData.currentUserID,
+            currentUserEmail: dishRatingUserData.currentUserEmail,
             ratings: dishRatingUserData.ratings,
             dishes: dishRatingUserData.dishes,
             ref: ref),
@@ -49,13 +49,12 @@ class FavoritesView extends ConsumerWidget {
       {required BuildContext context,
       required List<Rating> ratings,
       required List<Dish> dishes,
-      required String currentUserID,
+      required String currentUserEmail,
       required WidgetRef ref}) {
     RatingCollection ratingCollection = RatingCollection(ratings);
-    final String currentUserID = ref.watch(currentUserIDProvider);
     DishCollection dishDB = DishCollection(dishes);
 
-    var favorites = ratingCollection.getSingularUserRatings(currentUserID);
+    var favorites = ratingCollection.getSingularUserRatings(currentUserEmail);
     favorites.sort((a, b) => a.starRating.compareTo(b.starRating));
     favorites = favorites.toList();
     favorites = (favorites.length <= 8) ? favorites : favorites.sublist(0, 8);

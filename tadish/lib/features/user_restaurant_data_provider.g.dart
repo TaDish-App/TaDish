@@ -6,7 +6,7 @@ part of 'user_restaurant_data_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userRestaurantHash() => r'2c4d86fe7a3702811e224f19932fe037fedd5926';
+String _$userRestaurantHash() => r'c5341115c2c82ab60ba8ce121b14b4243898ae1c';
 
 /// See also [userRestaurant].
 @ProviderFor(userRestaurant)

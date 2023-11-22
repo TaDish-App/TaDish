@@ -21,7 +21,7 @@ Rating _$RatingFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Rating {
   String get id => throw _privateConstructorUsedError;
-  String get raterID => throw _privateConstructorUsedError;
+  String get raterEmail => throw _privateConstructorUsedError;
   String get dishID => throw _privateConstructorUsedError;
   double get starRating => throw _privateConstructorUsedError;
   String get restaurantName => throw _privateConstructorUsedError;
@@ -47,7 +47,7 @@ abstract class $RatingCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String raterID,
+      String raterEmail,
       String dishID,
       double starRating,
       String restaurantName,
@@ -76,7 +76,7 @@ class _$RatingCopyWithImpl<$Res, $Val extends Rating>
   @override
   $Res call({
     Object? id = null,
-    Object? raterID = null,
+    Object? raterEmail = null,
     Object? dishID = null,
     Object? starRating = null,
     Object? restaurantName = null,
@@ -95,9 +95,9 @@ class _$RatingCopyWithImpl<$Res, $Val extends Rating>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      raterID: null == raterID
-          ? _value.raterID
-          : raterID // ignore: cast_nullable_to_non_nullable
+      raterEmail: null == raterEmail
+          ? _value.raterEmail
+          : raterEmail // ignore: cast_nullable_to_non_nullable
               as String,
       dishID: null == dishID
           ? _value.dishID
@@ -160,7 +160,7 @@ abstract class _$$RatingImplCopyWith<$Res> implements $RatingCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String raterID,
+      String raterEmail,
       String dishID,
       double starRating,
       String restaurantName,
@@ -187,7 +187,7 @@ class __$$RatingImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? raterID = null,
+    Object? raterEmail = null,
     Object? dishID = null,
     Object? starRating = null,
     Object? restaurantName = null,
@@ -206,9 +206,9 @@ class __$$RatingImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      raterID: null == raterID
-          ? _value.raterID
-          : raterID // ignore: cast_nullable_to_non_nullable
+      raterEmail: null == raterEmail
+          ? _value.raterEmail
+          : raterEmail // ignore: cast_nullable_to_non_nullable
               as String,
       dishID: null == dishID
           ? _value.dishID
@@ -267,7 +267,7 @@ class __$$RatingImplCopyWithImpl<$Res>
 class _$RatingImpl implements _Rating {
   _$RatingImpl(
       {required this.id,
-      required this.raterID,
+      required this.raterEmail,
       required this.dishID,
       required this.starRating,
       required this.restaurantName,
@@ -288,7 +288,7 @@ class _$RatingImpl implements _Rating {
   @override
   final String id;
   @override
-  final String raterID;
+  final String raterEmail;
   @override
   final String dishID;
   @override
@@ -328,7 +328,7 @@ class _$RatingImpl implements _Rating {
 
   @override
   String toString() {
-    return 'Rating(id: $id, raterID: $raterID, dishID: $dishID, starRating: $starRating, restaurantName: $restaurantName, sweetness: $sweetness, sourness: $sourness, saltiness: $saltiness, spiciness: $spiciness, createdOn: $createdOn, tags: $tags, picture: $picture, publicNote: $publicNote, privateNote: $privateNote)';
+    return 'Rating(id: $id, raterEmail: $raterEmail, dishID: $dishID, starRating: $starRating, restaurantName: $restaurantName, sweetness: $sweetness, sourness: $sourness, saltiness: $saltiness, spiciness: $spiciness, createdOn: $createdOn, tags: $tags, picture: $picture, publicNote: $publicNote, privateNote: $privateNote)';
   }
 
   @override
@@ -337,7 +337,8 @@ class _$RatingImpl implements _Rating {
         (other.runtimeType == runtimeType &&
             other is _$RatingImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.raterID, raterID) || other.raterID == raterID) &&
+            (identical(other.raterEmail, raterEmail) ||
+                other.raterEmail == raterEmail) &&
             (identical(other.dishID, dishID) || other.dishID == dishID) &&
             (identical(other.starRating, starRating) ||
                 other.starRating == starRating) &&
@@ -366,7 +367,7 @@ class _$RatingImpl implements _Rating {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      raterID,
+      raterEmail,
       dishID,
       starRating,
       restaurantName,
@@ -397,7 +398,7 @@ class _$RatingImpl implements _Rating {
 abstract class _Rating implements Rating {
   factory _Rating(
       {required final String id,
-      required final String raterID,
+      required final String raterEmail,
       required final String dishID,
       required final double starRating,
       required final String restaurantName,
@@ -416,7 +417,7 @@ abstract class _Rating implements Rating {
   @override
   String get id;
   @override
-  String get raterID;
+  String get raterEmail;
   @override
   String get dishID;
   @override
