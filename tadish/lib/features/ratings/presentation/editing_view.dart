@@ -96,23 +96,6 @@ class EditingView extends ConsumerWidget {
       double saltinessSlider = _sliderSaltinessFieldKey.currentState?.value;
       String image = _imageFieldKey.currentState?.value;
 
-      // Edit the rating.
-      // ratingCollection.editRating(
-      //     name: dishName,
-      //     starRating: stars,
-      //     sweetness: sweetnessSlider,
-      //     sourness: sournessSlider,
-      //     saltiness: saltinessSlider,
-      //     spiciness: spicinessSlider,
-      //     tags: tags,
-      //     picture: image,
-      //     publicNote: publicNotes,
-      //     privateNote: privateNotes,
-      //     ratingID: ratingID,
-      //     dishID: rating.dishID,
-      //     raterID: rating.raterID,
-      //     createdOn: rating.createdOn);
-
       Rating newRating = Rating(
           id: ratingID,
           starRating: stars,
@@ -129,8 +112,9 @@ class EditingView extends ConsumerWidget {
           raterID: rating.raterID,
           createdOn: rating.createdOn);
       ref.read(editRatingControllerProvider.notifier).updateRating(
-            rating: newRating,
-            dishName: dishName,
+            updatedRating: newRating,
+            updatedDishName: dishName,
+            // TODO send old rating info e.g. star to help with avg calculations
             onSuccess: () {
               Navigator.pop(context);
               Navigator.pop(context);

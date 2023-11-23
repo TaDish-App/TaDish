@@ -5,9 +5,13 @@ class RestaurantCollection {
   RestaurantCollection(restaurants) : _restaurants = restaurants;
 
   final List<Restaurant> _restaurants;
-  
+
   List<Restaurant> getRestaurants() {
     return _restaurants.toList();
+  }
+
+  int size() {
+    return _restaurants.length;
   }
 
   List<String> getRestaurantNames() {

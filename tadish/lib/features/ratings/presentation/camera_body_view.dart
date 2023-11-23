@@ -4,6 +4,9 @@ import 'package:tadish/features/home/presentation/home_view.dart';
 import 'package:tadish/features/ratings/domain/rating.dart';
 import 'package:tadish/features/ratings/presentation/add_rating_controller.dart';
 import '../../common/star_confetti.dart';
+import '../../dish_rating_user_data_provider.dart';
+import '../../review/domain/dish.dart';
+import '../../review/domain/dish_collection.dart';
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
 import '../data/rating_provider.dart';
@@ -35,10 +38,16 @@ class CameraBodyView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
-    return asyncRatingsDB.when(data: (ratings) {
+    final AsyncValue<DishRatingUser> asyncDishRatingUserData =
+        ref.watch(dishRatingUserProvider);
+    return asyncDishRatingUserData.when(data: (dishRatingUserData) {
       print("data");
-      return _build(context: context, ratings: ratings, ref: ref);
+      return _build(
+          context: context,
+          ratings: dishRatingUserData.ratings,
+          dishes: dishRatingUserData.dishes,
+          currentUserEmail: dishRatingUserData.currentUserEmail,
+          ref: ref);
     }, loading: () {
       print("loading");
       return const TadishLoading();
@@ -52,10 +61,12 @@ class CameraBodyView extends ConsumerWidget {
   Widget _build(
       {required BuildContext context,
       required List<Rating> ratings,
+      required List<Dish> dishes,
+      required String currentUserEmail,
       required WidgetRef ref}) {
     RatingCollection ratingCollection = RatingCollection(ratings);
 
-    final String currentUser = ref.watch(currentUserIDProvider);
+    DishCollection dishCollection = DishCollection(dishes);
 
     displayConfirmationModal(String dishName) {
       return showDialog<String>(
@@ -104,14 +115,14 @@ class CameraBodyView extends ConsumerWidget {
       String image = _imageFieldKey.currentState?.value;
       image = 'assets/images/2.jpg';
 
-      String dishID = 'dish-001';
       int numRatings = ratingCollection.size();
       String id = 'rating-${(numRatings + 1).toString().padLeft(3, '0')}';
-
+      String dishId =
+          'dish-${(dishCollection.size() + 1).toString().padLeft(3, '0')}';
       Rating rating = Rating(
         id: id,
-        dishID: dishID,
-        raterID: currentUser,
+        dishID: dishId,
+        raterEmail: currentUserEmail,
         starRating: stars,
         restaurantName: restaurantName,
         sweetness: sweetnessSlider,

@@ -1,6 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tadish/features/picker/data/restaurant_provider.dart';
 
+import '../../picker/domain/restaurant_collection.dart';
+import '../../review/data/dish_database.dart';
+import '../../review/data/dish_provider.dart';
+import '../../review/domain/dish.dart';
 import '../data/rating_database.dart';
 import '../data/rating_provider.dart';
 import '../domain/rating.dart';
@@ -38,7 +43,39 @@ class AddRatingController extends _$AddRatingController {
     }
     // Weird. Can't use "if (state.hasValue)" below.
     if (!state.hasError) {
-      onSuccess();
+      // Create new dish instance
+      DishDatabase dishesDatabase = ref.watch(dishDatabaseProvider);
+
+      // TODO check if dish already exists based on name and location
+      final existingDish =
+          await AsyncValue.guard(() => dishesDatabase.fetchDish(dishName));
+
+      final restaurants =
+          RestaurantCollection(await ref.read(restaurantsProvider.future));
+      final newDish = Dish(
+          id: rating.dishID,
+          restaurantID:
+              'restaurant-${(restaurants.size() + 1).toString().padLeft(3, '0')}',
+          name: dishName,
+          averageStarRating: rating.starRating,
+          numRaters: "1",
+          averageSweetness: rating.sweetness!,
+          averageSourness: rating.sourness!,
+          averageSaltiness: rating.saltiness!,
+          averageSpiciness: rating.spiciness!,
+          createdOn: DateTime.now(),
+          pictures: ["assets/images/1.jpg"],
+          publicNotes: [rating.publicNote!],
+          tags: rating.tags!,
+          restaurantName: rating.restaurantName);
+      final newState =
+          await AsyncValue.guard(() => dishesDatabase.setDish(newDish));
+      if (mounted) {
+        state = newState;
+      }
+      if (!state.hasError) {
+        onSuccess();
+      }
     }
   }
 
