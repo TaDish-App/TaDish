@@ -1,19 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tadish/features/user/domain/user_collection.dart';
 import '../../common/drawer_view.dart';
-import '../domain/user_db.dart';
+import '../domain/user.dart';
 import 'friends_list_row.dart';
+import '../../user_all_provider.dart';
+import '../../tadish_error.dart';
+import '../../tadish_loading.dart';
 
 class FriendsListView extends ConsumerWidget {
 
   static const routeName = '/friendslist';
-
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String currentUserID = ref.watch(currentUserIDProvider);
-    final UserDB userDB = ref.watch(userDBProvider);
-    final UserData currentUser = userDB.getUser(currentUserID);
-    final List<UserData?> friendsList = userDB.getFriends(currentUserID);
+    final AsyncValue<UserAll> asyncUserAll = ref.watch(userAllProvider);
+    return asyncUserAll.when(data: (userALl) {
+      return _build(context: context, userID: userALl.currentUserID, users: userALl.user, ref: ref);
+    }, loading: () {
+      print("loading");
+      return const TadishLoading();
+    }, error: (error, stacktrace) {
+      print("error");
+      print(error.toString());
+      return TadishError(error.toString(), stacktrace.toString());
+    });
+  }
+  
+  Widget _build(
+    {
+      required BuildContext context, 
+      required List<User> users,
+      required String userID,
+      required WidgetRef ref
+    }) {
+    final String currentUserID = userID;
+    final UserCollection userDB = UserCollection(users);
+    final User currentUser = userDB.getUser(currentUserID);
+    final List<User?> friendsList = userDB.getFriends(currentUserID);
     return Scaffold(
       drawer: const DrawerView(),
       appBar: AppBar(

@@ -13,7 +13,7 @@ part 'rating.g.dart';
 class Rating with _$Rating {
   factory Rating({
     required String id,
-    required String raterID,
+    required String raterEmail,
     required String dishID,
     required double starRating,
     required String restaurantName,

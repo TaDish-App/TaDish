@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:tadish/features/picker/domain/restaurant.dart';
 import 'package:tadish/features/picker/domain/restaurant_collection.dart';
+import 'package:tadish/features/user/domain/user_collection.dart';
 import 'roll_button.dart';
 import '../../common/star_confetti.dart';
 import '../../user/presentation/friends_list_row.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../user_restaurant_data_provider.dart';
 
 import 'dart:async';
-import '../../user/domain/user_db.dart';
+import '../../user/domain/user.dart';
 
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
-import '../data/restaurant_database.dart';
-import '../data/restaurant_provider.dart';
-import '../domain/restaurant.dart';
 
 class SurpriseBodyView extends ConsumerStatefulWidget {
   const SurpriseBodyView({
@@ -79,10 +78,9 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
   
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<List<Restaurant>> asyncRestaurantsDB = ref.watch(restaurantsProvider);
-    return asyncRestaurantsDB.when(data: (restaurants) {
-      print("data");
-      return _build(context: context, restaurants: restaurants, ref: ref);
+    final AsyncValue<UserRestaurant> asyncUserRestaurant = ref.watch(userRestaurantProvider);
+    return asyncUserRestaurant.when(data: (userRestaurant) {
+      return _build(context: context, userID: userRestaurant.currentUserEmail, users: userRestaurant.user, restaurants: userRestaurant.restaurant, ref: ref);
     }, loading: () {
       print("loading");
       return const TadishLoading();
@@ -96,14 +94,16 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
   Widget _build(
     {required BuildContext context,
       required List<Restaurant> restaurants,
+      required List<User> users,
+      required String userID,
       required WidgetRef ref}) {
-
+    
     RestaurantCollection restaurantCollection = RestaurantCollection(restaurants);
     final items = restaurantCollection.getRestaurantNames();
-    final String currentUserID = ref.watch(currentUserIDProvider);
-    final UserDB userDB = ref.watch(userDBProvider);
-    final UserData currentUser = userDB.getUser(currentUserID);
-    List<UserData?> friendsList =userDB.getFriends(currentUserID);
+    final String currentUserID = userID;
+    final UserCollection userDB =UserCollection(users);
+    final User currentUser = userDB.getUser(currentUserID);
+    List<User?> friendsList = userDB.getFriends(currentUserID);
 
     // A function to show the friends list popup
     void showFriendsListPopup() {

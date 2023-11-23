@@ -18,7 +18,7 @@ import 'form-fields/star_field.dart';
 import 'form-fields/tags_field.dart';
 import '../../common/form-fields/submit_button.dart';
 import '../domain/rating.dart';
-import '../../user/domain/user_db.dart';
+import '../../user/domain/user.dart';
 
 /// Presents the page containing fields to enter a username and password, plus buttons.
 class EditingView extends ConsumerWidget {
@@ -47,7 +47,7 @@ class EditingView extends ConsumerWidget {
       print("data");
       return _build(
           context: context,
-          currentUserID: dishRatingUserData.currentUserID,
+          currentUserEmail: dishRatingUserData.currentUserEmail,
           ratings: dishRatingUserData.ratings,
           dishes: dishRatingUserData.dishes,
           ref: ref);
@@ -65,11 +65,11 @@ class EditingView extends ConsumerWidget {
       {required BuildContext context,
       required List<Rating> ratings,
       required List<Dish> dishes,
-      required String currentUserID,
+      required String currentUserEmail,
       required WidgetRef ref}) {
     RatingCollection ratingCollection = RatingCollection(ratings);
     DishCollection dishesDB = DishCollection(dishes);
-    final String currentUser = currentUserID;
+    final String currentUser = currentUserEmail;
 
     final ratingID = ModalRoute.of(context)!.settings.arguments as String;
     final rating = ratingCollection.getRating(ratingID);
@@ -109,7 +109,7 @@ class EditingView extends ConsumerWidget {
           publicNote: publicNotes,
           privateNote: privateNotes,
           dishID: rating.dishID,
-          raterID: rating.raterID,
+          raterEmail: currentUser,
           createdOn: rating.createdOn);
       ref.read(editRatingControllerProvider.notifier).updateRating(
             updatedRating: newRating,

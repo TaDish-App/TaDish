@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tadish/features/user/domain/user_collection.dart';
 import 'package:tadish/features/user/presentation/favorites_view.dart';
 import 'package:tadish/features/ratings/domain/rating.dart';
 import '../../ratings/data/rating_provider.dart';
@@ -9,8 +10,10 @@ import 'history_view.dart';
 import '../../common/taste_prefs_radar_chart.dart';
 import '../../../custom_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../domain/user_db.dart';
+import '../../dish_rating_user_data_provider.dart';
+import '../domain/user.dart';
+import '../../tadish_error.dart';
+import '../../tadish_loading.dart';
 
 class ProfileBodyView extends ConsumerStatefulWidget {
   const ProfileBodyView({
@@ -26,12 +29,14 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<List<Rating>> asyncRatingsDB = ref.watch(ratingsProvider);
+    final AsyncValue<DishRatingUser> asyncDishRatingUser = ref.watch(dishRatingUserProvider);
 
-    return asyncRatingsDB.when(
-        data: (ratings) => _build(
+    return asyncDishRatingUser.when(
+        data: (dishRatingUser) => _build(
             context: context,
-            ratings: ratings,
+            ratings: dishRatingUser.ratings,
+            users: dishRatingUser.users,
+            currentUserEmail: dishRatingUser.currentUserEmail,
             ref: ref),
         loading: () => const TadishLoading(),
         error: (error, stacktrace) =>
@@ -40,13 +45,14 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
 
   Widget _build({required BuildContext context,
     required List<Rating> ratings,
+    required List<User> users,
+    required String currentUserEmail,
     required WidgetRef ref}) {
     RatingCollection ratingCollection = RatingCollection(ratings);
 
     const secondaryTextColor = Colors.grey;
-    final String currentUserID = ref.watch(currentUserIDProvider);
-    final UserDB userDB = ref.watch(userDBProvider);
-    final UserData currentUser = userDB.getUser(currentUserID);
+    final UserCollection userDB = UserCollection(users);
+    final User currentUser = userDB.getUser(currentUserEmail);
 
     return Center(
       child: SafeArea(
@@ -97,7 +103,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
                   children: [
                     Text(
                         ratingCollection
-                            .getSingularUserRatings(currentUserID)
+                            .getSingularUserRatings(currentUserEmail)
                             .length
                             .toString(),
                         style: const TextStyle(
@@ -109,7 +115,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
                 ),
                 Column(
                   children: [
-                    Text(userDB.getFriends(currentUserID).length.toString(),
+                    Text(userDB.getFriends(currentUserEmail).length.toString(),
                         style: const TextStyle(
                           fontSize: 20,
                         )),
@@ -119,7 +125,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
                 ),
                 Column(
                   children: [
-                    Text(userDB.getUser(currentUserID).taggedDishes.toString(),
+                    Text(userDB.getUser(currentUserEmail).taggedDishes.toString(),
                         style: const TextStyle(
                           fontSize: 20,
                         )),
@@ -198,7 +204,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
                 ? const Expanded(
                     child: FavoritesView(),
                   )
-                : Expanded(child: HistoryView(userID: currentUserID))),
+                : Expanded(child: HistoryView(userID: currentUserEmail))),
           ],
         ),
       ),

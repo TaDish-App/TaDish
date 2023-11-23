@@ -40,12 +40,14 @@ class Tile extends StatelessWidget {
             height: 30,
             child: Row(
               children: [
-                Text(
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400),
-                    dishName),
+                Expanded(
+                  child: Text(
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400),
+                      dishName),
+                ),
               ],
             ),
           ),

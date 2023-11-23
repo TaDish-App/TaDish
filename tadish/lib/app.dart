@@ -3,6 +3,8 @@ import 'features/ratings/presentation/editing_view.dart';
 import 'features/authenticate/presentation/signin_view.dart';
 import 'features/authenticate/presentation/signup_view.dart';
 import 'features/home/presentation/home_view.dart';
+import 'features/authenticate/presentation/forgot_password_view.dart';
+import 'features/authenticate/presentation/verify_email_view.dart';
 import 'features/authenticate/presentation/landing_view.dart';
 import 'features/review/presentation/saved_view.dart';
 import 'features/ratings/presentation/camera_view.dart';
@@ -40,10 +42,14 @@ class MyApp extends ConsumerWidget {
                     return HomeView();
                   case SettingsView.routeName:
                     return const SettingsView();
-                  case SigninView.routeName:
-                    return SigninView();
+                  case SignInView.routeName:
+                    return SignInView();
                   case SignupView.routeName:
                     return const SignupView();
+                  case VerifyEmailView.routeName:
+                    return const VerifyEmailView();
+                  case ForgotPasswordView.routeName:
+                    return const ForgotPasswordView();
                   case FeedView.routeName:
                     return FeedView();
                   case ProfileView.routeName:
@@ -59,7 +65,7 @@ class MyApp extends ConsumerWidget {
                   case EditingView.routeName:
                     return EditingView();
                   default:
-                    return SigninView();
+                    return SignInView();
                 }
               },
             );

@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'dish_rating_user_data_provider.dart';
+part of 'user_restaurant_data_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dishRatingUserHash() => r'55ad4704e4934be279581358da8209bb8100634a';
+String _$userRestaurantHash() => r'c5341115c2c82ab60ba8ce121b14b4243898ae1c';
 
-/// See also [dishRatingUser].
-@ProviderFor(dishRatingUser)
-final dishRatingUserProvider =
-    AutoDisposeFutureProvider<DishRatingUser>.internal(
-  dishRatingUser,
-  name: r'dishRatingUserProvider',
+/// See also [userRestaurant].
+@ProviderFor(userRestaurant)
+final userRestaurantProvider =
+    AutoDisposeFutureProvider<UserRestaurant>.internal(
+  userRestaurant,
+  name: r'userRestaurantProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$dishRatingUserHash,
+      : _$userRestaurantHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef DishRatingUserRef = AutoDisposeFutureProviderRef<DishRatingUser>;
+typedef UserRestaurantRef = AutoDisposeFutureProviderRef<UserRestaurant>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:tadish/features/review/domain/dish.dart';
 import 'package:tadish/features/ratings/domain/rating.dart';
-import 'package:tadish/features/user/domain/user_db.dart';
+import 'package:tadish/features/user/domain/user.dart';
 import '../../common/Tile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,6 +12,7 @@ import '../../ratings/domain/rating_collection.dart';
 import '../../review/domain/dish_collection.dart';
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
+import '../../user/data/user_providers.dart';
 
 class FavoritesView extends ConsumerWidget {
   const FavoritesView({
@@ -35,7 +36,7 @@ class FavoritesView extends ConsumerWidget {
     return asyncDishRatingUserData.when(
         data: (dishRatingUserData) => _build(
             context: context,
-            currentUserID: dishRatingUserData.currentUserID,
+            currentUserEmail: dishRatingUserData.currentUserEmail,
             ratings: dishRatingUserData.ratings,
             dishes: dishRatingUserData.dishes,
             ref: ref),
@@ -48,13 +49,12 @@ class FavoritesView extends ConsumerWidget {
       {required BuildContext context,
       required List<Rating> ratings,
       required List<Dish> dishes,
-      required String currentUserID,
+      required String currentUserEmail,
       required WidgetRef ref}) {
     RatingCollection ratingCollection = RatingCollection(ratings);
-    final String currentUserID = ref.watch(currentUserIDProvider);
     DishCollection dishDB = DishCollection(dishes);
 
-    var favorites = ratingCollection.getSingularUserRatings(currentUserID);
+    var favorites = ratingCollection.getSingularUserRatings(currentUserEmail);
     favorites.sort((a, b) => a.starRating.compareTo(b.starRating));
     favorites = favorites.toList();
     favorites = (favorites.length <= 8) ? favorites : favorites.sublist(0, 8);
@@ -63,7 +63,7 @@ class FavoritesView extends ConsumerWidget {
     String? getImage() {
       return favoriteImagesIndex < favorites.length
           ? favorites[favoriteImagesIndex++].picture
-          : 'assets/images/cloche_dark.png';
+          : 'assets/images/logo_dark.png';
     }
 
     Widget getTile() {
@@ -71,7 +71,7 @@ class FavoritesView extends ConsumerWidget {
           index: favoriteImagesIndex,
           image: favoriteImagesIndex < favorites.length
               ? favorites[favoriteImagesIndex].picture!
-              : 'assets/images/cloche_dark.png',
+              : 'assets/images/logo_dark.png',
           dishName: favoriteImagesIndex < favorites.length
               ? dishDB.getDishName(favorites[favoriteImagesIndex++].dishID)
               : '');
