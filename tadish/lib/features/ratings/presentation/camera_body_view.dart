@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:tadish/features/home/presentation/home_view.dart';
 import 'package:tadish/features/ratings/domain/rating.dart';
 import 'package:tadish/features/ratings/presentation/add_rating_controller.dart';
 import '../../common/star_confetti.dart';
@@ -9,19 +10,16 @@ import '../../review/domain/dish.dart';
 import '../../review/domain/dish_collection.dart';
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
-import '../data/rating_provider.dart';
 import '../domain/rating_collection.dart';
-import 'camera_view.dart';
 import 'form-fields/images_field.dart';
 import 'form-fields/single_line_text_field.dart';
 import 'form-fields/slider_field.dart';
 import 'form-fields/star_field.dart';
 import 'form-fields/tags_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../user/data/user_providers.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../common/form-fields/submit_button.dart';
-import '../../user/domain/user.dart';
 
 class CameraBodyView extends ConsumerWidget {
   final _formKey = GlobalKey<FormBuilderState>();
@@ -36,6 +34,8 @@ class CameraBodyView extends ConsumerWidget {
   final _sliderSournessFieldKey = GlobalKey<FormBuilderFieldState>();
   final _sliderSaltinessFieldKey = GlobalKey<FormBuilderFieldState>();
   final _sliderSpicinessFieldKey = GlobalKey<FormBuilderFieldState>();
+
+  String imageUrl = '';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -98,7 +98,7 @@ class CameraBodyView extends ConsumerWidget {
               ));
     }
 
-    void onSubmit() {
+    Future<void> onSubmit() async {
       bool isValid = _formKey.currentState?.saveAndValidate() ?? false;
 
       if (!isValid) return;
@@ -114,6 +114,30 @@ class CameraBodyView extends ConsumerWidget {
       double spicinessSlider = _sliderSpicinessFieldKey.currentState?.value;
       double saltinessSlider = _sliderSaltinessFieldKey.currentState?.value;
       String image = _imageFieldKey.currentState?.value;
+
+      //Get a reference to storage root
+      Reference referenceRoot = FirebaseStorage.instance.ref();
+      Reference referenceDirImages = referenceRoot.child('images');
+
+      //Create a reference for the image to be stored
+      String uniqueFileName = "${currentUserEmail}_${DateTime.now().millisecondsSinceEpoch}";
+      Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+
+      //Handle errors/success
+      try {
+        //Store the file
+        await referenceImageToUpload.putFile(File(image));
+        //Success: get the download URL
+        imageUrl = await referenceImageToUpload.getDownloadURL();
+
+        // Use imageUrl for ratings database
+        print("image stored in firebase storage" + imageUrl);
+      } catch (error) {
+        //Some error occurred
+        print(error);
+      }
+
+      return;
       image = 'assets/images/2.jpg';
 
       int numRatings = ratingCollection.size();

@@ -23,6 +23,7 @@ class _CircleImageSelectorState extends State<CircleImageSelector> {
   @override
   Widget build(BuildContext context) {
     Future<File?> cropImage({required File imageFile}) async {
+      print("orignal file path before crop: " + imageFile.path);
       CroppedFile? croppedImage =
           await ImageCropper().cropImage(sourcePath: imageFile.path);
       if (croppedImage == null) return null;
@@ -32,7 +33,9 @@ class _CircleImageSelectorState extends State<CircleImageSelector> {
     Future pickImage(ImageSource source) async {
       try {
         final image = await ImagePicker().pickImage(source: source);
+
         if (image == null) return;
+        print("pickImage path: " + image.path);
         File? img = File(image.path);
         img = await cropImage(imageFile: img);
         setState(() {
