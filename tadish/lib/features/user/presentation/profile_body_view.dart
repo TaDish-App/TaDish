@@ -201,10 +201,9 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
               ],
             ),
             (onFavorites
-                ? const Expanded(
-                    child: FavoritesView(),
-                  )
-                : Expanded(child: HistoryView(userID: currentUserEmail))),
+                ? Expanded(child: FavoritesView(userID: currentUserEmail))
+                : Expanded(child: HistoryView(userID: currentUserEmail))
+                ),
           ],
         ),
       ),

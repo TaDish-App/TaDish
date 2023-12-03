@@ -3,6 +3,7 @@ import 'package:tadish/features/user/domain/user_collection.dart';
 import 'package:tadish/features/user/presentation/favorites_view.dart';
 import 'package:tadish/features/ratings/domain/rating.dart';
 import '../../ratings/data/rating_provider.dart';
+import '../../common/drawer_view.dart';
 import '../../ratings/domain/rating_collection.dart';
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
@@ -56,7 +57,12 @@ class _OtherProfileViewState extends ConsumerState<OtherProfileView> {
     final UserCollection userDB = UserCollection(users);
     final User currentUser = userDB.getUser(currentUserEmail);
 
-    return Center(
+    return Scaffold(
+      drawer: const DrawerView(),
+      appBar: AppBar(
+        title: const Text('Profile'),
+      ),
+      body: Center(
       child: SafeArea(
         child: Column(
           children: [
@@ -203,13 +209,14 @@ class _OtherProfileViewState extends ConsumerState<OtherProfileView> {
               ],
             ),
             (onFavorites
-                ? const Expanded(
-                    child: FavoritesView(),
+                ? Expanded(
+                    child: FavoritesView(userID: currentUserEmail)
                   )
                 : Expanded(child: HistoryView(userID: currentUserEmail))),
           ],
         ),
       ),
+    )
     );
   }
 }
