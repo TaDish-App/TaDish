@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:tadish/features/ratings/domain/rating.dart';
 import 'package:tadish/features/ratings/presentation/add_rating_controller.dart';
@@ -17,7 +19,6 @@ import 'form-fields/slider_field.dart';
 import 'form-fields/star_field.dart';
 import 'form-fields/tags_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../common/form-fields/submit_button.dart';
 
@@ -114,7 +115,8 @@ class CameraBodyView extends ConsumerWidget {
       double spicinessSlider = _sliderSpicinessFieldKey.currentState?.value;
       double saltinessSlider = _sliderSaltinessFieldKey.currentState?.value;
       String image = _imageFieldKey.currentState?.value;
-
+      image = image.split("'")[1];
+      String imageUrl = "assets/images/logo_dark.png";
       //Get a reference to storage root
       Reference referenceRoot = FirebaseStorage.instance.ref();
       Reference referenceDirImages = referenceRoot.child('images');
@@ -124,21 +126,16 @@ class CameraBodyView extends ConsumerWidget {
       Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
 
       //Handle errors/success
+      String filePath = image;
+      File file = File(filePath);
+
       try {
-        //Store the file
-        await referenceImageToUpload.putFile(File(image));
-        //Success: get the download URL
+        await referenceImageToUpload.putFile(file);
         imageUrl = await referenceImageToUpload.getDownloadURL();
-
-        // Use imageUrl for ratings database
-        print("image stored in firebase storage" + imageUrl);
-      } catch (error) {
-        //Some error occurred
-        print(error);
+      } catch (e) {
+        print(e);
+        // ...
       }
-
-      return;
-      image = 'assets/images/2.jpg';
 
       int numRatings = ratingCollection.size();
       String id = 'rating-${(numRatings + 1).toString().padLeft(3, '0')}';
@@ -155,7 +152,7 @@ class CameraBodyView extends ConsumerWidget {
         saltiness: saltinessSlider,
         spiciness: spicinessSlider,
         tags: tags,
-        picture: image,
+        picture: imageUrl,
         publicNote: publicNotes,
         privateNote: privateNotes,
         createdOn: DateTime.now().toString(),

@@ -33,9 +33,7 @@ class _CircleImageSelectorState extends State<CircleImageSelector> {
     Future pickImage(ImageSource source) async {
       try {
         final image = await ImagePicker().pickImage(source: source);
-
         if (image == null) return;
-        print("pickImage path: " + image.path);
         File? img = File(image.path);
         img = await cropImage(imageFile: img);
         setState(() {
