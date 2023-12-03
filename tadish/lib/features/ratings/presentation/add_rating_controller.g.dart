@@ -7,7 +7,7 @@ part of 'add_rating_controller.dart';
 // **************************************************************************
 
 String _$addRatingControllerHash() =>
-    r'5814b6e8da4404eb6ab02dc988facb528f28bcc1';
+    r'fec9151ee2c41eec293904c4d6a42c7398700776';
 
 /// See also [AddRatingController].
 @ProviderFor(AddRatingController)
