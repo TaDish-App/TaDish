@@ -176,7 +176,7 @@ class FriendsListView extends ConsumerWidget {
                       height: 200,
                       child: ListView(
                         children: friendsList.map((friend) =>
-                            FriendsListRow(name: friend!.name, tastePreference: friend.tastePreference,  icon: const Icon(Icons.person_outline)),
+                            FriendsListRow(name: friend!.name, email: friend.email, tastePreference: friend.tastePreference,  icon: const Icon(Icons.person_outline)),
                         ).toList(),
                       )
                   ),

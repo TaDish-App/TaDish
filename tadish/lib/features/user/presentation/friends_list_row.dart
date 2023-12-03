@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import '../../common/taste_prefs_radar_chart.dart';
+import 'other_profile_view.dart';
 
 class FriendsListRow extends StatelessWidget {
   final String name;
+  final String email;
   final List<double> tastePreference;
   final Icon icon;
 
   const FriendsListRow({
-    super.key, this.name = 'blank', this.tastePreference = const [0.00, 0.00, 0.00, 0.00], this.icon = const Icon(Icons.add_outlined),
-  });
+    Key? key,
+    this.name = 'blank',
+    this.email = 'blank',
+    this.tastePreference = const [0.00, 0.00, 0.00, 0.00],
+    this.icon = const Icon(Icons.add_outlined),
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +32,21 @@ class FriendsListRow extends StatelessWidget {
               fontSize: 20,
             ),
           ),
-          icon,
+          // Wrap the icon with GestureDetector
+          GestureDetector(
+            onTap: () {
+              // Navigate to OtherProfileView when the icon is tapped
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OtherProfileView(email: email),
+                ),
+              );
+            },
+            child: icon,
+          ),
         ],
-      )
+      ),
     );
   }
 }
