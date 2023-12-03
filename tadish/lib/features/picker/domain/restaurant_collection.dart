@@ -18,6 +18,14 @@ class RestaurantCollection {
     return _restaurants.map((data) => data.name).toList();
   }
 
+  String getRestaurantIdIfExists(restaurantName) {
+    try {
+      return _restaurants.firstWhere((data) => data.name == restaurantName).id;
+    } on StateError catch (_, e) {
+      return "";
+    }
+  }
+
   Restaurant getRestaurant(String restaurantID) {
     return _restaurants.firstWhere((data) => data.id == restaurantID);
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'inactive_slider.dart';
 
 class DishCard extends StatelessWidget {
-  final AssetImage picture;
+  final String picture;
   final String name;
   final double sweetness;
   final double sourness;
@@ -33,10 +33,7 @@ class DishCard extends StatelessWidget {
               children: [
                 Container(
                   height: 400.0,
-                  child: Ink.image(
-                    image: picture,
-                    fit: BoxFit.cover,
-                  ),
+                  child: picture.startsWith("assets/images") ? Image.asset(picture, fit: BoxFit.cover) : Image.network(picture, fit: BoxFit.cover),
                 ),
                 ListTile(
                   title: Row(

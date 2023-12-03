@@ -12,7 +12,7 @@ class DishRowTile extends StatelessWidget {
 
   const DishRowTile({
     super.key,
-    this.imageUrl = 'assets/images/5.jpg',
+    this.imageUrl = 'assets/images/logo_dark.png',
     this.ratingDateTime,
     this.tastePrefs,
     required this.dishName,
@@ -29,7 +29,7 @@ class DishRowTile extends StatelessWidget {
           minHeight: 44,
           maxWidth: 50,
         ),
-        child: Image.asset(imageUrl, fit: BoxFit.cover),
+        child: imageUrl.startsWith("assets/images") ? Image.asset(imageUrl, fit: BoxFit.cover) : Image.network(imageUrl, fit: BoxFit.cover),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

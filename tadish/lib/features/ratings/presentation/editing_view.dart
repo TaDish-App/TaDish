@@ -133,7 +133,6 @@ class EditingView extends ConsumerWidget {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      // TODO Image picking
                       ImagesField(
                           fieldKey: _imageFieldKey,
                           name: "Image",

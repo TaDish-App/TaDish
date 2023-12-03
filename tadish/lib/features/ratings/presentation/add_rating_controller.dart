@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tadish/features/picker/data/restaurant_database.dart';
 import 'package:tadish/features/picker/data/restaurant_provider.dart';
+import 'package:tadish/features/picker/domain/restaurant.dart';
 
 import '../../picker/domain/restaurant_collection.dart';
 import '../../review/data/dish_database.dart';
@@ -52,10 +54,19 @@ class AddRatingController extends _$AddRatingController {
 
       final restaurants =
           RestaurantCollection(await ref.read(restaurantsProvider.future));
+      final restaurantExistsId = restaurants.getRestaurantIdIfExists(restaurantName); // returns "" or an id
+      print("restaurantExistsId: $restaurantExistsId");
+
+      // create rest instance here is restaurantExistsId is ""
+      RestaurantDatabase restaurantDatabase = ref.watch(restaurantDatabaseProvider);
+      final newRestaurantId = 'restaurant-${(restaurants.size() + 1).toString().padLeft(3, '0')}';
+      if (restaurantExistsId == "") {
+        final newestState = await AsyncValue.guard(() => restaurantDatabase.setRestaurant(Restaurant(id: newRestaurantId, name: restaurantName, city: "Honolulu", state: "HI", location: "2500 Campus Rd, Honolulu, HI 96822", createdOn: DateTime.now())));
+      }
+
       final newDish = Dish(
           id: rating.dishID,
-          restaurantID:
-              'restaurant-${(restaurants.size() + 1).toString().padLeft(3, '0')}',
+          restaurantID: restaurantExistsId == "" ? 'restaurant-${(restaurants.size() + 1).toString().padLeft(3, '0')}' : restaurantExistsId,
           name: dishName,
           averageStarRating: rating.starRating,
           numRaters: "1",
@@ -64,7 +75,7 @@ class AddRatingController extends _$AddRatingController {
           averageSaltiness: rating.saltiness!,
           averageSpiciness: rating.spiciness!,
           createdOn: DateTime.now(),
-          pictures: ["assets/images/1.jpg"],
+          pictures: [rating.picture!],
           publicNotes: [rating.publicNote!],
           tags: rating.tags!,
           restaurantName: rating.restaurantName);

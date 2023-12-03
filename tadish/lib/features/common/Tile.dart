@@ -24,7 +24,7 @@ class Tile extends StatelessWidget {
       Container(
         // color: backgroundColor ?? Colors.grey.shade200,
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
+          image: image.startsWith("assets/images") ? DecorationImage(image: AssetImage(image), fit: BoxFit.cover) : DecorationImage(image: NetworkImage(image), fit: BoxFit.cover),
         ),
         height: extent,
       ),

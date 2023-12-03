@@ -87,9 +87,7 @@ class HistoryView extends ConsumerWidget {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Colors.grey.shade200,
-                                    image: DecorationImage(
-                                        image: AssetImage(rating.picture!),
-                                        fit: BoxFit.cover),
+                                    image: rating.picture!.startsWith("assets/images") ? DecorationImage(image: AssetImage(rating.picture!), fit: BoxFit.cover) : DecorationImage(image: NetworkImage(rating.picture!), fit: BoxFit.cover),
                                   ),
                                 ),
                               ),

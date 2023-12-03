@@ -117,7 +117,7 @@ class _RecommendationBodyViewState extends ConsumerState<RecommendationBodyView>
                     child: isFrontCard
                         ? DishCard(
                       name: dish.name,
-                      picture: AssetImage(dish.pictures[0]),
+                      picture: dish.pictures[0],
                       sweetness: dish.averageSweetness,
                       sourness: dish.averageSourness,
                       saltiness: dish.averageSaltiness,
@@ -134,7 +134,7 @@ class _RecommendationBodyViewState extends ConsumerState<RecommendationBodyView>
                 child: isFrontCard
                     ? DishCard(
                   name: dish.name,
-                  picture: AssetImage(dish.pictures[0]),
+                  picture: dish.pictures[0],
                   sweetness: dish.averageSweetness,
                   sourness: dish.averageSourness,
                   saltiness: dish.averageSaltiness,
