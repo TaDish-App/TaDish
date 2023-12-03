@@ -15,9 +15,8 @@ import '../../tadish_loading.dart';
 import '../../user/data/user_providers.dart';
 
 class FavoritesView extends ConsumerWidget {
-  const FavoritesView({
-    super.key,
-  });
+  final String userID;
+  const FavoritesView({super.key, required this.userID});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,7 +53,7 @@ class FavoritesView extends ConsumerWidget {
     RatingCollection ratingCollection = RatingCollection(ratings);
     DishCollection dishDB = DishCollection(dishes);
 
-    var favorites = ratingCollection.getSingularUserRatings(currentUserEmail);
+    var favorites = ratingCollection.getSingularUserRatings(userID);
     favorites.sort((a, b) => a.starRating.compareTo(b.starRating));
     favorites = favorites.toList();
     favorites = (favorites.length <= 8) ? favorites : favorites.sublist(0, 8);

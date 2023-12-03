@@ -3,6 +3,7 @@ import 'package:tadish/features/user/domain/user_collection.dart';
 import 'package:tadish/features/user/presentation/favorites_view.dart';
 import 'package:tadish/features/ratings/domain/rating.dart';
 import '../../ratings/data/rating_provider.dart';
+import '../../common/drawer_view.dart';
 import '../../ratings/domain/rating_collection.dart';
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
@@ -15,16 +16,19 @@ import '../domain/user.dart';
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
 
-class ProfileBodyView extends ConsumerStatefulWidget {
-  const ProfileBodyView({
+class OtherProfileView extends ConsumerStatefulWidget {
+  static const routeName = '/other_profile';
+  final String email;
+  const OtherProfileView({
+    required this.email,
     super.key,
   });
 
   @override
-  ConsumerState<ProfileBodyView> createState() => _ProfileBodyViewState();
+  ConsumerState<OtherProfileView> createState() => _OtherProfileViewState();
 }
 
-class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
+class _OtherProfileViewState extends ConsumerState<OtherProfileView> {
   bool onFavorites = true;
 
   @override
@@ -36,7 +40,7 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
             context: context,
             ratings: dishRatingUser.ratings,
             users: dishRatingUser.users,
-            currentUserEmail: dishRatingUser.currentUserEmail,
+            currentUserEmail: widget.email,
             ref: ref),
         loading: () => const TadishLoading(),
         error: (error, stacktrace) =>
@@ -49,12 +53,16 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
     required String currentUserEmail,
     required WidgetRef ref}) {
     RatingCollection ratingCollection = RatingCollection(ratings);
-
     const secondaryTextColor = Colors.grey;
     final UserCollection userDB = UserCollection(users);
     final User currentUser = userDB.getUser(currentUserEmail);
 
-    return Center(
+    return Scaffold(
+      drawer: const DrawerView(),
+      appBar: AppBar(
+        title: const Text('Profile'),
+      ),
+      body: Center(
       child: SafeArea(
         child: Column(
           children: [
@@ -201,12 +209,14 @@ class _ProfileBodyViewState extends ConsumerState<ProfileBodyView> {
               ],
             ),
             (onFavorites
-                ? Expanded(child: FavoritesView(userID: currentUserEmail))
-                : Expanded(child: HistoryView(userID: currentUserEmail))
-                ),
+                ? Expanded(
+                    child: FavoritesView(userID: currentUserEmail)
+                  )
+                : Expanded(child: HistoryView(userID: currentUserEmail))),
           ],
         ),
       ),
+    )
     );
   }
 }

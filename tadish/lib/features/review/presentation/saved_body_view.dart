@@ -8,7 +8,12 @@ import '../data/dish_provider.dart';
 import '../domain/dish.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+enum DishFilter { vegan, vegetarian, local }
+
+final filterProvider = StateProvider<List<String>>((ref) => []);
+
 class SavedBodyView extends ConsumerWidget {
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<Dish>> asyncDishesDB = ref.watch(dishesProvider);
@@ -32,27 +37,37 @@ class SavedBodyView extends ConsumerWidget {
       {required BuildContext context,
       required List<Dish> dishes,
       required WidgetRef ref}) {
-
+    final filters = ref.watch(filterProvider);
     DishCollection dishDB = DishCollection(dishes);
     final List<Dish> dishesWithRestaurant = dishDB.getDishRestaurant();
+    List<Dish> filteredDishes = dishesWithRestaurant.where((dish) {
+      return filters.every((filter) => dish.tags.contains(filter));
+    }).toList();
     return Padding(
         padding: const EdgeInsets.only(top: 10.0),
         child: Column(children: [
           SizedBox(
             height: 50,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: const [
-                FilterChip(label: Text("Vegan"), onSelected: null),
-                FilterChip(label: Text("Local"), onSelected: null),
-                FilterChip(label: Text("Spicy"), onSelected: null),
-                FilterChip(label: Text("Oldest First"), onSelected: null),
-              ],
-            ),
+            child: Wrap(
+            spacing: 5.0,
+            children: DishFilter.values.map((DishFilter filter) {
+              return FilterChip(
+                label: Text(filter.name),
+                selected: filters.contains(filter.name),
+                onSelected: (bool selected) {
+                  if (selected) {
+                    ref.read(filterProvider.notifier).state = [...filters, filter.name];
+                  } else {
+                    ref.read(filterProvider.notifier).state = filters.where((str) => str != filter.name).toList();
+                  }
+                },
+              );
+            }).toList(),
+          ),
           ),
           Expanded(
             child: Center(
-              child: dishesWithRestaurant.isEmpty
+              child: filteredDishes.isEmpty
                   ? Container(
                       alignment: Alignment.center,
                       child: const Column(
@@ -63,7 +78,7 @@ class SavedBodyView extends ConsumerWidget {
                   : Container(
                       alignment: Alignment.center,
                       child: ListView(
-                          children: dishesWithRestaurant
+                          children: filteredDishes
                               .map(
                                 (dish) => DishRowTile(
                                     imageUrl: dish.pictures[0],
