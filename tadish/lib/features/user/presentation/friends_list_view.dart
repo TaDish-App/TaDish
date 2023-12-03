@@ -123,7 +123,7 @@ class FriendsListView extends ConsumerWidget {
               const SizedBox(
                 height: 5,
               ),
-              FriendsListRow(name: currentUser.name, tastePreference: currentUser.tastePreference, icon: const Icon(Icons.person)),
+              FriendsListRow(name: currentUser.name, email: currentUser.email, tastePreference: currentUser.tastePreference, icon: const Icon(Icons.person)),
               const SizedBox(
                 height: 5,
               ),
