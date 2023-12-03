@@ -136,8 +136,8 @@ class FriendsListView extends ConsumerWidget {
                     child: Column(
                       children: <Widget>[
                         SingleLineTextField(
-                          name: "Dish Name",
-                          hint: "Enter the dish name",
+                          name: "Email",
+                          hint: "Enter the email",
                           fieldKey: _addFriendFieldKey,
                         ),
                       ],
@@ -146,7 +146,7 @@ class FriendsListView extends ConsumerWidget {
                 ),
                 SubmitButton(
                   onSubmit: onSubmit,
-                  submissionText: "add friend",
+                  submissionText: "Add friend",
                 ),
               ],
             ),

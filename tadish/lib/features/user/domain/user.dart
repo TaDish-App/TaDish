@@ -19,7 +19,7 @@ class User with _$User {
     required String geolocation,
     required DateTime createdOn,
     required DateTime updatedOn,
-    @Default([]) List<double> tastePreference,
+    required List<double> tastePreference,
     @Default([]) List<String> friendsIDList,
     @Default([]) List<String> savedDishesID,
     @Default('user') String role,

@@ -36,7 +36,7 @@ class SignInView extends StatelessWidget {
         }),
         AuthStateChangeAction<UserCreated>((context, state) {
           if (!state.credential.user!.emailVerified) {
-            Navigator.pushNamed(context, VerifyEmailView.routeName);
+            Navigator.pushNamed(context, CreateProfileView.routeName);
           } else {
             Navigator.pushReplacementNamed(context, HomeView.routeName);
           }
