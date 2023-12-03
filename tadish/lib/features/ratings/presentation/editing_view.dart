@@ -131,78 +131,89 @@ class EditingView extends ConsumerWidget {
               children: [
                 FormBuilder(
                   key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      ImagesField(
-                          fieldKey: _imageFieldKey,
-                          name: "Image",
-                          currImage: rating.picture),
-                      StarField(
-                          fieldKey: _starsFieldKey,
-                          currStars: rating.starRating),
-                      SingleLineTextField(
-                        name: "Restaurant",
-                        hint: "Enter the location",
-                        fieldKey: _restaurantNameFieldKey,
-                        currText: restaurantName,
-                      ),
-                      SingleLineTextField(
-                        name: "Dish Name",
-                        hint: "Enter the dish name",
-                        fieldKey: _dishNameFieldKey,
-                        currText: dishName,
-                      ),
-                      TagsField(
-                          name: "Tags",
-                          fieldKey: _tagsFieldKey,
-                          currTags: rating.tags),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: SingleLineTextField(
-                                name: "Public Notes",
-                                hint: "Public Notes",
-                                fieldKey: _publicNotesFieldKey,
-                                currText: rating.publicNote),
+                  child: SafeArea(
+                    child: Column(
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(Icons.arrow_back),
                           ),
-                          Flexible(
-                            child: SingleLineTextField(
-                              name: "Private Notes",
-                              hint: "Private Notes",
-                              fieldKey: _privateNotesFieldKey,
-                              currText: rating.privateNote,
+                        ),
+                        ImagesField(
+                            fieldKey: _imageFieldKey,
+                            name: "Image",
+                            currImage: rating.picture),
+                        StarField(
+                            fieldKey: _starsFieldKey,
+                            currStars: rating.starRating),
+                        SingleLineTextField(
+                          name: "Restaurant",
+                          hint: "Enter the location",
+                          fieldKey: _restaurantNameFieldKey,
+                          currText: restaurantName,
+                        ),
+                        SingleLineTextField(
+                          name: "Dish Name",
+                          hint: "Enter the dish name",
+                          fieldKey: _dishNameFieldKey,
+                          currText: dishName,
+                        ),
+                        TagsField(
+                            name: "Tags",
+                            fieldKey: _tagsFieldKey,
+                            currTags: rating.tags),
+                        Row(
+                          children: [
+                            Flexible(
+                              child: SingleLineTextField(
+                                  name: "Public Notes",
+                                  hint: "Public Notes",
+                                  fieldKey: _publicNotesFieldKey,
+                                  currText: rating.publicNote),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                      SliderField(
-                        fieldKey: _sliderSweetnessFieldKey,
-                        name: "Sweetness",
-                        color: Colors.pink,
-                        currValue: rating.sweetness,
-                      ),
-                      SliderField(
-                        fieldKey: _sliderSournessFieldKey,
-                        name: "Sourness",
-                        color: Colors.lime,
-                        currValue: rating.sourness,
-                      ),
-                      SliderField(
-                        fieldKey: _sliderSpicinessFieldKey,
-                        name: "Spiciness",
-                        color: Colors.orange,
-                        currValue: rating.spiciness,
-                      ),
-                      SliderField(
-                        fieldKey: _sliderSaltinessFieldKey,
-                        name: "Saltiness",
-                        color: Colors.blueGrey,
-                        currValue: rating.saltiness,
-                      ),
-                    ],
+                            Flexible(
+                              child: SingleLineTextField(
+                                name: "Private Notes",
+                                hint: "Private Notes",
+                                fieldKey: _privateNotesFieldKey,
+                                currText: rating.privateNote,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+                        SliderField(
+                          fieldKey: _sliderSweetnessFieldKey,
+                          name: "Sweetness",
+                          color: Colors.pink,
+                          currValue: rating.sweetness,
+                        ),
+                        SliderField(
+                          fieldKey: _sliderSournessFieldKey,
+                          name: "Sourness",
+                          color: Colors.lime,
+                          currValue: rating.sourness,
+                        ),
+                        SliderField(
+                          fieldKey: _sliderSpicinessFieldKey,
+                          name: "Spiciness",
+                          color: Colors.orange,
+                          currValue: rating.spiciness,
+                        ),
+                        SliderField(
+                          fieldKey: _sliderSaltinessFieldKey,
+                          name: "Saltiness",
+                          color: Colors.blueGrey,
+                          currValue: rating.saltiness,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SubmitButton(
