@@ -143,10 +143,11 @@ class EditingView extends ConsumerWidget {
                             child: const Icon(Icons.arrow_back),
                           ),
                         ),
-                        ImagesField(
-                            fieldKey: _imageFieldKey,
-                            name: "Image",
-                            currImage: rating.picture),
+                        // TODO Make images editable
+                        // ImagesField(
+                        //     fieldKey: _imageFieldKey,
+                        //     name: "Image",
+                        //     currImage: rating.picture),
                         StarField(
                             fieldKey: _starsFieldKey,
                             currStars: rating.starRating),
