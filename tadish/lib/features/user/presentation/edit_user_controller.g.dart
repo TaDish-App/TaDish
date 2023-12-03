@@ -7,7 +7,7 @@ part of 'edit_user_controller.dart';
 // **************************************************************************
 
 String _$editUserControllerHash() =>
-    r'9f42ca7029e01eb766026625c8220e7d5c1500d8';
+    r'b2edb3548b04b1d18cb387c29298afa43e2f3279';
 
 /// See also [EditUserController].
 @ProviderFor(EditUserController)

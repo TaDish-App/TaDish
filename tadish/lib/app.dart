@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'features/ratings/presentation/editing_view.dart';
 import 'features/authenticate/presentation/signin_view.dart';
-import 'features/authenticate/presentation/signup_view.dart';
 import 'features/home/presentation/home_view.dart';
 import 'features/authenticate/presentation/forgot_password_view.dart';
 import 'features/authenticate/presentation/verify_email_view.dart';
@@ -12,6 +11,7 @@ import 'features/review/presentation/recommendation_view.dart';
 import 'features/picker/presentation/surprise_view.dart';
 import 'features/user/presentation/profile_view.dart';
 import 'features/user/presentation/friends_list_view.dart';
+import 'features/authenticate/presentation/create_profile_view.dart';
 import 'features/settings/presentation/settings_view.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,9 +43,7 @@ class MyApp extends ConsumerWidget {
                   case SettingsView.routeName:
                     return const SettingsView();
                   case SignInView.routeName:
-                    return SignInView();
-                  case SignupView.routeName:
-                    return const SignupView();
+                    return const SignInView();
                   case VerifyEmailView.routeName:
                     return const VerifyEmailView();
                   case ForgotPasswordView.routeName:
@@ -54,6 +52,8 @@ class MyApp extends ConsumerWidget {
                     return FeedView();
                   case ProfileView.routeName:
                     return ProfileView();
+                  case CreateProfileView.routeName:
+                    return CreateProfileView();  
                   case RecommendationView.routeName:
                     return RecommendationView();
                   case SurpriseView.routeName:

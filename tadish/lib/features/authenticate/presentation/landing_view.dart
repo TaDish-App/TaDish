@@ -65,21 +65,6 @@ class LandingView extends StatelessWidget {
               ),
 
             const SizedBox(height: 12.0),
-            ElevatedButton(
-                onPressed: () {
-                  // Eventually: pushReplacementNamed
-                  Navigator.pushNamed(context, '/signup');
-                },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
-              ),
-              child: const Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  )
-              ),
-            )
           ],
         ),
       ),
