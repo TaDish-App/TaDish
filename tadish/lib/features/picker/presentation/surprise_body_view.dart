@@ -182,11 +182,11 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
                                         // Wrap the icon with GestureDetector
                                         GestureDetector(
                                           onTap: () {
-                                            if (currentParty.contains(friend.email)) {
-                                                ref.read(partyProvider.notifier).state = currentParty.where((email) => email != friend.email).toList();
-                                            } else {
-                                              ref.read(partyProvider.notifier).state = [...currentParty, friend.email];
-                                            }
+                                            // if (currentParty.contains(friend.email)) {
+                                            //     ref.read(partyProvider.notifier).state = currentParty.where((email) => email != friend.email).toList();
+                                            // } else {
+                                            //   ref.read(partyProvider.notifier).state = [...currentParty, friend.email];
+                                            // }
                                           },
                                           child: Icon(currentParty.contains(friend.email) ? Icons.do_not_disturb_on_outlined : Icons.add_outlined,),
                                         ),
