@@ -5,6 +5,7 @@ import '../../home/presentation/home_view.dart';
 import 'decorations.dart';
 import 'forgot_password_view.dart';
 import 'verify_email_view.dart';
+import 'create_profile_view.dart';
 
 /// Builds the page containing fields to enter a username and password, plus buttons.
 class SignInView extends StatelessWidget {
@@ -35,7 +36,7 @@ class SignInView extends StatelessWidget {
         }),
         AuthStateChangeAction<UserCreated>((context, state) {
           if (!state.credential.user!.emailVerified) {
-            Navigator.pushNamed(context, VerifyEmailView.routeName);
+            Navigator.pushNamed(context, CreateProfileView.routeName);
           } else {
             Navigator.pushReplacementNamed(context, HomeView.routeName);
           }

@@ -8,12 +8,15 @@ import '../../common/star_confetti.dart';
 import '../../user/presentation/friends_list_row.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../user_restaurant_data_provider.dart';
+import '../../common/taste_prefs_radar_chart.dart';
 
 import 'dart:async';
 import '../../user/domain/user.dart';
 
 import '../../tadish_error.dart';
 import '../../tadish_loading.dart';
+
+final partyProvider = StateProvider<List<String>>((ref) => []);
 
 class SurpriseBodyView extends ConsumerStatefulWidget {
   const SurpriseBodyView({
@@ -104,6 +107,7 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
     final UserCollection userDB =UserCollection(users);
     final User currentUser = userDB.getUser(currentUserID);
     List<User?> friendsList = userDB.getFriends(currentUserID);
+    final List<String> currentParty = ref.watch(partyProvider);
 
     // A function to show the friends list popup
     void showFriendsListPopup() {
@@ -111,11 +115,11 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Row(
+            title: Row(
               children: [
                 Text('FriendsList'),
                 Icon(Icons.emoji_people),
-                Text('1'),
+                Text('${currentParty.length + 1}'),
               ],
             ),
             content: SingleChildScrollView(
@@ -129,30 +133,10 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
                       FriendsListRow(
                           name: currentUser.name,
                           tastePreference: currentUser.tastePreference,
+                          email: currentUser.email,
                           icon: const Icon(Icons.person)),
                       const SizedBox(
                         height: 5,
-                      ),
-                      Row(
-                        children: [
-                          const Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                labelText: 'Add a friend',
-                              ),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Adding a friend'),
-                                ),
-                              );
-                            },
-                            child: const Text('Add'),
-                          ),
-                        ],
                       ),
                       const SizedBox(
                         height: 5,
@@ -180,10 +164,36 @@ class _SurpriseBodyViewState extends ConsumerState<SurpriseBodyView> {
                             height: 200,
                             child: ListView(
                               children: friendsList
-                                  .map((friend) => FriendsListRow(
-                                  name: friend!.name,
-                                  tastePreference: friend.tastePreference,
-                                  icon: const Icon(Icons.add_outlined)))
+                                  .map((friend) => 
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        // Radar Chart for taste prefs
+                                        TastePrefsRadarChart(tastePrefsData: friend!.tastePreference, radius: 20,),
+                                        Text(
+                                          friend.name,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        // Wrap the icon with GestureDetector
+                                        GestureDetector(
+                                          onTap: () {
+                                            // if (currentParty.contains(friend.email)) {
+                                            //     ref.read(partyProvider.notifier).state = currentParty.where((email) => email != friend.email).toList();
+                                            // } else {
+                                            //   ref.read(partyProvider.notifier).state = [...currentParty, friend.email];
+                                            // }
+                                          },
+                                          child: Icon(currentParty.contains(friend.email) ? Icons.do_not_disturb_on_outlined : Icons.add_outlined,),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                  )
                                   .toList(),
                             ),
                           ),

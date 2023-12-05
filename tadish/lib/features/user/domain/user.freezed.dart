@@ -24,16 +24,16 @@ mixin _$User {
   String get name => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  String get gender => throw _privateConstructorUsedError;
+  int get age => throw _privateConstructorUsedError;
+  String get ethnicity => throw _privateConstructorUsedError;
+  String get geolocation => throw _privateConstructorUsedError;
+  DateTime get createdOn => throw _privateConstructorUsedError;
+  DateTime get updatedOn => throw _privateConstructorUsedError;
   List<double> get tastePreference => throw _privateConstructorUsedError;
   List<String> get friendsIDList => throw _privateConstructorUsedError;
   List<String> get savedDishesID => throw _privateConstructorUsedError;
-  String? get geolocation => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
-  String get gender => throw _privateConstructorUsedError;
-  int? get age => throw _privateConstructorUsedError;
-  String? get ethnicity => throw _privateConstructorUsedError;
-  DateTime get createdOn => throw _privateConstructorUsedError;
-  DateTime get updatedOn => throw _privateConstructorUsedError;
   bool get isActive => throw _privateConstructorUsedError;
   int get taggedDishes => throw _privateConstructorUsedError;
 
@@ -52,16 +52,16 @@ abstract class $UserCopyWith<$Res> {
       String name,
       String username,
       String email,
+      String gender,
+      int age,
+      String ethnicity,
+      String geolocation,
+      DateTime createdOn,
+      DateTime updatedOn,
       List<double> tastePreference,
       List<String> friendsIDList,
       List<String> savedDishesID,
-      String? geolocation,
       String role,
-      String gender,
-      int? age,
-      String? ethnicity,
-      DateTime createdOn,
-      DateTime updatedOn,
       bool isActive,
       int taggedDishes});
 }
@@ -83,16 +83,16 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? name = null,
     Object? username = null,
     Object? email = null,
+    Object? gender = null,
+    Object? age = null,
+    Object? ethnicity = null,
+    Object? geolocation = null,
+    Object? createdOn = null,
+    Object? updatedOn = null,
     Object? tastePreference = null,
     Object? friendsIDList = null,
     Object? savedDishesID = null,
-    Object? geolocation = freezed,
     Object? role = null,
-    Object? gender = null,
-    Object? age = freezed,
-    Object? ethnicity = freezed,
-    Object? createdOn = null,
-    Object? updatedOn = null,
     Object? isActive = null,
     Object? taggedDishes = null,
   }) {
@@ -113,6 +113,30 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      gender: null == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String,
+      age: null == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int,
+      ethnicity: null == ethnicity
+          ? _value.ethnicity
+          : ethnicity // ignore: cast_nullable_to_non_nullable
+              as String,
+      geolocation: null == geolocation
+          ? _value.geolocation
+          : geolocation // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdOn: null == createdOn
+          ? _value.createdOn
+          : createdOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedOn: null == updatedOn
+          ? _value.updatedOn
+          : updatedOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       tastePreference: null == tastePreference
           ? _value.tastePreference
           : tastePreference // ignore: cast_nullable_to_non_nullable
@@ -125,34 +149,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.savedDishesID
           : savedDishesID // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      geolocation: freezed == geolocation
-          ? _value.geolocation
-          : geolocation // ignore: cast_nullable_to_non_nullable
-              as String?,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
-      gender: null == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      age: freezed == age
-          ? _value.age
-          : age // ignore: cast_nullable_to_non_nullable
-              as int?,
-      ethnicity: freezed == ethnicity
-          ? _value.ethnicity
-          : ethnicity // ignore: cast_nullable_to_non_nullable
-              as String?,
-      createdOn: null == createdOn
-          ? _value.createdOn
-          : createdOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedOn: null == updatedOn
-          ? _value.updatedOn
-          : updatedOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -177,16 +177,16 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String name,
       String username,
       String email,
+      String gender,
+      int age,
+      String ethnicity,
+      String geolocation,
+      DateTime createdOn,
+      DateTime updatedOn,
       List<double> tastePreference,
       List<String> friendsIDList,
       List<String> savedDishesID,
-      String? geolocation,
       String role,
-      String gender,
-      int? age,
-      String? ethnicity,
-      DateTime createdOn,
-      DateTime updatedOn,
       bool isActive,
       int taggedDishes});
 }
@@ -205,16 +205,16 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? name = null,
     Object? username = null,
     Object? email = null,
+    Object? gender = null,
+    Object? age = null,
+    Object? ethnicity = null,
+    Object? geolocation = null,
+    Object? createdOn = null,
+    Object? updatedOn = null,
     Object? tastePreference = null,
     Object? friendsIDList = null,
     Object? savedDishesID = null,
-    Object? geolocation = freezed,
     Object? role = null,
-    Object? gender = null,
-    Object? age = freezed,
-    Object? ethnicity = freezed,
-    Object? createdOn = null,
-    Object? updatedOn = null,
     Object? isActive = null,
     Object? taggedDishes = null,
   }) {
@@ -235,6 +235,30 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      gender: null == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String,
+      age: null == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int,
+      ethnicity: null == ethnicity
+          ? _value.ethnicity
+          : ethnicity // ignore: cast_nullable_to_non_nullable
+              as String,
+      geolocation: null == geolocation
+          ? _value.geolocation
+          : geolocation // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdOn: null == createdOn
+          ? _value.createdOn
+          : createdOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedOn: null == updatedOn
+          ? _value.updatedOn
+          : updatedOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       tastePreference: null == tastePreference
           ? _value._tastePreference
           : tastePreference // ignore: cast_nullable_to_non_nullable
@@ -247,34 +271,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value._savedDishesID
           : savedDishesID // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      geolocation: freezed == geolocation
-          ? _value.geolocation
-          : geolocation // ignore: cast_nullable_to_non_nullable
-              as String?,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
-      gender: null == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      age: freezed == age
-          ? _value.age
-          : age // ignore: cast_nullable_to_non_nullable
-              as int?,
-      ethnicity: freezed == ethnicity
-          ? _value.ethnicity
-          : ethnicity // ignore: cast_nullable_to_non_nullable
-              as String?,
-      createdOn: null == createdOn
-          ? _value.createdOn
-          : createdOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedOn: null == updatedOn
-          ? _value.updatedOn
-          : updatedOn // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -295,18 +295,18 @@ class _$UserImpl extends _User {
       required this.name,
       required this.username,
       required this.email,
-      required final List<double> tastePreference,
-      required final List<String> friendsIDList,
-      required final List<String> savedDishesID,
-      this.geolocation,
-      required this.role,
       required this.gender,
-      this.age,
-      this.ethnicity,
+      required this.age,
+      required this.ethnicity,
+      required this.geolocation,
       required this.createdOn,
       required this.updatedOn,
-      required this.isActive,
-      required this.taggedDishes})
+      final List<double> tastePreference = const [],
+      final List<String> friendsIDList = const [],
+      final List<String> savedDishesID = const [],
+      this.role = 'user',
+      this.isActive = true,
+      this.taggedDishes = 0})
       : _tastePreference = tastePreference,
         _friendsIDList = friendsIDList,
         _savedDishesID = savedDishesID,
@@ -323,8 +323,21 @@ class _$UserImpl extends _User {
   final String username;
   @override
   final String email;
+  @override
+  final String gender;
+  @override
+  final int age;
+  @override
+  final String ethnicity;
+  @override
+  final String geolocation;
+  @override
+  final DateTime createdOn;
+  @override
+  final DateTime updatedOn;
   final List<double> _tastePreference;
   @override
+  @JsonKey()
   List<double> get tastePreference {
     if (_tastePreference is EqualUnmodifiableListView) return _tastePreference;
     // ignore: implicit_dynamic_type
@@ -333,6 +346,7 @@ class _$UserImpl extends _User {
 
   final List<String> _friendsIDList;
   @override
+  @JsonKey()
   List<String> get friendsIDList {
     if (_friendsIDList is EqualUnmodifiableListView) return _friendsIDList;
     // ignore: implicit_dynamic_type
@@ -341,6 +355,7 @@ class _$UserImpl extends _User {
 
   final List<String> _savedDishesID;
   @override
+  @JsonKey()
   List<String> get savedDishesID {
     if (_savedDishesID is EqualUnmodifiableListView) return _savedDishesID;
     // ignore: implicit_dynamic_type
@@ -348,27 +363,18 @@ class _$UserImpl extends _User {
   }
 
   @override
-  final String? geolocation;
-  @override
+  @JsonKey()
   final String role;
   @override
-  final String gender;
-  @override
-  final int? age;
-  @override
-  final String? ethnicity;
-  @override
-  final DateTime createdOn;
-  @override
-  final DateTime updatedOn;
-  @override
+  @JsonKey()
   final bool isActive;
   @override
+  @JsonKey()
   final int taggedDishes;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, username: $username, email: $email, tastePreference: $tastePreference, friendsIDList: $friendsIDList, savedDishesID: $savedDishesID, geolocation: $geolocation, role: $role, gender: $gender, age: $age, ethnicity: $ethnicity, createdOn: $createdOn, updatedOn: $updatedOn, isActive: $isActive, taggedDishes: $taggedDishes)';
+    return 'User(id: $id, name: $name, username: $username, email: $email, gender: $gender, age: $age, ethnicity: $ethnicity, geolocation: $geolocation, createdOn: $createdOn, updatedOn: $updatedOn, tastePreference: $tastePreference, friendsIDList: $friendsIDList, savedDishesID: $savedDishesID, role: $role, isActive: $isActive, taggedDishes: $taggedDishes)';
   }
 
   @override
@@ -381,23 +387,23 @@ class _$UserImpl extends _User {
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.email, email) || other.email == email) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.age, age) || other.age == age) &&
+            (identical(other.ethnicity, ethnicity) ||
+                other.ethnicity == ethnicity) &&
+            (identical(other.geolocation, geolocation) ||
+                other.geolocation == geolocation) &&
+            (identical(other.createdOn, createdOn) ||
+                other.createdOn == createdOn) &&
+            (identical(other.updatedOn, updatedOn) ||
+                other.updatedOn == updatedOn) &&
             const DeepCollectionEquality()
                 .equals(other._tastePreference, _tastePreference) &&
             const DeepCollectionEquality()
                 .equals(other._friendsIDList, _friendsIDList) &&
             const DeepCollectionEquality()
                 .equals(other._savedDishesID, _savedDishesID) &&
-            (identical(other.geolocation, geolocation) ||
-                other.geolocation == geolocation) &&
             (identical(other.role, role) || other.role == role) &&
-            (identical(other.gender, gender) || other.gender == gender) &&
-            (identical(other.age, age) || other.age == age) &&
-            (identical(other.ethnicity, ethnicity) ||
-                other.ethnicity == ethnicity) &&
-            (identical(other.createdOn, createdOn) ||
-                other.createdOn == createdOn) &&
-            (identical(other.updatedOn, updatedOn) ||
-                other.updatedOn == updatedOn) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             (identical(other.taggedDishes, taggedDishes) ||
@@ -412,16 +418,16 @@ class _$UserImpl extends _User {
       name,
       username,
       email,
-      const DeepCollectionEquality().hash(_tastePreference),
-      const DeepCollectionEquality().hash(_friendsIDList),
-      const DeepCollectionEquality().hash(_savedDishesID),
-      geolocation,
-      role,
       gender,
       age,
       ethnicity,
+      geolocation,
       createdOn,
       updatedOn,
+      const DeepCollectionEquality().hash(_tastePreference),
+      const DeepCollectionEquality().hash(_friendsIDList),
+      const DeepCollectionEquality().hash(_savedDishesID),
+      role,
       isActive,
       taggedDishes);
 
@@ -445,18 +451,18 @@ abstract class _User extends User {
       required final String name,
       required final String username,
       required final String email,
-      required final List<double> tastePreference,
-      required final List<String> friendsIDList,
-      required final List<String> savedDishesID,
-      final String? geolocation,
-      required final String role,
       required final String gender,
-      final int? age,
-      final String? ethnicity,
+      required final int age,
+      required final String ethnicity,
+      required final String geolocation,
       required final DateTime createdOn,
       required final DateTime updatedOn,
-      required final bool isActive,
-      required final int taggedDishes}) = _$UserImpl;
+      final List<double> tastePreference,
+      final List<String> friendsIDList,
+      final List<String> savedDishesID,
+      final String role,
+      final bool isActive,
+      final int taggedDishes}) = _$UserImpl;
   const _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
@@ -470,25 +476,25 @@ abstract class _User extends User {
   @override
   String get email;
   @override
+  String get gender;
+  @override
+  int get age;
+  @override
+  String get ethnicity;
+  @override
+  String get geolocation;
+  @override
+  DateTime get createdOn;
+  @override
+  DateTime get updatedOn;
+  @override
   List<double> get tastePreference;
   @override
   List<String> get friendsIDList;
   @override
   List<String> get savedDishesID;
   @override
-  String? get geolocation;
-  @override
   String get role;
-  @override
-  String get gender;
-  @override
-  int? get age;
-  @override
-  String? get ethnicity;
-  @override
-  DateTime get createdOn;
-  @override
-  DateTime get updatedOn;
   @override
   bool get isActive;
   @override
