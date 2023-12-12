@@ -9,8 +9,8 @@ import '../domain/dish_collection.dart';
 
 class RecommendationBodyView extends ConsumerStatefulWidget {
   const RecommendationBodyView({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   ConsumerState<RecommendationBodyView> createState() =>
@@ -29,26 +29,31 @@ class _RecommendationBodyViewState
   @override
   Widget build(BuildContext context) {
     final AsyncValue<List<Dish>> asyncDishesDB = ref.watch(dishesProvider);
-    return asyncDishesDB.when(data: (dishes) {
-      print("data");
-      return _build(context: context, dishes: dishes, ref: ref);
-    }, loading: () {
-      print("loading");
-      return const TadishLoading();
-    }, error: (error, stacktrace) {
-      print("error");
-      print("asyncDishesDB.toString(): " + asyncDishesDB.toString());
-      print("asyncDishesDB.error: " + asyncDishesDB.error.toString());
-      print("dishes.toString(): " + dishes.toString());
-      print("error.toString(): " + error.toString());
-      return TadishError(error.toString(), stacktrace.toString());
-    });
+    return asyncDishesDB.when(
+      data: (dishes) {
+        print("data");
+        return _build(context: context, dishes: dishes, ref: ref);
+      },
+      loading: () {
+        print("loading");
+        return const TadishLoading();
+      },
+      error: (error, stacktrace) {
+        print("error");
+        print("asyncDishesDB.toString(): " + asyncDishesDB.toString());
+        print("asyncDishesDB.error: " + asyncDishesDB.error.toString());
+        print("dishes.toString(): " + dishes.toString());
+        print("error.toString(): " + error.toString());
+        return TadishError(error.toString(), stacktrace.toString());
+      },
+    );
   }
 
-  Widget _build(
-      {required BuildContext context,
-      required List<Dish> dishes,
-      required WidgetRef ref}) {
+  Widget _build({
+    required BuildContext context,
+    required List<Dish> dishes,
+    required WidgetRef ref,
+  }) {
     DishCollection dishDB = DishCollection(dishes);
     final dishesRest = dishDB.getDishRestaurant();
 
@@ -58,6 +63,7 @@ class _RecommendationBodyViewState
     Future<void> refresh() async {
       await Future.delayed(Duration.zero); // Delay the execution
       ref.read(dishesDisplay.notifier).state = dishesRest;
+      print(ref.watch(savedDisplay));
       ref.read(savedDisplay.notifier).state = [];
     }
 
@@ -96,62 +102,88 @@ class _RecommendationBodyViewState
             )
           : Stack(
               alignment: Alignment.center,
-              children: dishesSwipe.asMap().entries.map((entry) {
-                final index = entry.key;
-                final dish = entry.value;
-                final isFrontCard = index == 0;
+              children: [
+                ...dishesSwipe.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final dish = entry.value;
+                  final isFrontCard = index == 0;
 
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: Draggable(
-                    onDragEnd: (details) {
-                      if (details.offset.dx < -100) {
-                        // Swiped left
-                        swipeLeft();
-                      } else if (details.offset.dx > 100) {
-                        // Swiped right
-                        swipeRight();
-                      }
-                    },
-                    feedback: Material(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        child: isFrontCard
-                            ? DishCard(
-                                name: dish.name,
-                                picture: dish.pictures[0],
-                                sweetness: dish.averageSweetness,
-                                sourness: dish.averageSourness,
-                                saltiness: dish.averageSaltiness,
-                                spiciness: dish.averageSpiciness,
-                                numRaters: dish.numRaters,
-                              )
-                            : Container(
-                                width: 100.0,
-                                height: 100.0,
-                              ),
+                  return Positioned(
+                    top: 0,
+                    bottom: 0,
+                    right: 0,
+                    left: 0,
+                    child: Draggable(
+                      onDragEnd: (details) {
+                        if (details.offset.dx < -100) {
+                          // Swiped left
+                          swipeLeft();
+                        } else if (details.offset.dx > 100) {
+                          // Swiped right
+                          swipeRight();
+                        }
+                      },
+                      feedback: Material(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: isFrontCard
+                              ? DishCard(
+                                  name: dish.name,
+                                  picture: dish.pictures[0],
+                                  sweetness: dish.averageSweetness,
+                                  sourness: dish.averageSourness,
+                                  saltiness: dish.averageSaltiness,
+                                  spiciness: dish.averageSpiciness,
+                                  numRaters: dish.numRaters,
+                                )
+                              : Container(
+                                  width: 100.0,
+                                  height: 100.0,
+                                ),
+                        ),
                       ),
+                      childWhenDragging: Container(),
+                      child: isFrontCard
+                          ? DishCard(
+                              name: dish.name,
+                              picture: dish.pictures[0],
+                              sweetness: dish.averageSweetness,
+                              sourness: dish.averageSourness,
+                              saltiness: dish.averageSaltiness,
+                              spiciness: dish.averageSpiciness,
+                              numRaters: dish.numRaters,
+                            )
+                          : Container(
+                              width: 100.0,
+                              height: 100.0,
+                            ),
                     ),
-                    childWhenDragging: Container(),
-                    child: isFrontCard
-                        ? DishCard(
-                            name: dish.name,
-                            picture: dish.pictures[0],
-                            sweetness: dish.averageSweetness,
-                            sourness: dish.averageSourness,
-                            saltiness: dish.averageSaltiness,
-                            spiciness: dish.averageSpiciness,
-                            numRaters: dish.numRaters,
-                          )
-                        : Container(
-                            width: 100.0,
-                            height: 100.0,
-                          ),
+                  );
+                }).toList(),
+                Positioned(
+                  bottom: 16.0, // Adjust the bottom spacing
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0), // Adjust the padding as needed
+                        child: ElevatedButton(
+                          onPressed: swipeLeft,
+                          child: const Icon(Icons.cancel),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0), // Adjust the padding as needed
+                        child: ElevatedButton(
+                          onPressed: swipeRight,
+                          child: const Icon(Icons.favorite),
+                        ),
+                      ),
+                    ],
                   ),
-                )
-              }).toList(),
+                ),
+              ],
             ),
     );
   }
