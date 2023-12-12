@@ -115,7 +115,6 @@ class _RecommendationBodyViewState
                       }
                     },
                     feedback: Material(
-                      elevation: isFrontCard ? 8 : 0,
                       child: Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height,
@@ -151,7 +150,7 @@ class _RecommendationBodyViewState
                             height: 100.0,
                           ),
                   ),
-                );
+                )
               }).toList(),
             ),
     );

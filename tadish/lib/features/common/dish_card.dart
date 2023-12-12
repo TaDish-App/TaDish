@@ -10,7 +10,8 @@ class DishCard extends StatelessWidget {
   final double saltiness;
   final String numRaters;
 
-  const DishCard({super.key,
+  const DishCard({
+    Key? key,
     required this.picture,
     required this.name,
     required this.sweetness,
@@ -18,58 +19,92 @@ class DishCard extends StatelessWidget {
     required this.spiciness,
     required this.saltiness,
     required this.numRaters,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-      Center(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Card(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  height: 400.0,
-                  child: picture.startsWith("assets/images") ? Image.asset(picture, fit: BoxFit.cover) : Image.network(picture, fit: BoxFit.cover),
-                ),
-                ListTile(
-                  title: Row(
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    height: 350.0,
+                    child: picture.startsWith("assets/images")
+                        ? Image.asset(picture, fit: BoxFit.cover)
+                        : Image.network(picture, fit: BoxFit.cover),
+                  ),
+                  ListTile(
+                    title: Row(
                       children: [
                         Text(name),
                         const Icon(Icons.emoji_people, size: 20),
                         Text(numRaters),
-                      ]
+                      ],
+                    ),
                   ),
-                ),
-                const Text("Sweetness"),
-                InactiveSliderExample(
-                  color: Colors.blue,
-                  value: sweetness,
-                ),
-                const Text("Sourness"),
-                InactiveSliderExample(
-                  color: Colors.lime,
-                  value: sourness,
-                ),
-                const Text("Spiciness"),
-                InactiveSliderExample(
-                  color: Colors.orange,
-                  value: spiciness,
-                ),
-                const Text("Saltiness"),
-                InactiveSliderExample(
-                  color: Colors.blueGrey,
-                  value: saltiness,
-                ),
-              ],
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            const Text("Sweetness"),
+                            InactiveSliderExample(
+                              color: Colors.blue,
+                              value: sweetness,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            const Text("Sourness"),
+                            InactiveSliderExample(
+                              color: Colors.lime,
+                              value: sourness,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            const Text("Spiciness"),
+                            InactiveSliderExample(
+                              color: Colors.orange,
+                              value: spiciness,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            const Text("Saltiness"),
+                            InactiveSliderExample(
+                              color: Colors.blueGrey,
+                              value: saltiness,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      ]
+      ],
     );
   }
 }
