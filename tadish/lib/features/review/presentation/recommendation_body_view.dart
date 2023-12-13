@@ -54,7 +54,6 @@ class _RecommendationBodyViewState
     required WidgetRef ref,
   }) {
     DishCollection dishDB = DishCollection(dishes);
-    final dishesRest = dishDB.getDishRestaurant();
 
     final dishesSwipe = ref.watch(dishesDisplay);
     final saved = ref.watch(savedDisplay);
@@ -63,8 +62,12 @@ class _RecommendationBodyViewState
     final User currentUser = userDB.getUser(currentUserEmail);
 
     Future<void> refresh() async {
-      await Future.delayed(Duration.zero); // Delay the execution
-      ref.read(dishesDisplay.notifier).state = dishesRest;
+      await Future.delayed(Duration.zero); 
+      final dishesRest = dishDB.getDishRestaurant();
+      final notSavedDishes = dishesRest.where((dish) {
+      return !currentUser.savedDishesID.contains(dish.id);
+    }).toList();
+      ref.read(dishesDisplay.notifier).state = notSavedDishes;
       ref.read(savedDisplay.notifier).state = [];
     }
 
