@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tadish/features/review/domain/dish_collection.dart';
+import 'package:tadish/features/review/presentation/dishDialog.dart';
 
 import '../../common/dish_row_tile.dart';
 import '../../tadish_error.dart';
@@ -96,7 +97,8 @@ class SavedBodyView extends ConsumerWidget {
                       child: ListView(
                           children: filteredDishes
                               .map(
-                                (dish) => DishRowTile(
+                                (dish) => GestureDetector(
+                                   child: DishRowTile(
                                     imageUrl: dish.pictures[0],
                                     dishName: dish.name,
                                     restaurantName: dish.restaurantName,
@@ -107,6 +109,23 @@ class SavedBodyView extends ConsumerWidget {
                                       dish.averageSpiciness,
                                       dish.averageSaltiness
                                     ]),
+                                    onTap: (){
+                                     showDialog<String>(
+                                     context: context,
+                                     builder: (BuildContext context) => 
+                                      DishDialog(dishName: dish.name,
+                                      imageUrl: dish.pictures[0],
+                                      restaurantName: dish.restaurantName,
+                                      starRating: dish.averageStarRating,
+                                      averageSaltiness: dish.averageSaltiness, 
+                                      averageSourness: dish.averageSourness,
+                                      averageSpiciness: dish.averageSpiciness,
+                                      averageSweetness: dish.averageSweetness,
+                                      publicNote: dish.publicNotes[0],
+                                      tags: dish.tags)
+                                     );
+                                    }
+                                ),
                               )
                               .toList())),
             ),
