@@ -6,6 +6,10 @@ import '../domain/dish.dart';
 import '../data/dish_provider.dart';
 import '../../common/dish_card.dart';
 import '../domain/dish_collection.dart';
+import '../../dish_rating_user_data_provider.dart';
+import 'package:tadish/features/user/domain/user.dart';
+import 'package:tadish/features/user/domain/user_collection.dart';
+import 'package:tadish/features/user/presentation/edit_user_controller.dart';
 
 class RecommendationBodyView extends ConsumerStatefulWidget {
   const RecommendationBodyView({
@@ -28,30 +32,25 @@ class _RecommendationBodyViewState
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<List<Dish>> asyncDishesDB = ref.watch(dishesProvider);
-    return asyncDishesDB.when(
-      data: (dishes) {
-        print("data");
-        return _build(context: context, dishes: dishes, ref: ref);
-      },
-      loading: () {
-        print("loading");
-        return const TadishLoading();
-      },
-      error: (error, stacktrace) {
-        print("error");
-        print("asyncDishesDB.toString(): " + asyncDishesDB.toString());
-        print("asyncDishesDB.error: " + asyncDishesDB.error.toString());
-        print("dishes.toString(): " + dishes.toString());
-        print("error.toString(): " + error.toString());
-        return TadishError(error.toString(), stacktrace.toString());
-      },
-    );
+  final AsyncValue<DishRatingUser> asyncDishRatingUser = ref.watch(dishRatingUserProvider);
+
+    return asyncDishRatingUser.when(
+        data: (dishRatingUser) => _build(
+            context: context,
+            dishes: dishRatingUser.dishes,
+            users: dishRatingUser.users,
+            currentUserEmail: dishRatingUser.currentUserEmail,
+            ref: ref),
+        loading: () => const TadishLoading(),
+        error: (error, stacktrace) =>
+            TadishError(error.toString(), stacktrace.toString()));
   }
 
   Widget _build({
     required BuildContext context,
+    required List<User> users,
     required List<Dish> dishes,
+    required String currentUserEmail,
     required WidgetRef ref,
   }) {
     DishCollection dishDB = DishCollection(dishes);
@@ -59,11 +58,13 @@ class _RecommendationBodyViewState
 
     final dishesSwipe = ref.watch(dishesDisplay);
     final saved = ref.watch(savedDisplay);
+    
+    final UserCollection userDB = UserCollection(users);
+    final User currentUser = userDB.getUser(currentUserEmail);
 
     Future<void> refresh() async {
       await Future.delayed(Duration.zero); // Delay the execution
       ref.read(dishesDisplay.notifier).state = dishesRest;
-      print(ref.watch(savedDisplay));
       ref.read(savedDisplay.notifier).state = [];
     }
 
@@ -72,8 +73,38 @@ class _RecommendationBodyViewState
     }
 
     void swipeRight() {
-      final dish = dishesSwipe[0].name;
-      ref.read(savedDisplay.notifier).state = [...saved, dish];
+      final dish = dishesSwipe[0].id;
+      
+      List<String> savedDishesID = List.from(currentUser.savedDishesID);
+      savedDishesID.add(dish);
+      
+      User newUser = User(
+        id: currentUser.id,
+        name: currentUser.name,
+        username: currentUser.username,
+        email: currentUser.email,
+        tastePreference: currentUser.tastePreference,
+        friendsIDList: currentUser.friendsIDList,
+        savedDishesID: savedDishesID,
+        geolocation: currentUser.geolocation,
+        role: currentUser.role,
+        gender: currentUser.gender,
+        age: currentUser.age,
+        ethnicity: currentUser.ethnicity,
+        createdOn: currentUser.createdOn,
+        updatedOn: DateTime.now(),
+        isActive: currentUser.isActive,
+        taggedDishes: currentUser.taggedDishes
+      );
+      
+      ref.read(editUserControllerProvider.notifier).updateUser(
+            updatedUser: newUser,
+            // TODO send old rating info e.g. star to help with avg calculations
+            onSuccess: () {
+
+            },
+          );
+
       ref.read(dishesDisplay.notifier).state = dishesSwipe.sublist(1);
     }
 
