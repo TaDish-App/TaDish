@@ -25,13 +25,6 @@ class DishCollection {
 
   List<Dish> getDishRestaurant() {
     List<Dish> dishes = _dishes.toList();
-    // FIXME replace with actual restaurant DB
-    // RestaurantDB restaurantDB = ref.read(restaurantDBProvider);
-    for (var dish in dishes) {
-      // RestaurantData restaurant = restaurantDB.getRestaurant(dish.restaurantID);
-      // FIXME
-      // dish.restaurant = Restaurant(id: 'restaurant-810', name: 'Bruge', city: 'Honolulu', state: 'HI', location: '2566 Campus Rd, Honolulu, HI 96822', createdOn: DateTime.now());
-    }
     return dishes;
   }
 

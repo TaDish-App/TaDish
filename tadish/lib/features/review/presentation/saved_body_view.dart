@@ -7,40 +7,56 @@ import '../../tadish_loading.dart';
 import '../data/dish_provider.dart';
 import '../domain/dish.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../dish_rating_user_data_provider.dart';
+import 'package:tadish/features/ratings/domain/rating.dart';
+import 'package:tadish/features/user/domain/user.dart';
+import 'package:tadish/features/user/domain/user_collection.dart';
 
 enum DishFilter { vegan, vegetarian, local }
 
 final filterProvider = StateProvider<List<String>>((ref) => []);
 
 class SavedBodyView extends ConsumerWidget {
+  const SavedBodyView({super.key});
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<Dish>> asyncDishesDB = ref.watch(dishesProvider);
-    return asyncDishesDB.when(data: (dishes) {
-      print("data");
-      return _build(context: context, dishes: dishes, ref: ref);
-    }, loading: () {
-      print("loading");
-      return const TadishLoading();
-    }, error: (error, stacktrace) {
-      print("error");
-      print("asyncDishesDB.toString(): " + asyncDishesDB.toString());
-      print("asyncDishesDB.error: " + asyncDishesDB.error.toString());
-      print("dishes.toString(): " + dishes.toString());
-      print("error.toString(): " + error.toString());
-      return TadishError(error.toString(), stacktrace.toString());
-    });
+  final AsyncValue<DishRatingUser> asyncDishRatingUser = ref.watch(dishRatingUserProvider);
+
+    return asyncDishRatingUser.when(
+        data: (dishRatingUser) => _build(
+            context: context,
+            dishes: dishRatingUser.dishes,
+            ratings: dishRatingUser.ratings,
+            users: dishRatingUser.users,
+            currentUserEmail: dishRatingUser.currentUserEmail,
+            ref: ref),
+        loading: () => const TadishLoading(),
+        error: (error, stacktrace) =>
+            TadishError(error.toString(), stacktrace.toString()));
   }
 
-  Widget _build(
-      {required BuildContext context,
-      required List<Dish> dishes,
-      required WidgetRef ref}) {
+  Widget _build({required BuildContext context,
+    required List<Rating> ratings,
+    required List<User> users,
+    required List<Dish> dishes,
+    required String currentUserEmail,
+    required WidgetRef ref}) {
     final filters = ref.watch(filterProvider);
+    // load collections
     DishCollection dishDB = DishCollection(dishes);
     final List<Dish> dishesWithRestaurant = dishDB.getDishRestaurant();
-    List<Dish> filteredDishes = dishesWithRestaurant.where((dish) {
+    final UserCollection userDB = UserCollection(users);
+    final User currentUser = userDB.getUser(currentUserEmail);
+    // get users saved dishes
+    final List<String> userDishes = currentUser.savedDishesID;
+    // find users saved dishes
+    final List<Dish> myDishes = dishesWithRestaurant.where((dish) {
+      return userDishes.contains(dish.id);
+    }).toList();
+    // filter users saved dishes by tags
+    List<Dish> filteredDishes = myDishes.where((dish) {
       return filters.every((filter) => dish.tags.contains(filter));
     }).toList();
     return Padding(
